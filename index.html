@@ -205,7 +205,7 @@
     /* Main content */
     main {
       flex: 1;
-      padding-bottom: 5rem; /* Adjusted for bottom nav */
+      /* padding-bottom: 5rem; */ /* Let footer margin handle spacing */
       overflow-y: auto; /* Scroll vertical principal */
     }
     .section {
@@ -469,7 +469,12 @@
 
 
     /* Footer */
-    .footer { padding: 1.5rem 1rem; text-align: center; position: relative; margin-bottom: 4rem; /* Ensure space above bottom nav */ }
+    .footer {
+        padding: 1.5rem 1rem;
+        text-align: center;
+        position: relative;
+        margin-bottom: 6rem; /* Increased margin-bottom */
+    }
     .footer-content { background-color: rgba(255, 255, 255, 0.95); border-radius: 1rem; padding: 1rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); position: relative; }
     .footer-decoration { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--pink-400); }
     .stationery-icon { position: absolute; width: 1.5rem; height: 1.5rem; opacity: 0.2; }
@@ -682,15 +687,6 @@
         const isScrollable = scrollWidth > clientWidth + tolerance;
         prevButton.classList.toggle('hidden', !isScrollable || scrollLeft <= tolerance);
         nextButton.classList.toggle('hidden', !isScrollable || scrollLeft >= (scrollWidth - clientWidth - tolerance));
-
-        // Original logic for hiding both if not scrollable (kept for reference, but above line handles it)
-        // if (scrollWidth <= clientWidth + tolerance) {
-        //      prevButton.classList.add('hidden');
-        //      nextButton.classList.add('hidden');
-        //      return;
-        // }
-        // prevButton.classList.toggle('hidden', scrollLeft <= tolerance);
-        // nextButton.classList.toggle('hidden', scrollLeft >= (scrollWidth - clientWidth - tolerance));
     }
 
     // Função para mover o carrossel usando scroll
