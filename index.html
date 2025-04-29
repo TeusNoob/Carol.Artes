@@ -82,30 +82,34 @@
       font-weight: 700;
       color: var(--pink-600);
       flex-shrink: 0;
+      margin-right: 0.5rem; /* Add space between title and icons */
     }
 
     .fixed-top-bar-icons {
       display: flex;
-      gap: 0.8rem; /* Spacing between icons */
-      /* Icons are naturally centered by flex space-between */
+      gap: 0.7rem; /* Spacing between icons - adjusted */
+      flex-grow: 1; /* Allow icons area to grow */
+      justify-content: center; /* Center icons within their space */
     }
 
     .fixed-top-bar-icon {
-      width: 1.75rem; /* Icon size from image */
-      height: 1.75rem;
+      width: 2rem; /* Increased icon button size */
+      height: 2rem; /* Increased icon button size */
       vertical-align: middle;
       transition: transform 0.2s ease;
-      background-color: var(--white); /* Ensure background doesn't interfere if icons have transparency */
-      padding: 0.2rem; /* Add padding around icon */
-      border-radius: 50%; /* Make icon background circular */
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1); /* Subtle shadow */
-      display: flex; /* Center icon within the circle */
+      background-color: var(--white);
+      padding: 0.2rem;
+      border-radius: 50%;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0; /* Prevent icons from shrinking */
     }
      .fixed-top-bar-icon img {
-        width: 70%; /* Adjust icon size inside the circle */
-        height: 70%;
+        width: 80%; /* Adjusted icon size inside the circle */
+        height: 80%; /* Adjusted icon size inside the circle */
+        object-fit: contain; /* Ensure image fits */
      }
 
     .fixed-top-bar-icon:hover {
@@ -126,6 +130,7 @@
       flex-shrink: 0;
       line-height: 1.2; /* Adjust line height */
       text-align: center;
+      margin-left: 0.5rem; /* Add space between icons and button */
     }
 
     .fixed-top-bar-button:hover {
@@ -140,7 +145,7 @@
     .header-video-container {
         width: 100%;
         padding: 0 1rem; /* Match header padding */
-        margin: 1rem 0 0.5rem; /* Match header margin */
+        margin: 0.5rem 0 0.5rem; /* Reduced top margin to decrease space */
         box-sizing: border-box;
     }
     .header-video {
@@ -165,10 +170,9 @@
         scrollbar-width: none;  /* Firefox */
     }
 
-    /* Original Header Styles (Keep for reference or remove if unused elsewhere) */
-    /*
-    .header {
-      padding: 1.5rem 1rem 1.5rem;
+    /* Original Header Styles (needed for Coupon section) */
+    .header { /* Keep general header styling for coupon section */
+      padding: 1.5rem 1rem 1rem; /* Reduced bottom padding slightly */
       text-align: center;
       background-color: rgba(255, 255, 255, 0.95);
       border-radius: 2rem;
@@ -178,32 +182,23 @@
       margin: 1rem 1rem 0.5rem;
       border: 2px solid var(--pink-200);
     }
-    .header::after {
-      content: '';
-      position: absolute;
-      bottom: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 20px;
-      height: 20px;
-      background-color: rgba(255, 255, 255, 0.95);
-      border-right: 2px solid var(--pink-200);
-      border-bottom: 2px solid var(--pink-200);
-      transform: translateX(-50%) rotate(45deg);
-    }
-    .site-title {
+    .site-title { /* Keep site title style */
       font-family: 'Dancing Script', cursive;
       font-size: 2rem;
       font-weight: 700;
       color: var(--pink-600);
       margin-bottom: 0.25rem;
     }
-    .site-subtitle {
+    .site-subtitle { /* Keep site subtitle style */
       font-size: 0.875rem;
       color: var(--gray-600);
       font-weight: 300;
     }
-    */
+    /* Ensure specific font for coupon title if needed, though global .site-title should work */
+    #cupons .site-title {
+       font-family: 'Dancing Script', cursive;
+    }
+
     /* --- REMOVED Scroll Indicator Styles --- */
     /* --- REMOVED Social buttons Styles --- */
 
@@ -446,7 +441,19 @@
 
 
     /* Bottom navigation */
-     .bottom-nav { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); background-color: rgba(255, 255, 255, 0.95); border-radius: 2rem; display: flex; height: 3.5rem; z-index: 50; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); padding: 0 1rem; }
+     .bottom-nav {
+        position: fixed;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 2rem;
+        display: flex;
+        height: 3.5rem;
+        z-index: 999; /* Increased z-index */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 0 1rem;
+     }
      .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; color: var(--gray-500); text-decoration: none; position: relative; padding: 0 1.5rem; transition: color 0.3s ease; }
      .nav-item.active { color: var(--pink-500); }
      .nav-item::after { content: ''; position: absolute; bottom: 0.5rem; width: 0; height: 2px; background-color: var(--pink-500); border-radius: 9999px; transition: width 0.3s ease; }
@@ -462,7 +469,7 @@
 
 
     /* Footer */
-    .footer { padding: 1.5rem 1rem; text-align: center; position: relative; margin-bottom: 4rem; }
+    .footer { padding: 1.5rem 1rem; text-align: center; position: relative; margin-bottom: 4rem; /* Ensure space above bottom nav */ }
     .footer-content { background-color: rgba(255, 255, 255, 0.95); border-radius: 1rem; padding: 1rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); position: relative; }
     .footer-decoration { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--pink-400); }
     .stationery-icon { position: absolute; width: 1.5rem; height: 1.5rem; opacity: 0.2; }
@@ -490,7 +497,7 @@
     }
     @media (max-width: 480px) {
         .fixed-top-bar { width: calc(100% - 1rem); top: 0.5rem;} /* Adjust width for smaller screens */
-        body { padding-top: 50px; } /* Adjust padding */
+        body { padding-top: 55px; } /* Adjust padding - slightly more needed with larger icons */
 
         .nav-item {
             padding: 0 1rem;
@@ -500,14 +507,16 @@
         /* item width handled by JS */
 
         /* Adjust top bar elements slightly for very small screens if necessary */
-        .fixed-top-bar-title { font-size: 1.1rem; }
-        .fixed-top-bar-icons { gap: 0.5rem; }
-        .fixed-top-bar-icon { width: 1.5rem; height: 1.5rem; }
-        .fixed-top-bar-button { font-size: 0.65rem; padding: 0.4rem 0.6rem; }
+        .fixed-top-bar-title { font-size: 1.1rem; margin-right: 0.2rem;}
+        .fixed-top-bar-icons { gap: 0.4rem; } /* Adjust gap */
+        .fixed-top-bar-icon { width: 1.8rem; height: 1.8rem; } /* Slightly smaller */
+        .fixed-top-bar-button { font-size: 0.65rem; padding: 0.4rem 0.6rem; margin-left: 0.2rem;}
     }
 
     @media (max-width: 360px) {
-        body { padding-top: 45px; } /* Further adjust padding */
+        body { padding-top: 50px; } /* Further adjust padding */
+        .fixed-top-bar-icons { gap: 0.3rem; } /* Adjust gap */
+        .fixed-top-bar-icon { width: 1.6rem; height: 1.6rem; } /* Slightly smaller */
         .nav-item { padding: 0 0.8rem; }
         .product-title { font-size: 0.7rem; min-height: calc(2 * 1.5 * 0.7rem); }
         .product-price { font-size: 0.8rem; }
@@ -534,6 +543,9 @@
       <a href="https://instagram.com/carolartes.print" class="fixed-top-bar-icon" target="_blank" rel="noopener noreferrer" title="Instagram">
         <img src="templates/layout/instagram.png" alt="Instagram">
       </a>
+      <a href="https://tiktok.com/@personalizadosdacarol" class="fixed-top-bar-icon" target="_blank" rel="noopener noreferrer" title="TikTok">
+           <img src="templates/layout/tiktok.png" alt="TikTok">
+      </a>
       <a href="https://api.whatsapp.com/send/?phone=5531987426591" class="fixed-top-bar-icon" target="_blank" rel="noopener noreferrer" title="WhatsApp">
         <img src="templates/layout/whatsapp.png" alt="WhatsApp">
       </a>
@@ -549,7 +561,7 @@
       <div class="header-video-container">
            <video class="header-video" autoplay loop muted playsinline poster="templates/layout/placeholder.png">
                <source src="templates/video/carolartesloop.mp4" type="video/mp4">
-               Your browser does not support the video tag. </video>
+               Seu navegador não suporta a tag de vídeo. </video>
        </div>
 
       <section class="section">
@@ -600,11 +612,11 @@
     </div>
 
     <div id="cupons" class="content-section">
-       <header class="header"> <h1 class="site-title">Cupons de Desconto</h1>
+       <header class="header">
+         <h1 class="site-title">Cupons de Desconto</h1>
          <p class="site-subtitle">Economize em suas compras</p>
        </header>
-       <section class="section" style="border-bottom: none;">
-         <div id="cupons-container">
+       <section class="section" style="border-bottom: none; margin-top: 0.5rem;"> <div id="cupons-container">
            <div class="loading-spinner"><div class="spinner"></div></div>
            </div>
        </section>
@@ -666,14 +678,19 @@
         const clientWidth = carouselElement.clientWidth;
         const tolerance = 5;
 
-        if (scrollWidth <= clientWidth + tolerance) {
-             prevButton.classList.add('hidden');
-             nextButton.classList.add('hidden');
-             return;
-        }
+        // Always show arrows if scrollable, hide if not
+        const isScrollable = scrollWidth > clientWidth + tolerance;
+        prevButton.classList.toggle('hidden', !isScrollable || scrollLeft <= tolerance);
+        nextButton.classList.toggle('hidden', !isScrollable || scrollLeft >= (scrollWidth - clientWidth - tolerance));
 
-        prevButton.classList.toggle('hidden', scrollLeft <= tolerance);
-        nextButton.classList.toggle('hidden', scrollLeft >= (scrollWidth - clientWidth - tolerance));
+        // Original logic for hiding both if not scrollable (kept for reference, but above line handles it)
+        // if (scrollWidth <= clientWidth + tolerance) {
+        //      prevButton.classList.add('hidden');
+        //      nextButton.classList.add('hidden');
+        //      return;
+        // }
+        // prevButton.classList.toggle('hidden', scrollLeft <= tolerance);
+        // nextButton.classList.toggle('hidden', scrollLeft >= (scrollWidth - clientWidth - tolerance));
     }
 
     // Função para mover o carrossel usando scroll
@@ -687,10 +704,12 @@
         if (!items.length) return;
 
         const itemsPerView = getItemsPerView();
+        // Calculate based on visible width for more accurate scrolling
         const itemWidth = items[0].offsetWidth;
         const gap = parseFloat(getComputedStyle(carousel).gap) || 15;
         const totalItemWidth = itemWidth + gap;
-        const scrollAmount = itemsPerView * totalItemWidth;
+        // Scroll by the width of visible items instead of a fixed number
+        const scrollAmount = carousel.clientWidth; // Scroll one viewport width
         const targetScrollLeft = carousel.scrollLeft + (direction * scrollAmount);
 
         carousel.scrollTo({
@@ -745,11 +764,14 @@
       if (produto.mercadoPagoId) {
         const mpButtonContainer = document.getElementById(`mp-button-${produto.id}`);
         if (mpButtonContainer) {
-          const script = document.createElement('script');
-          script.src = "https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js";
-          script.setAttribute('data-preference-id', produto.mercadoPagoId);
-          script.setAttribute('data-source', 'button');
-          setTimeout(() => { mpButtonContainer.appendChild(script); }, 0);
+          // Delay MP script injection slightly
+          setTimeout(() => {
+              const script = document.createElement('script');
+              script.src = "https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js";
+              script.setAttribute('data-preference-id', produto.mercadoPagoId);
+              script.setAttribute('data-source', 'button');
+              mpButtonContainer.appendChild(script);
+          }, 100); // Delay helps sometimes with dynamic rendering
         } else {
           console.warn(`MP Button container not found: mp-button-${produto.id}`);
         }
@@ -831,13 +853,15 @@
           }
         }
 
+         // Initial adjustment and arrow update after content is added
+         adjustCarouselLayout();
+
+         // Add scroll listeners after content is loaded
          document.querySelectorAll('.carousel').forEach(carousel => {
              const debouncedUpdateArrows = debounce(() => updateArrowVisibility(carousel), 150);
              carousel.addEventListener('scroll', debouncedUpdateArrows);
          });
 
-         adjustCarouselLayout();
-         document.querySelectorAll('.carousel').forEach(updateArrowVisibility);
 
       } catch (erro) {
         console.error('Erro fatal ao inicializar:', erro);
@@ -861,8 +885,10 @@
           if (currentSection) currentSection.classList.remove('active');
           targetSection.classList.add('active');
 
-          // Scroll to top when changing sections if needed
-          // window.scrollTo({ top: 0, behavior: 'smooth' });
+          // Scroll to top when changing sections only if not already near the top
+          if (window.scrollY > 100) {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
         }
       });
     });
@@ -906,10 +932,16 @@
         const gap = 15;
         document.querySelectorAll('.carousel').forEach(carousel => {
             const items = carousel.querySelectorAll('.carousel-item');
-            if (!items.length) return;
+            if (!items.length) {
+                updateArrowVisibility(carousel); // Hide arrows if no items
+                return;
+            };
 
             const itemsToShow = getItemsPerView();
             const availableWidth = carousel.clientWidth;
+            // Ensure availableWidth is positive before calculation
+            if (availableWidth <= 0) return;
+
             const totalGapWidth = Math.max(0, (itemsToShow - 1)) * gap;
             let itemWidth = (availableWidth > totalGapWidth) ? (availableWidth - totalGapWidth) / itemsToShow : availableWidth;
             itemWidth = Math.max(100, itemWidth); // Minimum item width
@@ -927,7 +959,6 @@
     const debouncedResize = debounce(() => {
         console.log("Window resized, adjusting...");
         adjustCarouselLayout();
-        // No need to call updateArrowVisibility separately here, adjustCarouselLayout handles it.
     }, 250);
     window.addEventListener('resize', debouncedResize);
 
@@ -935,7 +966,10 @@
     document.addEventListener('DOMContentLoaded', () => {
         inicializarConteudo();
         // Adjust layout once on load after content might affect widths
-        setTimeout(adjustCarouselLayout, 100); // Slight delay ensures content is rendered
+        // Use requestAnimationFrame for potentially smoother initial layout
+        requestAnimationFrame(() => {
+            setTimeout(adjustCarouselLayout, 50); // Small delay still helps ensure rendering
+        });
     });
 
   </script>
