@@ -386,10 +386,15 @@ main {
   margin-bottom: 0.25rem;
 }
 .product-timer {
-  font-size: 0.65rem; /* Diminuído o tamanho do timer */
+  /* MODIFICADO: Tamanho da fonte reduzido e nowrap adicionado */
+  font-size: 0.6rem;
+  white-space: nowrap;
+  overflow: hidden; /* Opcional: esconde se ainda assim não couber */
+  text-overflow: ellipsis; /* Opcional: adiciona '...' se não couber */
   color: var(--pink-600);
   margin-top: 0.25rem;
   font-weight: 500;
+  line-height: 1.2; /* Ajuste de linha se necessário */
 }
 .buy-button, .mercado-pago-button {
   width: 100%;
@@ -536,6 +541,8 @@ main {
     .fixed-top-bar-icons { gap: 0.4rem; } /* Adjust gap */
     .fixed-top-bar-icon { width: 1.8rem; height: 1.8rem; } /* Slightly smaller */
     .fixed-top-bar-button { font-size: 0.65rem; padding: 0.4rem 0.6rem; margin-left: 0.2rem;}
+    /* Ajustar tamanho da fonte do timer para telas pequenas */
+    .product-timer, .product-modal-timer { font-size: 0.55rem; }
 }
 
 @media (max-width: 360px) {
@@ -549,6 +556,8 @@ main {
     .buy-button, .mercado-pago-button { min-height: calc(0.4rem * 2 + 1.5 * 0.7rem); }
     .carousel-prev { left: -0.25rem; }
     .carousel-next { right: -0.25rem; }
+    /* Ajustar tamanho da fonte do timer para telas MUITO pequenas */
+    .product-timer, .product-modal-timer { font-size: 0.5rem; }
 }
 /* Style for empty carousel message */
 .carousel-empty {
@@ -645,10 +654,15 @@ main {
 }
 
 .product-modal-timer {
-  font-size: 0.75rem; /* Diminuído o tamanho do timer */
+  /* MODIFICADO: Tamanho da fonte reduzido e nowrap adicionado */
+  font-size: 0.7rem;
+  white-space: nowrap;
+  overflow: hidden; /* Opcional */
+  text-overflow: ellipsis; /* Opcional */
   color: var(--pink-600);
   margin-bottom: 1rem;
   font-weight: 500;
+  line-height: 1.2; /* Ajuste de linha se necessário */
 }
 
 .product-modal-warning {
@@ -669,8 +683,10 @@ main {
 }
 
 .product-modal-seal img {
-  width: 1.5rem;
-  height: 1.5rem;
+  /* MODIFICADO: Tamanho aumentado */
+  width: 2.5rem;
+  height: auto; /* Manter proporção */
+  max-height: 2.5rem; /* Limitar altura se necessário */
 }
 
 .product-modal-seal-text {
@@ -944,7 +960,6 @@ function adjustCarouselLayout() {
     });
 }
 
-// CORREÇÃO: Removida a função garantirReproducaoVideo() - desnecessária com atributos corretos
 
 // Função para atualizar visibilidade das setas baseado no scroll
 function updateArrowVisibility(carouselElement) {
@@ -1027,86 +1042,106 @@ async function carregarDados(url) {
 }
 
 
-// Gerar tempos fixos para cada produto (usando hash do ID)
+// MODIFICADO: Gerar tempos fixos variando entre 6h e 3 dias (em segundos)
 function gerarTempoFixo(produtoId) {
   // Função simples de hash para gerar um número consistente baseado no ID
   let hash = 0;
   for (let i = 0; i < produtoId.length; i++) {
-    hash = ((hash << 5) - hash) + produtoId.charCodeAt(i);
+    const char = produtoId.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
     hash |= 0; // Converter para inteiro de 32 bits
   }
 
-  // Usar o hash para gerar um tempo entre 1 e 24 horas
+  // Usar o hash para gerar um tempo pseudo-aleatório consistente
   const seed = Math.abs(hash);
-  const horas = 1 + (seed % 24); // Entre 1 e 24 horas
-  const minutos = seed % 60; // Entre 0 e 59 minutos
-  const segundos = (seed * 13) % 60; // Entre 0 e 59 segundos
 
-  return horas * 3600 + minutos * 60 + segundos;
+  // Definir limites em segundos (6 horas a 72 horas/3 dias)
+  const minSegundos = 6 * 3600;
+  const maxSegundos = 72 * 3600;
+
+  // Calcular um valor dentro do range usando o seed
+  const range = maxSegundos - minSegundos;
+  // Usar módulo e adicionar o mínimo para ficar dentro do range desejado
+  const segundosAleatorios = minSegundos + (seed % range);
+
+  console.log(`Tempo gerado para ${produtoId}: ${segundosAleatorios} segundos`);
+  return segundosAleatorios;
 }
 
-// Função para formatar o tempo em formato legível
-function formatarTempo(segundos) {
-  const horas = Math.floor(segundos / 3600);
-  const minutos = Math.floor((segundos % 3600) / 60);
-  const segs = segundos % 60;
+// MODIFICADO: Função para formatar o tempo incluindo dias
+function formatarTempo(segundosTotais) {
+  if (segundosTotais < 0) segundosTotais = 0; // Garante que não seja negativo
 
-  return `${horas.toString().padStart(2, '0')}h ${minutos.toString().padStart(2, '0')}m ${segs.toString().padStart(2, '0')}s`;
+  const segundosPorDia = 86400;
+  const segundosPorHora = 3600;
+  const segundosPorMinuto = 60;
+
+  const dias = Math.floor(segundosTotais / segundosPorDia);
+  const segundosRestantesHoras = segundosTotais % segundosPorDia;
+
+  const horas = Math.floor(segundosRestantesHoras / segundosPorHora);
+  const segundosRestantesMinutos = segundosRestantesHoras % segundosPorHora;
+
+  const minutos = Math.floor(segundosRestantesMinutos / segundosPorMinuto);
+  const segundos = segundosRestantesMinutos % segundosPorMinuto;
+
+  let resultado = '';
+  if (dias > 0) {
+    resultado += `${dias}d `;
+  }
+  // Sempre mostrar horas, minutos e segundos, mesmo que 0, com padding
+  resultado += `${horas.toString().padStart(2, '0')}h `;
+  resultado += `${minutos.toString().padStart(2, '0')}m `;
+  resultado += `${segundos.toString().padStart(2, '0')}s`;
+
+  // Se quiser omitir dias/horas/etc se forem 0, a lógica seria mais complexa.
+  // Exemplo: return `${dias > 0 ? dias + 'd ' : ''}${horas > 0 || dias > 0 ? horas.toString().padStart(2, '0') + 'h ' : ''}${minutos.toString().padStart(2, '0')}m ${segundos.toString().padStart(2, '0')}s`;
+
+  return resultado.trim(); // Remove espaços extras no final
 }
+
 
 // Armazenar os timers ativos para poder limpar quando necessário
 const timersAtivos = {};
 
 // Função para iniciar o timer de um produto
 function iniciarTimer(produtoId, elementoId) {
-  // Limpar timer anterior se existir
+  // Limpar timer anterior se existir para este elemento
   if (timersAtivos[elementoId]) {
     clearInterval(timersAtivos[elementoId]);
+    delete timersAtivos[elementoId]; // Remove a referência antiga
   }
 
   // Gerar tempo fixo baseado no ID do produto
-  const tempoTotal = gerarTempoFixo(produtoId);
+  const tempoTotalFixo = gerarTempoFixo(produtoId); // Esta é a duração *total* da oferta
 
-  // Calcular tempo restante baseado no tempo atual
-  const agora = Math.floor(Date.now() / 1000);
-  const cicloCompleto = tempoTotal;
-  const tempoPassado = agora % cicloCompleto;
-  let tempoRestante = cicloCompleto - tempoPassado;
-
-  // Atualizar o elemento com o tempo formatado
   const elemento = document.getElementById(elementoId);
-  if (elemento) {
-    elemento.textContent = `Oferta válida por: ${formatarTempo(tempoRestante)}`;
-  } else {
+  if (!elemento) {
       console.warn(`Elemento do timer não encontrado: ${elementoId}`);
       return; // Sai se o elemento não existe
   }
 
-  // Decrementar o tempo a cada segundo
-  const timer = setInterval(() => {
-    tempoRestante--;
+  // Função para atualizar o display do timer
+  function atualizarDisplay() {
+      const agora = Math.floor(Date.now() / 1000); // Tempo atual em segundos
+      // O ciclo recomeça a cada 'tempoTotalFixo' segundos
+      const tempoPassadoNoCiclo = agora % tempoTotalFixo;
+      let tempoRestante = tempoTotalFixo - tempoPassadoNoCiclo;
 
-    // Atualizar o elemento com o novo tempo
-    if (elemento) {
-      elemento.textContent = `Oferta válida por: ${formatarTempo(tempoRestante)}`;
-    } else {
-        // Se o elemento sumir, limpar o timer
-        clearInterval(timer);
-        delete timersAtivos[elementoId];
-        return;
-    }
+      // Atualizar o elemento com o tempo formatado
+      elemento.textContent = `Oferta termina em: ${formatarTempo(tempoRestante)}`;
+  }
 
-    // Se o tempo acabou, reiniciar
-    if (tempoRestante <= 0) {
-      tempoRestante = cicloCompleto;
-    }
-  }, 1000);
+  // Atualizar imediatamente
+  atualizarDisplay();
 
-  // Armazenar o timer para poder limpar depois
-  timersAtivos[elementoId] = timer;
+  // Iniciar intervalo para decrementar a cada segundo
+  const timerId = setInterval(atualizarDisplay, 1000);
 
-  return timer;
+  // Armazenar o ID do novo timer para poder limpar depois
+  timersAtivos[elementoId] = timerId;
 }
+
 
 // Função para abrir o modal do produto
 function openProductModal(produto) {
@@ -1139,7 +1174,7 @@ function openProductModal(produto) {
   // Iniciar o timer no modal
   const produtoId = produto.id || `produto-modal-${Date.now()}`; // ID fallback
   const timerElementId = 'modal-product-timer';
-  iniciarTimer(produtoId, timerElementId);
+  iniciarTimer(produtoId, timerElementId); // Timer reiniciará aqui
 
   // Configurar botão de compra
   modalBuyButton.onclick = function() {
@@ -1161,15 +1196,17 @@ function openProductModal(produto) {
 // Função para fechar o modal do produto
 function closeProductModal() {
   const modal = document.getElementById('product-modal');
+  if (!modal) return;
   modal.style.display = 'none';
   document.body.style.overflow = ''; // Restaurar rolagem do body
 
   // Limpar o timer do modal para evitar que continue rodando em background
-  if (timersAtivos['modal-product-timer']) {
-    clearInterval(timersAtivos['modal-product-timer']);
-    delete timersAtivos['modal-product-timer'];
+  const modalTimerElementId = 'modal-product-timer';
+  if (timersAtivos[modalTimerElementId]) {
+    clearInterval(timersAtivos[modalTimerElementId]);
+    delete timersAtivos[modalTimerElementId];
     // Limpa o texto do timer no modal para a próxima abertura
-    const modalTimerElement = document.getElementById('modal-product-timer');
+    const modalTimerElement = document.getElementById(modalTimerElementId);
     if (modalTimerElement) modalTimerElement.textContent = '';
   }
 }
@@ -1474,16 +1511,11 @@ document.addEventListener('click', function(e) {
 document.addEventListener('DOMContentLoaded', function() {
   console.log("DOM carregado. Iniciando aplicação...");
 
-  // CORREÇÃO: Removida a tentativa explícita de carregar/reproduzir vídeo aqui.
-  // Confiar nos atributos HTML5 <video autoplay muted loop playsinline>.
-  // O navegador deve lidar com isso automaticamente.
-
   // Adiciona listener para erro no vídeo para diagnóstico
   const video = document.getElementById('header-video');
   if (video) {
       video.addEventListener('error', (e) => {
           console.error("Erro ao carregar ou reproduzir o vídeo:", e);
-          // Poderia tentar carregar um poster ou imagem fallback aqui se o vídeo falhar
       });
        video.addEventListener('canplay', () => {
           console.log("Vídeo pronto para reprodução.");
