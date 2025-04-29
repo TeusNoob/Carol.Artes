@@ -205,8 +205,9 @@
     /* Main content */
     main {
       flex: 1;
-      /* padding-bottom: 5rem; */ /* Let footer margin handle spacing */
       overflow-y: auto; /* Scroll vertical principal */
+      /* CORREÇÃO: Adiciona padding-bottom para garantir espaço para o nav fixo */
+      padding-bottom: 7rem;
     }
     .section {
       padding: 1.5rem 1rem;
@@ -445,14 +446,17 @@
         position: fixed;
         bottom: 1rem;
         left: 50%;
-        transform: translateX(-50%);
+        /* CORREÇÃO: Adicionado translateZ(0) para tentar forçar aceleração por hardware */
+        transform: translateX(-50%) translateZ(0);
         background-color: rgba(255, 255, 255, 0.95);
         border-radius: 2rem;
         display: flex;
         height: 3.5rem;
-        z-index: 999; /* Increased z-index */
+        z-index: 999;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         padding: 0 1rem;
+        /* Adicionado para garantir que não seja afetado por transformações pai */
+        will-change: transform;
      }
      .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; color: var(--gray-500); text-decoration: none; position: relative; padding: 0 1.5rem; transition: color 0.3s ease; }
      .nav-item.active { color: var(--pink-500); }
@@ -473,7 +477,8 @@
         padding: 1.5rem 1rem;
         text-align: center;
         position: relative;
-        margin-bottom: 6rem; /* Increased margin-bottom */
+        /* CORREÇÃO: Removido margin-bottom, espaço agora é dado pelo padding do main */
+        /* margin-bottom: 6rem; */
     }
     .footer-content { background-color: rgba(255, 255, 255, 0.95); border-radius: 1rem; padding: 1rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); position: relative; }
     .footer-decoration { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--pink-400); }
@@ -969,7 +974,6 @@
     }, 250);
 
 
-    // --- CORREÇÃO APLICADA AQUI ---
     // Inicializar após o DOM estar pronto, esperando o conteúdo ser carregado
     document.addEventListener('DOMContentLoaded', async () => {
         console.log("DOM carregado. Iniciando conteúdo...");
@@ -993,7 +997,6 @@
 
         console.log("Inicialização completa.");
     });
-    // --- FIM DA CORREÇÃO ---
 
   </script>
 </body>
