@@ -153,12 +153,6 @@ body {
     padding: 0 1rem; /* Match header padding */
     margin: 0.5rem 0 0.5rem; /* Reduced top margin to decrease space */
     box-sizing: border-box;
-    position: relative;
-    background-color: var(--pink-50);
-    border-radius: 1.5rem;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border: 2px solid var(--pink-200);
 }
 .header-video {
     display: block;
@@ -166,6 +160,8 @@ body {
     max-width: 100%;
     height: auto;
     border-radius: 1.5rem; /* Rounded corners like header */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--pink-200); /* Match header border */
     background-color: var(--pink-50); /* Fallback background */
 }
 /* --- End Header Video --- */
@@ -721,247 +717,296 @@ main {
 <body>
 
 <div class="fixed-top-bar">
-  <span class="fixed-top-bar-title">Carol Artes</span>
-  <div class="fixed-top-bar-icons">
-    <a href="https://instagram.com/carolartes.oficial" class="fixed-top-bar-icon" target="_blank" rel="noopener noreferrer" title="Instagram">
-      <img src="templates/layout/instagram.png" alt="Instagram">
-    </a>
-    <a href="https://tiktok.com/@carolartes.ofical" class="fixed-top-bar-icon" target="_blank" rel="noopener noreferrer" title="TikTok">
-         <img src="templates/layout/tiktok.png" alt="TikTok">
-    </a>
-    <a href="https://api.whatsapp.com/send/?phone=5531987426591" class="fixed-top-bar-icon" target="_blank" rel="noopener noreferrer" title="WhatsApp">
-      <img src="templates/layout/whatsapp.png" alt="WhatsApp">
-    </a>
-  </div>
-  <a href="https://shopee.com.br/CarollShop" class="fixed-top-bar-button" target="_blank" rel="noopener noreferrer">
-    Ir para a loja na Shopee
+<span class="fixed-top-bar-title">Carol Artes</span>
+<div class="fixed-top-bar-icons">
+  <a href="https://instagram.com/carolartes.oficial" class="fixed-top-bar-icon" target="_blank" rel="noopener noreferrer" title="Instagram">
+    <img src="templates/layout/instagram.png" alt="Instagram">
   </a>
+  <a href="https://tiktok.com/@carolartes.ofical" class="fixed-top-bar-icon" target="_blank" rel="noopener noreferrer" title="TikTok">
+       <img src="templates/layout/tiktok.png" alt="TikTok">
+  </a>
+  <a href="https://api.whatsapp.com/send/?phone=5531987426591" class="fixed-top-bar-icon" target="_blank" rel="noopener noreferrer" title="WhatsApp">
+    <img src="templates/layout/whatsapp.png" alt="WhatsApp">
+  </a>
+</div>
+<a href="https://shopee.com.br/CarollShop" class="fixed-top-bar-button" target="_blank" rel="noopener noreferrer">
+  Ir para a loja na Shopee
+</a>
 </div>
 
 <main>
-  <div id="inicio" class="content-section active">
+<div id="inicio" class="content-section active">
 
-    <div class="header-video-container">
-         <!-- Usando imagem estática em vez de vídeo para garantir que algo seja exibido -->
-         <img src="templates/layout/placeholder.png" alt="Carol Artes" class="header-video">
-     </div>
-
-    <section class="section">
-      <h2 class="section-title">Moldes Digitais</h2>
-      <div class="carousel-container">
-        <div class="carousel hide-scrollbar" id="moldes-carousel">
-          <!-- Conteúdo será inserido via JavaScript -->
-        </div>
-        <div class="carousel-nav carousel-prev hidden" onclick="moveCarousel('moldes-carousel', -1)">
-          <img src="templates/layout/arrow-left.png" alt="Anterior" class="carousel-nav-icon">
-        </div>
-        <div class="carousel-nav carousel-next hidden" onclick="moveCarousel('moldes-carousel', 1)">
-          <img src="templates/layout/arrow-right.png" alt="Próximo" class="carousel-nav-icon">
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2 class="section-title">Conheça nossos personalizados prontos</h2>
-      <div class="carousel-container">
-         <div class="carousel hide-scrollbar" id="personalizados-carousel">
-           <!-- Conteúdo será inserido via JavaScript -->
-         </div>
-         <div class="carousel-nav carousel-prev hidden" onclick="moveCarousel('personalizados-carousel', -1)">
-           <img src="templates/layout/arrow-left.png" alt="Anterior" class="carousel-nav-icon">
-         </div>
-         <div class="carousel-nav carousel-next hidden" onclick="moveCarousel('personalizados-carousel', 1)">
-           <img src="templates/layout/arrow-right.png" alt="Próximo" class="carousel-nav-icon">
-         </div>
-       </div>
-       <a href="https://shopee.com.br/CarollShop" class="see-more-button" target="_blank" rel="noopener noreferrer">Ver mais na Shopee</a>
-     </section>
-
-    <section class="section">
-      <h2 class="section-title">Produtos de vendedores parceiros</h2>
-      <div class="carousel-container">
-        <div class="carousel hide-scrollbar" id="parceiros-carousel">
-          <!-- Conteúdo será inserido via JavaScript -->
-        </div>
-        <div class="carousel-nav carousel-prev hidden" onclick="moveCarousel('parceiros-carousel', -1)">
-          <img src="templates/layout/arrow-left.png" alt="Anterior" class="carousel-nav-icon">
-        </div>
-        <div class="carousel-nav carousel-next hidden" onclick="moveCarousel('parceiros-carousel', 1)">
-          <img src="templates/layout/arrow-right.png" alt="Próximo" class="carousel-nav-icon">
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <div id="cupons" class="content-section">
-     <header class="header">
-       <h1 class="site-title">Cupons de Desconto</h1>
-       <p class="site-subtitle">Economize em suas compras</p>
-     </header>
-     <section class="section" style="border-bottom: none; margin-top: 0.5rem;">
-       <div id="cupons-container">
-         <!-- Conteúdo será inserido via JavaScript -->
-       </div>
-     </section>
+  <div class="header-video-container">
+       <!-- Corrigido: adicionado preload="auto" e controlado via JavaScript -->
+       <video id="header-video" class="header-video" autoplay loop muted playsinline preload="auto" poster="templates/layout/placeholder.png">
+           <source src="templates/video/carolartesloop.mp4" type="video/mp4">
+           Seu navegador não suporta a tag de vídeo.
+       </video>
    </div>
 
-  <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-decoration">✨</div>
-      <img src="templates/layout/pencil.png" alt="Lápis" class="stationery-icon icon-1">
-      <img src="templates/layout/ruler.png" alt="Régua" class="stationery-icon icon-2">
-      <img src="templates/layout/paperclip.png" alt="Clipe" class="stationery-icon icon-3">
-      <img src="templates/layout/eraser.png" alt="Borracha" class="stationery-icon icon-4">
+  <section class="section">
+    <h2 class="section-title">Moldes Digitais</h2>
+    <div class="carousel-container">
+      <div class="carousel hide-scrollbar" id="moldes-carousel">
+        <div class="loading-spinner"><div class="spinner"></div></div>
+        </div>
+      <div class="carousel-nav carousel-prev hidden" onclick="moveCarousel('moldes-carousel', -1)">
+        <img src="templates/layout/arrow-left.png" alt="Anterior" class="carousel-nav-icon">
+      </div>
+      <div class="carousel-nav carousel-next hidden" onclick="moveCarousel('moldes-carousel', 1)">
+        <img src="templates/layout/arrow-right.png" alt="Próximo" class="carousel-nav-icon">
+      </div>
     </div>
-  </footer>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Conheça nossos personalizados prontos</h2>
+    <div class="carousel-container">
+       <div class="carousel hide-scrollbar" id="personalizados-carousel">
+         <div class="loading-spinner"><div class="spinner"></div></div>
+         </div>
+       <div class="carousel-nav carousel-prev hidden" onclick="moveCarousel('personalizados-carousel', -1)">
+         <img src="templates/layout/arrow-left.png" alt="Anterior" class="carousel-nav-icon">
+       </div>
+       <div class="carousel-nav carousel-next hidden" onclick="moveCarousel('personalizados-carousel', 1)">
+         <img src="templates/layout/arrow-right.png" alt="Próximo" class="carousel-nav-icon">
+       </div>
+     </div>
+     <a href="https://shopee.com.br/CarollShop" class="see-more-button" target="_blank" rel="noopener noreferrer">Ver mais na Shopee</a>
+   </section>
+
+  <section class="section">
+    <h2 class="section-title">Produtos de vendedores parceiros</h2>
+    <div class="carousel-container">
+      <div class="carousel hide-scrollbar" id="parceiros-carousel">
+        <div class="loading-spinner"><div class="spinner"></div></div>
+         </div>
+      <div class="carousel-nav carousel-prev hidden" onclick="moveCarousel('parceiros-carousel', -1)">
+        <img src="templates/layout/arrow-left.png" alt="Anterior" class="carousel-nav-icon">
+      </div>
+      <div class="carousel-nav carousel-next hidden" onclick="moveCarousel('parceiros-carousel', 1)">
+        <img src="templates/layout/arrow-right.png" alt="Próximo" class="carousel-nav-icon">
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="cupons" class="content-section">
+   <header class="header">
+     <h1 class="site-title">Cupons de Desconto</h1>
+     <p class="site-subtitle">Economize em suas compras</p>
+   </header>
+   <section class="section" style="border-bottom: none; margin-top: 0.5rem;"> <div id="cupons-container">
+       <div class="loading-spinner"><div class="spinner"></div></div>
+       </div>
+   </section>
+ </div>
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-decoration">✨</div>
+    <img src="templates/layout/pencil.png" alt="Lápis" class="stationery-icon icon-1">
+    <img src="templates/layout/ruler.png" alt="Régua" class="stationery-icon icon-2">
+    <img src="templates/layout/paperclip.png" alt="Clipe" class="stationery-icon icon-3">
+    <img src="templates/layout/eraser.png" alt="Borracha" class="stationery-icon icon-4">
+  </div>
+</footer>
 </main>
 
 <nav class="bottom-nav">
-  <a href="#" class="nav-item active" data-section="inicio">
-    <img src="templates/layout/home.png" alt="Início" class="nav-icon">
-    <span class="nav-text">Início</span>
-  </a>
-  <a href="#" class="nav-item" data-section="cupons">
-    <img src="templates/layout/coupon.png" alt="Cupons" class="nav-icon">
-    <span class="nav-text">Cupons</span>
-  </a>
+<a href="#" class="nav-item active" data-section="inicio">
+  <img src="templates/layout/home.png" alt="Início" class="nav-icon">
+  <span class="nav-text">Início</span>
+</a>
+<a href="#" class="nav-item" data-section="cupons">
+  <img src="templates/layout/coupon.png" alt="Cupons" class="nav-icon">
+  <span class="nav-text">Cupons</span>
+</a>
 </nav>
 
 <!-- Modal para exibir produto -->
 <div id="product-modal" class="product-modal">
-  <div class="product-modal-content">
-    <div class="product-modal-close" onclick="closeProductModal()">✕</div>
-    <img id="modal-product-image" src="/placeholder.svg" alt="Produto" class="product-modal-image">
-    <div class="product-modal-info">
-      <h3 id="modal-product-title" class="product-modal-title"></h3>
-      <div class="product-modal-price-container">
-        <span id="modal-product-old-price" class="product-modal-old-price"></span>
-        <span id="modal-product-price" class="product-modal-price"></span>
-      </div>
-      <div id="modal-product-timer" class="product-modal-timer"></div>
-      <div class="product-modal-warning">
-        ⚠️ Após o pagamento, você será redirecionado automaticamente para o link de download. Caso isso não aconteça, o link será enviado para o seu e-mail.
-      </div>
-      <div class="product-modal-seal">
-        <img src="templates/layout/mercadopago.png" alt="Mercado Pago" onerror="this.src='https://www.mercadopago.com/org-img/MP3/API/logos/mp-logo.svg'; this.onerror=null;">
-        <span class="product-modal-seal-text">Compra segura com Mercado Pago</span>
-      </div>
-      <div class="product-modal-buttons">
-        <div class="product-modal-button product-modal-button-back" onclick="closeProductModal()">Voltar</div>
-        <div id="modal-product-buy" class="product-modal-button product-modal-button-buy">Comprar</div>
-      </div>
+<div class="product-modal-content">
+  <div class="product-modal-close" onclick="closeProductModal()">✕</div>
+  <img id="modal-product-image" src="/placeholder.svg" alt="Produto" class="product-modal-image">
+  <div class="product-modal-info">
+    <h3 id="modal-product-title" class="product-modal-title"></h3>
+    <div class="product-modal-price-container">
+      <span id="modal-product-old-price" class="product-modal-old-price"></span>
+      <span id="modal-product-price" class="product-modal-price"></span>
+    </div>
+    <div id="modal-product-timer" class="product-modal-timer"></div>
+    <div class="product-modal-warning">
+      ⚠️ Após o pagamento, você será redirecionado automaticamente para o link de download. Caso isso não aconteça, o link será enviado para o seu e-mail.
+    </div>
+    <div class="product-modal-seal">
+      <img src="templates/layout/mercadopago.png" alt="Mercado Pago" onerror="this.src='https://www.mercadopago.com/org-img/MP3/API/logos/mp-logo.svg'; this.onerror=null;">
+      <span class="product-modal-seal-text">Compra segura com Mercado Pago</span>
+    </div>
+    <div class="product-modal-buttons">
+      <div class="product-modal-button product-modal-button-back" onclick="closeProductModal()">Voltar</div>
+      <div id="modal-product-buy" class="product-modal-button product-modal-button-buy">Comprar</div>
     </div>
   </div>
 </div>
+</div>
 
 <script>
-  // Dados de exemplo para uso direto (sem depender de arquivos JSON)
-  const dadosExemplo = {
-    moldes: [
-      {
-        id: "molde1",
-        titulo: "Molde Digital Teste 1",
-        preco: 19.90,
-        imagem: "templates/layout/placeholder.png",
-        alt: "Molde Digital",
-        mercadoPagoId: "123456789"
-      },
-      {
-        id: "molde2",
-        titulo: "Molde Digital Teste 2",
-        preco: 24.90,
-        imagem: "templates/layout/placeholder.png",
-        alt: "Molde Digital",
-        mercadoPagoId: "987654321"
-      },
-      {
-        id: "molde3",
-        titulo: "Molde Digital Teste 3",
-        preco: 29.90,
-        imagem: "templates/layout/placeholder.png",
-        alt: "Molde Digital",
-        mercadoPagoId: "456789123"
-      }
-    ],
-    personalizados: [
-      {
-        id: "pers1",
-        titulo: "Personalizado Teste 1",
-        preco: 39.90,
-        imagem: "templates/layout/placeholder.png",
-        alt: "Personalizado",
-        link: "https://shopee.com.br/CarollShop"
-      },
-      {
-        id: "pers2",
-        titulo: "Personalizado Teste 2",
-        preco: 49.90,
-        imagem: "templates/layout/placeholder.png",
-        alt: "Personalizado",
-        link: "https://shopee.com.br/CarollShop"
-      },
-      {
-        id: "pers3",
-        titulo: "Personalizado Teste 3",
-        preco: 59.90,
-        imagem: "templates/layout/placeholder.png",
-        alt: "Personalizado",
-        link: "https://shopee.com.br/CarollShop"
-      }
-    ],
-    parceiros: [
-      {
-        id: "parc1",
-        titulo: "Produto Parceiro Teste 1",
-        preco: 29.90,
-        imagem: "templates/layout/placeholder.png",
-        alt: "Produto Parceiro",
-        link: "https://shopee.com.br"
-      },
-      {
-        id: "parc2",
-        titulo: "Produto Parceiro Teste 2",
-        preco: 34.90,
-        imagem: "templates/layout/placeholder.png",
-        alt: "Produto Parceiro",
-        link: "https://shopee.com.br"
-      },
-      {
-        id: "parc3",
-        titulo: "Produto Parceiro Teste 3",
-        preco: 39.90,
-        imagem: "templates/layout/placeholder.png",
-        alt: "Produto Parceiro",
-        link: "https://shopee.com.br"
-      }
-    ],
-    cupons: [
-      {
-        titulo: "Cupom de Desconto",
-        desconto: "10% OFF",
-        descricao: "Válido para todos os produtos",
-        codigo: "CAROL10",
-        validade: "Válido até 31/12/2023"
-      },
-      {
-        titulo: "Cupom Especial",
-        desconto: "15% OFF",
-        descricao: "Válido para moldes digitais",
-        codigo: "MOLDE15",
-        validade: "Válido até 31/12/2023"
-      }
-    ]
-  };
+// Dados de exemplo para teste (caso os arquivos JSON não sejam carregados)
+const dadosExemplo = {
+  moldes: [
+    {
+      id: "molde1",
+      titulo: "Molde Digital Teste 1",
+      preco: 19.90,
+      imagem: "templates/layout/placeholder.png",
+      alt: "Molde Digital",
+      mercadoPagoId: "123456789"
+    },
+    {
+      id: "molde2",
+      titulo: "Molde Digital Teste 2",
+      preco: 24.90,
+      imagem: "templates/layout/placeholder.png",
+      alt: "Molde Digital",
+      mercadoPagoId: "987654321"
+    }
+  ],
+  personalizados: [
+    {
+      id: "pers1",
+      titulo: "Personalizado Teste 1",
+      preco: 39.90,
+      imagem: "templates/layout/placeholder.png",
+      alt: "Personalizado",
+      link: "https://shopee.com.br/CarollShop"
+    },
+    {
+      id: "pers2",
+      titulo: "Personalizado Teste 2",
+      preco: 49.90,
+      imagem: "templates/layout/placeholder.png",
+      alt: "Personalizado",
+      link: "https://shopee.com.br/CarollShop"
+    }
+  ],
+  parceiros: [
+    {
+      id: "parc1",
+      titulo: "Produto Parceiro Teste 1",
+      preco: 29.90,
+      imagem: "templates/layout/placeholder.png",
+      alt: "Produto Parceiro",
+      link: "https://shopee.com.br"
+    },
+    {
+      id: "parc2",
+      titulo: "Produto Parceiro Teste 2",
+      preco: 34.90,
+      imagem: "templates/layout/placeholder.png",
+      alt: "Produto Parceiro",
+      link: "https://shopee.com.br"
+    }
+  ],
+  cupons: [
+    {
+      titulo: "Cupom de Desconto",
+      desconto: "10% OFF",
+      descricao: "Válido para todos os produtos",
+      codigo: "CAROL10",
+      validade: "Válido até 31/12/2023"
+    }
+  ]
+};
 
-  // Função auxiliar para obter quantos itens estão visíveis
-  function getItemsPerView() {
+// Debounce function
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Função auxiliar para obter quantos itens estão visíveis
+function getItemsPerView() {
+    // Ajustar para telas menores primeiro
     if (window.innerWidth <= 480) return 2;
     if (window.innerWidth <= 768) return 3;
-    return 4;
-  }
+    return 4; // Para telas maiores
+}
 
-  // Função para atualizar visibilidade das setas baseado no scroll
-  function updateArrowVisibility(carouselElement) {
+// Função para ajustar layout dos carrosséis
+function adjustCarouselLayout() {
+    const gap = 15;
+    document.querySelectorAll('.carousel').forEach(carousel => {
+        if (!carousel || carousel.offsetParent === null) return;
+
+        const items = carousel.querySelectorAll('.carousel-item');
+        if (!items.length) {
+            updateArrowVisibility(carousel);
+            return;
+        }
+
+        const itemsToShow = getItemsPerView();
+        const availableWidth = carousel.clientWidth;
+
+        if (availableWidth <= 0) return;
+
+        const totalGapWidth = Math.max(0, (itemsToShow - 1)) * gap;
+        let itemWidth = (availableWidth > totalGapWidth) ? (availableWidth - totalGapWidth) / itemsToShow : availableWidth;
+        itemWidth = Math.max(100, Math.floor(itemWidth));
+
+        items.forEach(item => {
+            item.style.width = `${itemWidth}px`;
+        });
+
+        updateArrowVisibility(carousel);
+    });
+}
+
+// Função para garantir que o vídeo seja reproduzido
+function garantirReproducaoVideo() {
+    const video = document.getElementById('header-video');
+    if (video) {
+        console.log("Tentando reproduzir o vídeo...");
+        
+        // Verificar se o vídeo está pronto para reprodução
+        if (video.readyState >= 2) {
+            video.play().catch(err => {
+                console.error("Erro ao reproduzir vídeo:", err);
+            });
+        } else {
+            // Se o vídeo não estiver pronto, adicionar evento para tentar novamente quando estiver
+            video.addEventListener('loadeddata', function() {
+                video.play().catch(err => {
+                    console.error("Erro ao reproduzir vídeo após carregamento:", err);
+                });
+            });
+        }
+        
+        // Verificar se o vídeo está sendo reproduzido após um curto período
+        setTimeout(() => {
+            if (video.paused) {
+                console.log("Vídeo ainda pausado, tentando novamente...");
+                video.play().catch(err => {
+                    console.error("Erro ao reproduzir vídeo após timeout:", err);
+                });
+            } else {
+                console.log("Vídeo está sendo reproduzido com sucesso!");
+            }
+        }, 1000);
+    }
+}
+
+// Função para atualizar visibilidade das setas baseado no scroll
+function updateArrowVisibility(carouselElement) {
+    // Adicionar verificação se carouselElement existe
     if (!carouselElement) return;
     const container = carouselElement.closest('.carousel-container');
     if (!container) return;
@@ -972,349 +1017,559 @@ main {
     const scrollLeft = carouselElement.scrollLeft;
     const scrollWidth = carouselElement.scrollWidth;
     const clientWidth = carouselElement.clientWidth;
-    const tolerance = 5;
+    const tolerance = 5; // Pequena tolerância para evitar problemas de arredondamento
 
+    // Garante que clientWidth seja maior que 0 antes de verificar scrollWidth
     const isScrollable = clientWidth > 0 && scrollWidth > clientWidth + tolerance;
 
     prevButton.classList.toggle('hidden', !isScrollable || scrollLeft <= tolerance);
     nextButton.classList.toggle('hidden', !isScrollable || scrollLeft >= (scrollWidth - clientWidth - tolerance));
-  }
+}
 
-  // Função para mover o carrossel usando scroll
-  function moveCarousel(carouselId, direction) {
+// Função para mover o carrossel usando scroll
+function moveCarousel(carouselId, direction) {
     const carousel = document.getElementById(carouselId);
-    if (!carousel) return;
-    
+    if (!carousel) {
+        console.error(`Carousel element not found: ${carouselId}`);
+        return;
+    }
     const items = carousel.querySelectorAll('.carousel-item');
-    if (!items.length) return;
+    if (!items.length) return; // Sai se não houver itens
 
+    // Usa clientWidth que é a largura visível real
     const scrollAmount = carousel.clientWidth;
     const targetScrollLeft = carousel.scrollLeft + (direction * scrollAmount);
 
     carousel.scrollTo({
-      left: targetScrollLeft,
-      behavior: 'smooth'
+        left: targetScrollLeft,
+        behavior: 'smooth'
     });
-  }
+}
 
-  // Armazenar os timers de cada produto
-  const produtoTimers = {};
-
-  // Função para gerar um temporizador aleatório
-  function gerarTempoAleatorio() {
-    const horas = Math.floor(Math.random() * 24) + 1;
-    const minutos = Math.floor(Math.random() * 60);
-    const segundos = Math.floor(Math.random() * 60);
-    return horas * 3600 + minutos * 60 + segundos;
-  }
-
-  // Função para formatar o tempo em formato legível
-  function formatarTempo(segundos) {
-    const horas = Math.floor(segundos / 3600);
-    const minutos = Math.floor((segundos % 3600) / 60);
-    const segs = segundos % 60;
-    return `${horas.toString().padStart(2, '0')}h ${minutos.toString().padStart(2, '0')}m ${segs.toString().padStart(2, '0')}s`;
-  }
-
-  // Função para iniciar o timer de um produto
-  function iniciarTimer(produtoId, elementoId) {
-    if (!produtoTimers[produtoId]) {
-      produtoTimers[produtoId] = gerarTempoAleatorio();
+// Função para carregar dados JSON
+async function carregarDados(url) {
+  try {
+    console.log(`Tentando carregar dados de: ${url}`);
+    
+    // Adicionar timestamp para evitar cache
+    const urlComTimestamp = `${url}?t=${new Date().getTime()}`;
+    const resposta = await fetch(urlComTimestamp, {
+      method: 'GET',
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
+    });
+    
+    if (!resposta.ok) {
+      console.error(`Erro HTTP ${resposta.status} ao carregar ${url}`);
+      
+      // Tentar com caminho absoluto
+      const baseUrl = window.location.href.split('/').slice(0, -1).join('/');
+      const absoluteUrl = `${baseUrl}/${url}?t=${new Date().getTime()}`;
+      console.log(`Tentando caminho absoluto: ${absoluteUrl}`);
+      
+      const respostaAbsoluta = await fetch(absoluteUrl, {
+        method: 'GET',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      });
+      
+      if (!respostaAbsoluta.ok) {
+        console.error(`Erro HTTP ${respostaAbsoluta.status} ao carregar caminho absoluto ${absoluteUrl}`);
+        return null; // Retorna null em caso de erro para usar dados de exemplo
+      }
+      
+      const contentType = respostaAbsoluta.headers.get("content-type");
+      if (contentType && contentType.indexOf("application/json") !== -1) {
+        const dados = await respostaAbsoluta.json();
+        console.log(`Dados carregados com sucesso de ${absoluteUrl}:`, dados);
+        return dados;
+      } else {
+        console.error(`Resposta de ${absoluteUrl} não é JSON. Tipo: ${contentType}`);
+        return null;
+      }
     }
     
-    const elemento = document.getElementById(elementoId);
+    const contentType = resposta.headers.get("content-type");
+    // Verifica se a resposta é JSON antes de tentar parsear
+    if (contentType && contentType.indexOf("application/json") !== -1) {
+      const dados = await resposta.json();
+      console.log(`Dados carregados com sucesso de ${url}:`, dados);
+      return dados;
+    } else {
+      console.error(`Resposta de ${url} não é JSON. Tipo: ${contentType}`);
+      
+      // Tentar ler como texto e parsear manualmente
+      const texto = await resposta.text();
+      console.log(`Conteúdo recebido como texto: ${texto.substring(0, 100)}...`);
+      
+      try {
+        const dadosParseados = JSON.parse(texto);
+        console.log(`Texto parseado com sucesso como JSON:`, dadosParseados);
+        return dadosParseados;
+      } catch (erroParser) {
+        console.error(`Erro ao parsear texto como JSON:`, erroParser);
+        return null;
+      }
+    }
+  } catch (erro) {
+    console.error(`Falha na rede ou ao processar ${url}:`, erro);
+    return null; // Retorna null em caso de falha para usar dados de exemplo
+  }
+}
+
+// Armazenar os timers de cada produto
+const produtoTimers = {};
+
+// Função para gerar um temporizador aleatório
+function gerarTempoAleatorio() {
+  // Gerar entre 1 e 24 horas
+  const horas = Math.floor(Math.random() * 24) + 1;
+  const minutos = Math.floor(Math.random() * 60);
+  const segundos = Math.floor(Math.random() * 60);
+  
+  // Retornar o tempo total em segundos
+  return horas * 3600 + minutos * 60 + segundos;
+}
+
+// Função para formatar o tempo em formato legível
+function formatarTempo(segundos) {
+  const horas = Math.floor(segundos / 3600);
+  const minutos = Math.floor((segundos % 3600) / 60);
+  const segs = segundos % 60;
+  
+  return `${horas.toString().padStart(2, '0')}h ${minutos.toString().padStart(2, '0')}m ${segs.toString().padStart(2, '0')}s`;
+}
+
+// Função para iniciar o timer de um produto
+function iniciarTimer(produtoId, elementoId) {
+  // Gerar tempo aleatório se não existir
+  if (!produtoTimers[produtoId]) {
+    produtoTimers[produtoId] = gerarTempoAleatorio();
+  }
+  
+  // Atualizar o elemento com o tempo formatado
+  const elemento = document.getElementById(elementoId);
+  if (elemento) {
+    elemento.textContent = `Oferta válida por: ${formatarTempo(produtoTimers[produtoId])}`;
+  }
+  
+  // Decrementar o tempo a cada segundo
+  const timer = setInterval(() => {
+    produtoTimers[produtoId]--;
+    
+    // Atualizar o elemento com o novo tempo
     if (elemento) {
       elemento.textContent = `Oferta válida por: ${formatarTempo(produtoTimers[produtoId])}`;
     }
     
-    const timer = setInterval(() => {
-      produtoTimers[produtoId]--;
-      
-      if (elemento) {
-        elemento.textContent = `Oferta válida por: ${formatarTempo(produtoTimers[produtoId])}`;
-      }
-      
-      if (produtoTimers[produtoId] <= 0) {
-        produtoTimers[produtoId] = gerarTempoAleatorio();
-      }
-    }, 1000);
-    
-    return timer;
-  }
-
-  // Função para abrir o modal do produto
-  function openProductModal(produto) {
-    const modal = document.getElementById('product-modal');
-    const modalImage = document.getElementById('modal-product-image');
-    const modalTitle = document.getElementById('modal-product-title');
-    const modalOldPrice = document.getElementById('modal-product-old-price');
-    const modalPrice = document.getElementById('modal-product-price');
-    const modalTimer = document.getElementById('modal-product-timer');
-    const modalBuyButton = document.getElementById('modal-product-buy');
-
-    modalImage.src = produto.imagem || 'templates/layout/placeholder.png';
-    modalImage.alt = produto.alt || 'Produto';
-    modalTitle.textContent = produto.titulo || 'Produto sem título';
-    
-    const preco = produto.preco || 0;
-    const precoAntigo = preco * 2;
-    
-    modalOldPrice.textContent = `R$ ${precoAntigo.toFixed(2).replace('.', ',')}`;
-    modalPrice.textContent = `R$ ${preco.toFixed(2).replace('.', ',')}`;
-    
-    const produtoId = produto.id || 'produto-sem-id';
-    const timerElementId = 'modal-product-timer';
-    iniciarTimer(produtoId, timerElementId);
-
-    modalBuyButton.onclick = function() {
-      if (produto.mercadoPagoId) {
-        window.open(`https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=${produto.mercadoPagoId}`, '_blank');
-      } else {
-        alert('Este produto não está disponível para compra no momento.');
-      }
-      closeProductModal();
-    };
-
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-  }
-
-  // Função para fechar o modal do produto
-  function closeProductModal() {
-    const modal = document.getElementById('product-modal');
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
-  }
-
-  // Fechar modal ao clicar fora do conteúdo
-  window.onclick = function(event) {
-    const modal = document.getElementById('product-modal');
-    if (event.target === modal) {
-      closeProductModal();
+    // Se o tempo acabou, reiniciar
+    if (produtoTimers[produtoId] <= 0) {
+      produtoTimers[produtoId] = gerarTempoAleatorio();
     }
+  }, 1000);
+  
+  return timer;
+}
+
+// Função para abrir o modal do produto
+function openProductModal(produto) {
+  const modal = document.getElementById('product-modal');
+  const modalImage = document.getElementById('modal-product-image');
+  const modalTitle = document.getElementById('modal-product-title');
+  const modalOldPrice = document.getElementById('modal-product-old-price');
+  const modalPrice = document.getElementById('modal-product-price');
+  const modalTimer = document.getElementById('modal-product-timer');
+  const modalBuyButton = document.getElementById('modal-product-buy');
+
+  // Preencher dados do produto no modal
+  modalImage.src = produto.imagem || 'templates/layout/placeholder.png';
+  modalImage.alt = produto.alt || 'Produto';
+  modalTitle.textContent = produto.titulo || 'Produto sem título';
+  
+  const preco = produto.preco || 0;
+  const precoAntigo = preco * 2; // Preço 100% maior
+  
+  modalOldPrice.textContent = `R$ ${precoAntigo.toFixed(2).replace('.', ',')}`;
+  modalPrice.textContent = `R$ ${preco.toFixed(2).replace('.', ',')}`;
+  
+  // Iniciar o timer no modal
+  const produtoId = produto.id || 'produto-sem-id';
+  const timerElementId = 'modal-product-timer';
+  iniciarTimer(produtoId, timerElementId);
+
+  // Configurar botão de compra
+  modalBuyButton.onclick = function() {
+    if (produto.mercadoPagoId) {
+      window.open(`https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=${produto.mercadoPagoId}`, '_blank');
+    } else {
+      alert('Este produto não está disponível para compra no momento.');
+    }
+    closeProductModal();
   };
 
-  // Função para renderizar produtos com botão do Mercado Pago
-  function renderizarProdutoMercadoPago(produto, container) {
-    if (!produto || !produto.id) return;
-    
-    const produtoId = produto.id;
-    const preco = produto.preco || 0;
-    const precoAntigo = preco * 2;
-    const timerElementId = `timer-${produtoId}`;
+  // Exibir modal
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden'; // Impedir rolagem do body
+}
 
-    const produtoHTML = `
-      <div class="carousel-item">
-        <div class="product-card">
-          <div class="product-img-container">
-            <img src="${produto.imagem || 'templates/layout/placeholder.png'}" alt="${produto.alt || 'Produto'}" class="product-img" loading="lazy" onerror="this.onerror=null;this.src='templates/layout/placeholder.png';">
+// Função para fechar o modal do produto
+function closeProductModal() {
+  const modal = document.getElementById('product-modal');
+  modal.style.display = 'none';
+  document.body.style.overflow = ''; // Restaurar rolagem do body
+}
+
+// Fechar modal ao clicar fora do conteúdo
+window.onclick = function(event) {
+  const modal = document.getElementById('product-modal');
+  if (event.target === modal) {
+    closeProductModal();
+  }
+};
+
+// Função para renderizar produtos com botão do Mercado Pago
+function renderizarProdutoMercadoPago(produto, container) {
+  // Validação básica do produto
+  if (!produto || !produto.id) {
+     console.warn("Tentativa de renderizar produto inválido (Mercado Pago):", produto);
+     return;
+  }
+  const produtoId = produto.id || Math.random().toString(36).substring(7); // Gera ID se faltar
+  const preco = produto.preco || 0;
+  const precoAntigo = preco * 2; // Preço 100% maior
+  const timerElementId = `timer-${produtoId}`;
+
+  const produtoHTML = `
+    <div class="carousel-item">
+      <div class="product-card">
+        <div class="product-img-container">
+          <img src="${produto.imagem || 'templates/layout/placeholder.png'}" alt="${produto.alt || 'Produto'}" class="product-img" loading="lazy" onerror="this.onerror=null;this.src='templates/layout/placeholder.png';">
+        </div>
+        <div class="product-info">
+          <div>
+            <h3 class="product-title">${produto.titulo || 'Produto s/ título'}</h3>
+            <div class="product-old-price">R$ ${precoAntigo.toFixed(2).replace('.', ',')}</div>
+            <div class="product-price">R$ ${preco.toFixed(2).replace('.', ',')}</div>
+            <div id="${timerElementId}" class="product-timer">Carregando...</div>
           </div>
-          <div class="product-info">
-            <div>
-              <h3 class="product-title">${produto.titulo || 'Produto s/ título'}</h3>
-              <div class="product-old-price">R$ ${precoAntigo.toFixed(2).replace('.', ',')}</div>
-              <div class="product-price">R$ ${preco.toFixed(2).replace('.', ',')}</div>
-              <div id="${timerElementId}" class="product-timer">Carregando...</div>
-            </div>
-            <div class="mercado-pago-button" id="mp-button-${produtoId}">
-              ${produto.mercadoPagoId ? `<button class="buy-button" onclick='openProductModal(${JSON.stringify(produto).replace(/"/g, '&quot;')})'>Comprar</button>` : '<button class="buy-button" disabled>Indisponível</button>'}
-            </div>
+          <div class="mercado-pago-button" id="mp-button-${produtoId}">
+            ${produto.mercadoPagoId ? `<button class="buy-button" onclick='openProductModal(${JSON.stringify(produto).replace(/"/g, '&quot;')})'>Comprar</button>` : '<button class="buy-button" disabled>Indisponível</button>'}
           </div>
         </div>
       </div>
-    `;
-    container.insertAdjacentHTML('beforeend', produtoHTML);
-    
-    setTimeout(() => {
-      iniciarTimer(produtoId, timerElementId);
-    }, 100);
-  }
+    </div>
+  `;
+  container.insertAdjacentHTML('beforeend', produtoHTML);
+  
+  // Iniciar o timer para este produto
+  setTimeout(() => {
+    iniciarTimer(produtoId, timerElementId);
+  }, 100);
+}
 
-  // Função para renderizar produtos com botão de compra normal
-  function renderizarProduto(produto, container) {
-    if (!produto) return;
-    
-    const produtoId = produto.id || Math.random().toString(36).substring(7);
-    const preco = produto.preco || 0;
-    const precoAntigo = preco * 2;
-    
-    const produtoHTML = `
-      <div class="carousel-item">
-        <div class="product-card">
-          <div class="product-img-container">
-            <img src="${produto.imagem || 'templates/layout/placeholder.png'}" alt="${produto.alt || 'Produto'}" class="product-img" loading="lazy" onerror="this.onerror=null;this.src='templates/layout/placeholder.png';">
+// Função para renderizar produtos com botão de compra normal
+function renderizarProduto(produto, container) {
+   // Validação básica
+   if (!produto) {
+       console.warn("Tentativa de renderizar produto inválido:", produto);
+       return;
+   }
+  const produtoId = produto.id || Math.random().toString(36).substring(7);
+  const preco = produto.preco || 0;
+  const precoAntigo = preco * 2; // Preço 100% maior
+  
+  const produtoHTML = `
+    <div class="carousel-item">
+      <div class="product-card">
+        <div class="product-img-container">
+          <img src="${produto.imagem || 'templates/layout/placeholder.png'}" alt="${produto.alt || 'Produto'}" class="product-img" loading="lazy" onerror="this.onerror=null;this.src='templates/layout/placeholder.png';">
+        </div>
+        <div class="product-info">
+          <div>
+            <h3 class="product-title">${produto.titulo || 'Produto s/ título'}</h3>
+            <div class="product-old-price">R$ ${precoAntigo.toFixed(2).replace('.', ',')}</div>
+            <div class="product-price">R$ ${preco.toFixed(2).replace('.', ',')}</div>
           </div>
-          <div class="product-info">
-            <div>
-              <h3 class="product-title">${produto.titulo || 'Produto s/ título'}</h3>
-              <div class="product-old-price">R$ ${precoAntigo.toFixed(2).replace('.', ',')}</div>
-              <div class="product-price">R$ ${preco.toFixed(2).replace('.', ',')}</div>
-            </div>
-            <button class="buy-button" data-link="${produto.link || '#'}" ${!(produto.link && produto.link !== '#') ? 'disabled' : ''}>
-              ${(produto.link && produto.link !== '#') ? 'Comprar' : 'Indisponível'}
-            </button>
-          </div>
+          <button class="buy-button" data-link="${produto.link || '#'}" ${!(produto.link && produto.link !== '#') ? 'disabled' : ''}>
+            ${(produto.link && produto.link !== '#') ? 'Comprar' : 'Indisponível'}
+          </button>
         </div>
       </div>
-    `;
-    container.insertAdjacentHTML('beforeend', produtoHTML);
-  }
+    </div>
+  `;
+  container.insertAdjacentHTML('beforeend', produtoHTML);
+}
 
-  // Função para renderizar cupons
-  function renderizarCupom(cupom, container) {
-    if (!cupom) return;
-    
-    const cupomHTML = `
-      <div class="coupon-card">
-        <div class="coupon-discount">${cupom.desconto || ''}</div>
-        <h3 class="coupon-title">${cupom.titulo || 'Cupom'}</h3>
-        <p class="coupon-description">${cupom.descricao || ''}</p>
-        <div class="coupon-code">
-          <div class="code-display">${cupom.codigo || '------'}</div>
-          <button class="copy-button" data-code="${cupom.codigo || ''}" ${!cupom.codigo ? 'disabled' : ''}>Copiar</button>
-        </div>
-        <button class="shopee-button" onclick="window.open('https://shopee.com.br/CarollShop', '_blank', 'noopener,noreferrer')">Usar na Shopee</button>
-        <p class="coupon-validity">${cupom.validade || ''}</p>
-      </div>
-    `;
-    container.insertAdjacentHTML('beforeend', cupomHTML);
-  }
-
-  // Função para ajustar layout dos carrosséis
-  function adjustCarouselLayout() {
-    const gap = 15;
-    document.querySelectorAll('.carousel').forEach(carousel => {
-      if (!carousel || carousel.offsetParent === null) return;
-
-      const items = carousel.querySelectorAll('.carousel-item');
-      if (!items.length) {
-        updateArrowVisibility(carousel);
+// Função para renderizar cupons
+function renderizarCupom(cupom, container) {
+   // Validação básica
+   if (!cupom) {
+        console.warn("Tentativa de renderizar cupom inválido:", cupom);
         return;
-      }
+   }
+  const cupomHTML = `
+    <div class="coupon-card">
+      <div class="coupon-discount">${cupom.desconto || ''}</div>
+      <h3 class="coupon-title">${cupom.titulo || 'Cupom'}</h3>
+      <p class="coupon-description">${cupom.descricao || ''}</p>
+      <div class="coupon-code">
+        <div class="code-display">${cupom.codigo || '------'}</div>
+        <button class="copy-button" data-code="${cupom.codigo || ''}" ${!cupom.codigo ? 'disabled' : ''}>Copiar</button>
+      </div>
+      <button class="shopee-button" onclick="window.open('https://shopee.com.br/CarollShop', '_blank', 'noopener,noreferrer')">Usar na Shopee</button>
+      <p class="coupon-validity">${cupom.validade || ''}</p>
+    </div>
+  `;
+  container.insertAdjacentHTML('beforeend', cupomHTML);
+}
 
-      const itemsToShow = getItemsPerView();
-      const availableWidth = carousel.clientWidth;
-
-      if (availableWidth <= 0) return;
-
-      const totalGapWidth = Math.max(0, (itemsToShow - 1)) * gap;
-      let itemWidth = (availableWidth > totalGapWidth) ? (availableWidth - totalGapWidth) / itemsToShow : availableWidth;
-      itemWidth = Math.max(100, Math.floor(itemWidth));
-
-      items.forEach(item => {
-        item.style.width = `${itemWidth}px`;
+// Função para inicializar conteúdo
+async function inicializarConteudo() {
+  console.log("Iniciando carregamento de dados...");
+  
+  // Forçar carregamento do vídeo
+  const video = document.getElementById('header-video');
+  if (video) {
+    console.log("Forçando carregamento do vídeo...");
+    
+    // Tentar carregar o vídeo com caminho absoluto
+    const videoSource = video.querySelector('source');
+    if (videoSource) {
+      const currentSrc = videoSource.getAttribute('src');
+      const baseUrl = window.location.href.split('/').slice(0, -1).join('/');
+      const absolutePath = `${baseUrl}/${currentSrc}`;
+      
+      console.log("Caminho atual do vídeo:", currentSrc);
+      console.log("Tentando caminho absoluto:", absolutePath);
+      
+      videoSource.setAttribute('src', absolutePath);
+      video.load();
+      
+      video.addEventListener('loadeddata', () => {
+        console.log("Vídeo carregado com sucesso!");
+        video.play().catch(err => console.error("Erro ao reproduzir vídeo:", err));
       });
-
-      updateArrowVisibility(carousel);
-    });
+      
+      video.addEventListener('error', (e) => {
+        console.error("Erro ao carregar vídeo:", e);
+      });
+    }
   }
 
-  // Função para inicializar conteúdo usando dados de exemplo
-  function inicializarConteudoComDadosExemplo() {
-    // Renderizar moldes
-    const moldesCarousel = document.getElementById('moldes-carousel');
-    if (moldesCarousel) {
-      moldesCarousel.innerHTML = '';
-      dadosExemplo.moldes.forEach(molde => renderizarProdutoMercadoPago(molde, moldesCarousel));
+  try {
+    // Fetch all data concurrently
+    const [moldesData, personalizadosData, parceirosData, cuponsData] = await Promise.all([
+      carregarDados('dados/moldes/moldes.json'),
+      carregarDados('dados/personalizados/personalizados.json'),
+      carregarDados('dados/parceiros/parceiros.json'),
+      carregarDados('dados/cupons/cupons.json')
+    ]);
+
+    // Usar dados de exemplo se os dados reais não forem carregados
+    const moldes = moldesData || dadosExemplo;
+    const personalizados = personalizadosData || dadosExemplo.personalizados;
+    const parceiros = parceirosData || dadosExemplo.parceiros;
+    const cupons = cuponsData || dadosExemplo.cupons;
+
+    console.log("Dados carregados. Renderizando...");
+
+    const renderMap = {
+      'moldes-carousel': { data: moldes, renderer: renderizarProdutoMercadoPago, emptyMsg: 'Nenhum molde digital encontrado.' },
+      'personalizados-carousel': { data: personalizados, renderer: renderizarProduto, emptyMsg: 'Nenhum personalizado encontrado.' },
+      'parceiros-carousel': { data: parceiros, renderer: renderizarProduto, emptyMsg: 'Nenhum produto de parceiro encontrado.' },
+      'cupons-container': { data: cupons, renderer: renderizarCupom, emptyMsg: 'Nenhum cupom disponível.' }
+    };
+
+    // Render content synchronously after data is fetched
+    for (const id in renderMap) {
+      const container = document.getElementById(id);
+      const { data, renderer, emptyMsg } = renderMap[id];
+      if (container) {
+        container.innerHTML = ''; // Clear spinner first
+        if (data && data.length > 0) { // Check if data is valid array
+          data.forEach(item => renderer(item, container));
+        } else {
+          console.log(`Container ${id} sem dados ou dados inválidos.`);
+          const emptyClass = id.includes('carousel') ? 'carousel-empty' : 'coupon-empty';
+           container.innerHTML = `<p class="${emptyClass}">${emptyMsg}</p>`;
+        }
+      } else {
+         console.warn(`Container element not found: ${id}`);
+      }
     }
 
-    // Renderizar personalizados
-    const personalizadosCarousel = document.getElementById('personalizados-carousel');
-    if (personalizadosCarousel) {
-      personalizadosCarousel.innerHTML = '';
-      dadosExemplo.personalizados.forEach(personalizado => renderizarProduto(personalizado, personalizadosCarousel));
-    }
-
-    // Renderizar parceiros
-    const parceirosCarousel = document.getElementById('parceiros-carousel');
-    if (parceirosCarousel) {
-      parceirosCarousel.innerHTML = '';
-      dadosExemplo.parceiros.forEach(parceiro => renderizarProduto(parceiro, parceirosCarousel));
-    }
-
-    // Renderizar cupons
-    const cuponsContainer = document.getElementById('cupons-container');
-    if (cuponsContainer) {
-      cuponsContainer.innerHTML = '';
-      dadosExemplo.cupons.forEach(cupom => renderizarCupom(cupom, cuponsContainer));
-    }
-
+    console.log("Conteúdo renderizado (inicialmente).");
+    
     // Ajustar layout após renderização
     setTimeout(adjustCarouselLayout, 100);
+
+  } catch (erro) {
+    console.error('Erro durante a inicialização do conteúdo:', erro);
+    document.querySelectorAll('.loading-spinner, #cupons-container').forEach(c => {
+         if (c.querySelector('.spinner')) {
+             c.innerHTML = '<p style="color: red; text-align: center;">Erro ao carregar conteúdo.</p>';
+         } else if (c.id === 'cupons-container' && !c.hasChildNodes()) {
+              c.innerHTML = '<p style="color: red; text-align: center;">Erro ao carregar cupons.</p>';
+         }
+     });
+  } finally {
+     console.log("Função inicializarConteudo concluída.");
+  }
+}
+
+// Navegação entre seções
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', function(e) {
+    e.preventDefault();
+    const currentActive = document.querySelector('.nav-item.active');
+    const currentSection = document.querySelector('.content-section.active');
+    const targetSectionId = this.getAttribute('data-section');
+    const targetSection = document.getElementById(targetSectionId);
+
+    if (currentActive !== this && targetSection) {
+      if (currentActive) currentActive.classList.remove('active');
+      this.classList.add('active');
+      if (currentSection) currentSection.classList.remove('active');
+      targetSection.classList.add('active');
+
+      if (window.scrollY > 100) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+  });
+});
+
+// Listener de clique para botões (delegação)
+document.addEventListener('click', function(e) {
+  // Botões 'Comprar' normais
+  const buyButton = e.target.closest('.buy-button:not([disabled])');
+  if (buyButton && buyButton.hasAttribute('data-link')) {
+    const link = buyButton.getAttribute('data-link');
+    if (link && link !== '#') {
+      window.open(link, '_blank', 'noopener,noreferrer');
+    }
   }
 
-  // Navegação entre seções
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', function(e) {
-      e.preventDefault();
-      const currentActive = document.querySelector('.nav-item.active');
-      const currentSection = document.querySelector('.content-section.active');
-      const targetSectionId = this.getAttribute('data-section');
-      const targetSection = document.getElementById(targetSectionId);
+  // Botões 'Copiar' cupom
+  const copyButton = e.target.closest('.copy-button:not([disabled])');
+  if (copyButton) {
+    const code = copyButton.getAttribute('data-code');
+    if (code) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(code).then(() => {
+          const originalText = copyButton.textContent;
+          copyButton.textContent = 'Copiado!';
+          copyButton.disabled = true;
+          setTimeout(() => { copyButton.textContent = originalText; copyButton.disabled = false; }, 2000);
 
-      if (currentActive !== this && targetSection) {
-        if (currentActive) currentActive.classList.remove('active');
-        this.classList.add('active');
-        if (currentSection) currentSection.classList.remove('active');
-        targetSection.classList.add('active');
+          const couponCard = copyButton.closest('.coupon-card');
+          if (couponCard) {
+            const shopeeButton = couponCard.querySelector('.shopee-button');
+            if (shopeeButton) shopeeButton.style.display = 'block';
+          }
+        }).catch(err => {
+          console.error('Erro ao copiar:', err);
+          alert('Falha ao copiar. Verifique as permissões ou tente manualmente.');
+        });
+      } else {
+        alert('Função de copiar não suportada neste navegador.');
+      }
+    }
+  }
+});
 
-        if (window.scrollY > 100) {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+// Inicializar conteúdo quando o DOM estiver pronto
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("DOM carregado, inicializando...");
+  
+  // Forçar carregamento do vídeo
+  const video = document.getElementById('header-video');
+  if (video) {
+    console.log("Vídeo encontrado, tentando carregar...");
+    
+    // Tentar carregar o vídeo novamente
+    video.load();
+    
+    // Adicionar listeners para depuração
+    video.addEventListener('loadeddata', () => console.log("Vídeo carregado com sucesso!"));
+    video.addEventListener('error', (e) => console.error("Erro ao carregar vídeo:", e));
+    
+    // Verificar se o vídeo está sendo carregado
+    setTimeout(() => {
+      if (video.readyState === 0) {
+        console.warn("Vídeo não está carregando. Tentando novamente...");
+        // Tentar com um caminho absoluto
+        const videoSource = video.querySelector('source');
+        if (videoSource) {
+          const currentSrc = videoSource.getAttribute('src');
+          console.log("Caminho atual do vídeo:", currentSrc);
+          
+          // Tentar com um caminho absoluto se necessário
+          if (currentSrc.startsWith('templates/')) {
+            const absolutePath = window.location.href.split('/').slice(0, -1).join('/') + '/' + currentSrc;
+            console.log("Tentando caminho absoluto:", absolutePath);
+            videoSource.setAttribute('src', absolutePath);
+            video.load();
+            video.play().catch(err => console.error("Erro ao reproduzir vídeo:", err));
+          }
         }
       }
+    }, 1000);
+  }
+  
+  // Inicializar conteúdo
+  inicializarConteudo().then(() => {
+    console.log("Conteúdo inicializado, ajustando layout...");
+    adjustCarouselLayout();
+    
+    // Adicionar listeners para scroll nos carrosséis
+    document.querySelectorAll('.carousel').forEach(carousel => {
+      carousel.addEventListener('scroll', debounce(() => updateArrowVisibility(carousel), 100));
     });
   });
+});
 
-  // Listener de clique para botões (delegação)
-  document.addEventListener('click', function(e) {
-    // Botões 'Comprar' normais
-    const buyButton = e.target.closest('.buy-button:not([disabled])');
-    if (buyButton && buyButton.hasAttribute('data-link')) {
-      const link = buyButton.getAttribute('data-link');
-      if (link && link !== '#') {
-        window.open(link, '_blank', 'noopener,noreferrer');
+// Verificar se os dados JSON estão sendo carregados corretamente
+async function testarAcessoJSON() {
+  console.log("Testando acesso aos arquivos JSON...");
+  
+  const arquivos = [
+    'dados/moldes/moldes.json',
+    'dados/personalizados/personalizados.json',
+    'dados/parceiros/parceiros.json',
+    'dados/cupons/cupons.json'
+  ];
+  
+  for (const arquivo of arquivos) {
+    try {
+      const resposta = await fetch(arquivo);
+      console.log(`Teste de acesso a ${arquivo}: ${resposta.ok ? 'OK' : 'Falhou'} (Status: ${resposta.status})`);
+      
+      if (!resposta.ok) {
+        // Tentar com caminho absoluto
+        const absolutePath = window.location.href.split('/').slice(0, -1).join('/') + '/' + arquivo;
+        console.log(`Tentando caminho absoluto para ${arquivo}: ${absolutePath}`);
+        
+        const respostaAbsoluta = await fetch(absolutePath);
+        console.log(`Teste de acesso absoluto a ${arquivo}: ${respostaAbsoluta.ok ? 'OK' : 'Falhou'} (Status: ${respostaAbsoluta.status})`);
       }
+    } catch (erro) {
+      console.error(`Erro ao acessar ${arquivo}:`, erro);
     }
+  }
+}
 
-    // Botões 'Copiar' cupom
-    const copyButton = e.target.closest('.copy-button:not([disabled])');
-    if (copyButton) {
-      const code = copyButton.getAttribute('data-code');
-      if (code) {
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(code).then(() => {
-            const originalText = copyButton.textContent;
-            copyButton.textContent = 'Copiado!';
-            copyButton.disabled = true;
-            setTimeout(() => { copyButton.textContent = originalText; copyButton.disabled = false; }, 2000);
+// Executar teste de acesso aos arquivos JSON
+testarAcessoJSON();
 
-            const couponCard = copyButton.closest('.coupon-card');
-            if (couponCard) {
-              const shopeeButton = couponCard.querySelector('.shopee-button');
-              if (shopeeButton) shopeeButton.style.display = 'block';
-            }
-          }).catch(err => {
-            console.error('Erro ao copiar:', err);
-            alert('Falha ao copiar. Verifique as permissões ou tente manualmente.');
-          });
-        } else {
-          alert('Função de copiar não suportada neste navegador.');
-        }
-      }
-    }
-  });
-
-  // Inicializar conteúdo quando o DOM estiver pronto
-  document.addEventListener('DOMContentLoaded', function() {
-    // Usar dados de exemplo diretamente
-    inicializarConteudoComDadosExemplo();
-    
-    // Ajustar layout ao redimensionar a janela
-    window.addEventListener('resize', adjustCarouselLayout);
-  });
-
-  // Inicializar imediatamente para garantir que o conteúdo seja exibido
-  inicializarConteudoComDadosExemplo();
+// Ajustar layout ao redimensionar a janela
+window.addEventListener('resize', debounce(adjustCarouselLayout, 200));
 </script>
 </body>
 </html>
