@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "titulo": "Pack com 55 Moldes",
+    "preco": 9.99,
+    "imagem": "templates/produto/molde1.jpg",
+    "alt": "Pack de Moldes Essencial",
+    "mercadoPagoId": "1039323113-84ec7164-5053-4b63-ab40-236e0625d67c"
+  },
+  {
+    "id": 2,
+    "titulo": "Molde Buquê",
+    "preco": 4.99,
+    "imagem": "templates/produto/molde2.jpg",
+    "alt": "Molde para Agenda",
+    "mercadoPagoId": "1039323113-4eb74c01-bd23-47f0-86b3-900120ca504d"
+  },
+  {
+    "id": 3,
+    "titulo": "Caixa Envelope",
+    "preco": 4.99,
+    "imagem": "templates/produto/molde3.jpg",
+    "alt": "Planner Semanal",
+    "mercadoPagoId": "1039323113-b0c2e386-a5e7-43d3-b3d3-bd759892b73a"
+  },
+  {
+    "id": 4,
+    "titulo": "Caixa Milk",
+    "preco": 4.99,
+    "imagem": "templates/produto/molde4.jpg",
+    "alt": "Calendário 2024",
+    "mercadoPagoId": "1039323113-0b850a39-460a-4b48-b6f5-4a300a695649"
+  },
+  {
+    "id": 5,
+    "titulo": "Caixa Pirâmide",
+    "preco": 4.99,
+    "imagem": "templates/produto/molde5.jpg",
+    "alt": "Kit Etiquetas",
+    "mercadoPagoId": "1039323113-1a4bd448-33e3-42ed-abfc-dd82eb552799"
+  },
+  {
+    "id": 6,
+    "titulo": "Sacolinha P",
+    "preco": 4.99,
+    "imagem": "templates/produto/molde6.jpg",
+    "alt": "Molde para Convites",
+    "mercadoPagoId": "1039323113-6de3f6d4-9742-46e3-aab6-362bd9a1c332"
+  },
+  {
+    "id": 7,
+    "titulo": "Sacolinha M",
+    "preco": 9.99,
+    "imagem": "templates/produto/molde7.jpg",
+    "alt": "Molde Extra",
+    "mercadoPagoId": "1039323113-489880bd-01fa-48db-ae2b-0a895cfc8eaa"
+  },
+  {
+    "id": 8,
+    "titulo": "Caixa Maletinha",
+    "preco": 4.99,
+    "imagem": "templates/produto/molde8.jpg",
+    "alt": "Molde Personalizado",
+    "mercadoPagoId": "1039323113-f5e07b62-df74-4a30-9068-d28dd843efac"
+  },
+  {
+    "id": 9,
+    "titulo": "Caixa Bala",
+    "preco": 4.99,
+    "imagem": "templates/produto/molde9.jpg",
+    "alt": "Molde Especial",
+    "mercadoPagoId": "1039323113-a2b981de-cd4e-43a5-8017-e251060420f4"
+  }
+]
