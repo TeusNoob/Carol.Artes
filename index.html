@@ -738,8 +738,7 @@ main {
 <div id="inicio" class="content-section active">
 
   <div class="header-video-container">
-       <!-- Corrigido: adicionado preload="auto" e controlado via JavaScript -->
-       <video id="header-video" class="header-video" autoplay loop muted playsinline preload="auto" poster="templates/layout/placeholder.png">
+       <video id="header-video" class="header-video" autoplay loop muted playsinline preload="metadata" poster="templates/layout/placeholder.png">
            <source src="templates/video/carolartesloop.mp4" type="video/mp4">
            Seu navegador não suporta a tag de vídeo.
        </video>
@@ -825,7 +824,6 @@ main {
 </a>
 </nav>
 
-<!-- Modal para exibir produto -->
 <div id="product-modal" class="product-modal">
 <div class="product-modal-content">
   <div class="product-modal-close" onclick="closeProductModal()">✕</div>
@@ -858,64 +856,40 @@ const dadosExemplo = {
   moldes: [
     {
       id: "molde1",
-      titulo: "Molde Digital Teste 1",
+      titulo: "Exemplo: Molde Digital 1",
       preco: 19.90,
       imagem: "templates/layout/placeholder.png",
-      alt: "Molde Digital",
-      mercadoPagoId: "123456789"
+      alt: "Molde Digital Exemplo",
+      mercadoPagoId: null // Exemplo não tem ID de compra real
     },
-    {
-      id: "molde2",
-      titulo: "Molde Digital Teste 2",
-      preco: 24.90,
-      imagem: "templates/layout/placeholder.png",
-      alt: "Molde Digital",
-      mercadoPagoId: "987654321"
-    }
   ],
   personalizados: [
     {
       id: "pers1",
-      titulo: "Personalizado Teste 1",
+      titulo: "Exemplo: Personalizado 1",
       preco: 39.90,
       imagem: "templates/layout/placeholder.png",
-      alt: "Personalizado",
-      link: "https://shopee.com.br/CarollShop"
+      alt: "Personalizado Exemplo",
+      link: "#" // Exemplo não tem link real
     },
-    {
-      id: "pers2",
-      titulo: "Personalizado Teste 2",
-      preco: 49.90,
-      imagem: "templates/layout/placeholder.png",
-      alt: "Personalizado",
-      link: "https://shopee.com.br/CarollShop"
-    }
   ],
   parceiros: [
     {
       id: "parc1",
-      titulo: "Produto Parceiro Teste 1",
+      titulo: "Exemplo: Produto Parceiro 1",
       preco: 29.90,
       imagem: "templates/layout/placeholder.png",
-      alt: "Produto Parceiro",
-      link: "https://shopee.com.br"
+      alt: "Produto Parceiro Exemplo",
+      link: "#" // Exemplo não tem link real
     },
-    {
-      id: "parc2",
-      titulo: "Produto Parceiro Teste 2",
-      preco: 34.90,
-      imagem: "templates/layout/placeholder.png",
-      alt: "Produto Parceiro",
-      link: "https://shopee.com.br"
-    }
   ],
   cupons: [
     {
-      titulo: "Cupom de Desconto",
-      desconto: "10% OFF",
-      descricao: "Válido para todos os produtos",
-      codigo: "CAROL10",
-      validade: "Válido até 31/12/2023"
+      titulo: "Exemplo: Cupom",
+      desconto: "5% OFF",
+      descricao: "Cupom de exemplo",
+      codigo: "EXEMPLO5",
+      validade: "Inválido"
     }
   ]
 };
@@ -970,36 +944,7 @@ function adjustCarouselLayout() {
     });
 }
 
-// Função para garantir que o vídeo seja reproduzido
-function garantirReproducaoVideo() {
-    const video = document.getElementById('header-video');
-    if (video) {
-        console.log("Tentando reproduzir o vídeo...");
-        
-        // Forçar carregamento do vídeo
-        video.load();
-        
-        // Tentar reproduzir o vídeo após o carregamento
-        video.addEventListener('loadeddata', function() {
-            console.log("Vídeo carregado, tentando reproduzir...");
-            video.play().catch(err => {
-                console.error("Erro ao reproduzir vídeo:", err);
-            });
-        });
-        
-        // Verificar se o vídeo está sendo reproduzido após um curto período
-        setTimeout(() => {
-            if (video.paused) {
-                console.log("Vídeo ainda pausado, tentando novamente...");
-                video.play().catch(err => {
-                    console.error("Erro ao reproduzir vídeo após timeout:", err);
-                });
-            } else {
-                console.log("Vídeo está sendo reproduzido com sucesso!");
-            }
-        }, 1000);
-    }
-}
+// CORREÇÃO: Removida a função garantirReproducaoVideo() - desnecessária com atributos corretos
 
 // Função para atualizar visibilidade das setas baseado no scroll
 function updateArrowVisibility(carouselElement) {
@@ -1046,53 +991,41 @@ function moveCarousel(carouselId, direction) {
 // Função para carregar dados JSON
 async function carregarDados(url) {
   try {
-    console.log(`Tentando carregar dados de: ${url}`);
-    
-    // Tentar com caminho relativo primeiro
-    let resposta = await fetch(url, {
-      cache: 'no-store' // Evitar cache
-    });
-    
-    // Se falhar, tentar com caminho absoluto
+    // Tenta buscar o recurso com cache desabilitado para garantir dados frescos
+    const resposta = await fetch(url, { cache: 'no-store' });
+
     if (!resposta.ok) {
-      console.log(`Falha ao carregar com caminho relativo, tentando caminho absoluto...`);
-      const baseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
-      const absoluteUrl = baseUrl + url;
-      
-      console.log(`Tentando caminho absoluto: ${absoluteUrl}`);
-      resposta = await fetch(absoluteUrl, {
-        cache: 'no-store' // Evitar cache
-      });
-      
-      if (!resposta.ok) {
-        console.error(`Erro HTTP ${resposta.status} ao carregar ${absoluteUrl}`);
-        return null;
-      }
+      // Se falhar, loga o erro e retorna null
+      console.error(`Erro HTTP ${resposta.status} ao carregar ${url}. Verifique se o arquivo existe no caminho correto e se o servidor permite o acesso.`);
+      return null;
     }
-    
-    // Processar a resposta
+
+    // Verifica o tipo de conteúdo antes de tentar fazer o parse
     const contentType = resposta.headers.get("content-type");
-    if (contentType && contentType.indexOf("application/json") !== -1) {
+    if (contentType && contentType.includes("application/json")) {
       const dados = await resposta.json();
-      console.log(`Dados carregados com sucesso:`, dados);
+      console.log(`Dados JSON carregados com sucesso de: ${url}`);
       return dados;
     } else {
-      console.log(`Resposta não é JSON, tentando parsear texto...`);
+      // Se não for JSON, loga um aviso e tenta ler como texto (e parsear depois, caso seja um JSON mal configurado no servidor)
+      console.warn(`Resposta de ${url} não é application/json (Content-Type: ${contentType}). Tentando parsear como texto.`);
       const texto = await resposta.text();
       try {
         const dados = JSON.parse(texto);
-        console.log(`Texto parseado com sucesso como JSON:`, dados);
+        console.log(`Texto de ${url} parseado com sucesso como JSON.`);
         return dados;
       } catch (erroParser) {
-        console.error(`Erro ao parsear texto como JSON:`, erroParser);
-        return null;
+        console.error(`Erro ao parsear texto de ${url} como JSON:`, erroParser, "\nTexto recebido:", texto);
+        return null; // Retorna null se o parse falhar
       }
     }
   } catch (erro) {
-    console.error(`Falha na rede ou ao processar ${url}:`, erro);
+    // Captura erros de rede ou outros problemas
+    console.error(`Falha ao buscar ou processar ${url}:`, erro);
     return null;
   }
 }
+
 
 // Gerar tempos fixos para cada produto (usando hash do ID)
 function gerarTempoFixo(produtoId) {
@@ -1102,13 +1035,13 @@ function gerarTempoFixo(produtoId) {
     hash = ((hash << 5) - hash) + produtoId.charCodeAt(i);
     hash |= 0; // Converter para inteiro de 32 bits
   }
-  
+
   // Usar o hash para gerar um tempo entre 1 e 24 horas
   const seed = Math.abs(hash);
   const horas = 1 + (seed % 24); // Entre 1 e 24 horas
   const minutos = seed % 60; // Entre 0 e 59 minutos
   const segundos = (seed * 13) % 60; // Entre 0 e 59 segundos
-  
+
   return horas * 3600 + minutos * 60 + segundos;
 }
 
@@ -1117,7 +1050,7 @@ function formatarTempo(segundos) {
   const horas = Math.floor(segundos / 3600);
   const minutos = Math.floor((segundos % 3600) / 60);
   const segs = segundos % 60;
-  
+
   return `${horas.toString().padStart(2, '0')}h ${minutos.toString().padStart(2, '0')}m ${segs.toString().padStart(2, '0')}s`;
 }
 
@@ -1130,40 +1063,48 @@ function iniciarTimer(produtoId, elementoId) {
   if (timersAtivos[elementoId]) {
     clearInterval(timersAtivos[elementoId]);
   }
-  
+
   // Gerar tempo fixo baseado no ID do produto
   const tempoTotal = gerarTempoFixo(produtoId);
-  
+
   // Calcular tempo restante baseado no tempo atual
   const agora = Math.floor(Date.now() / 1000);
   const cicloCompleto = tempoTotal;
   const tempoPassado = agora % cicloCompleto;
   let tempoRestante = cicloCompleto - tempoPassado;
-  
+
   // Atualizar o elemento com o tempo formatado
   const elemento = document.getElementById(elementoId);
   if (elemento) {
     elemento.textContent = `Oferta válida por: ${formatarTempo(tempoRestante)}`;
+  } else {
+      console.warn(`Elemento do timer não encontrado: ${elementoId}`);
+      return; // Sai se o elemento não existe
   }
-  
+
   // Decrementar o tempo a cada segundo
   const timer = setInterval(() => {
     tempoRestante--;
-    
+
     // Atualizar o elemento com o novo tempo
     if (elemento) {
       elemento.textContent = `Oferta válida por: ${formatarTempo(tempoRestante)}`;
+    } else {
+        // Se o elemento sumir, limpar o timer
+        clearInterval(timer);
+        delete timersAtivos[elementoId];
+        return;
     }
-    
+
     // Se o tempo acabou, reiniciar
     if (tempoRestante <= 0) {
       tempoRestante = cicloCompleto;
     }
   }, 1000);
-  
+
   // Armazenar o timer para poder limpar depois
   timersAtivos[elementoId] = timer;
-  
+
   return timer;
 }
 
@@ -1177,30 +1118,39 @@ function openProductModal(produto) {
   const modalTimer = document.getElementById('modal-product-timer');
   const modalBuyButton = document.getElementById('modal-product-buy');
 
+  // Validação básica do produto recebido
+  if (!produto || typeof produto !== 'object') {
+      console.error("Tentativa de abrir modal com dados de produto inválidos:", produto);
+      alert("Erro ao carregar detalhes do produto.");
+      return;
+  }
+
   // Preencher dados do produto no modal
   modalImage.src = produto.imagem || 'templates/layout/placeholder.png';
   modalImage.alt = produto.alt || 'Produto';
   modalTitle.textContent = produto.titulo || 'Produto sem título';
-  
-  const preco = produto.preco || 0;
+
+  const preco = typeof produto.preco === 'number' ? produto.preco : 0;
   const precoAntigo = preco * 2; // Preço 100% maior
-  
+
   modalOldPrice.textContent = `R$ ${precoAntigo.toFixed(2).replace('.', ',')}`;
   modalPrice.textContent = `R$ ${preco.toFixed(2).replace('.', ',')}`;
-  
+
   // Iniciar o timer no modal
-  const produtoId = produto.id || 'produto-sem-id';
+  const produtoId = produto.id || `produto-modal-${Date.now()}`; // ID fallback
   const timerElementId = 'modal-product-timer';
   iniciarTimer(produtoId, timerElementId);
 
   // Configurar botão de compra
   modalBuyButton.onclick = function() {
     if (produto.mercadoPagoId) {
-      window.open(`https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=${produto.mercadoPagoId}`, '_blank');
+      // Abre link de pagamento do Mercado Pago em nova aba
+      window.open(`https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=${produto.mercadoPagoId}`, '_blank', 'noopener,noreferrer');
     } else {
-      alert('Este produto não está disponível para compra no momento.');
+      // Se não houver ID do Mercado Pago, informa o usuário
+      alert('Este produto não está disponível para compra online no momento.');
     }
-    closeProductModal();
+    closeProductModal(); // Fecha o modal após o clique
   };
 
   // Exibir modal
@@ -1213,13 +1163,17 @@ function closeProductModal() {
   const modal = document.getElementById('product-modal');
   modal.style.display = 'none';
   document.body.style.overflow = ''; // Restaurar rolagem do body
-  
-  // Limpar o timer do modal
+
+  // Limpar o timer do modal para evitar que continue rodando em background
   if (timersAtivos['modal-product-timer']) {
     clearInterval(timersAtivos['modal-product-timer']);
     delete timersAtivos['modal-product-timer'];
+    // Limpa o texto do timer no modal para a próxima abertura
+    const modalTimerElement = document.getElementById('modal-product-timer');
+    if (modalTimerElement) modalTimerElement.textContent = '';
   }
 }
+
 
 // Fechar modal ao clicar fora do conteúdo
 window.onclick = function(event) {
@@ -1240,60 +1194,68 @@ function renderizarProdutoMercadoPago(produto, container) {
   const preco = produto.preco || 0;
   const precoAntigo = preco * 2; // Preço 100% maior
   const timerElementId = `timer-${produtoId}`;
+  const imagemSrc = produto.imagem || 'templates/layout/placeholder.png';
+  const imagemAlt = produto.alt || 'Produto';
+  const titulo = produto.titulo || 'Produto s/ título';
 
   const produtoHTML = `
     <div class="carousel-item">
       <div class="product-card">
         <div class="product-img-container">
-          <img src="${produto.imagem || 'templates/layout/placeholder.png'}" alt="${produto.alt || 'Produto'}" class="product-img" loading="lazy" onerror="this.onerror=null;this.src='templates/layout/placeholder.png';">
+          <img src="${imagemSrc}" alt="${imagemAlt}" class="product-img" loading="lazy" onerror="this.onerror=null;this.src='templates/layout/placeholder.png';">
         </div>
         <div class="product-info">
           <div>
-            <h3 class="product-title">${produto.titulo || 'Produto s/ título'}</h3>
+            <h3 class="product-title">${titulo}</h3>
             <div class="product-old-price">R$ ${precoAntigo.toFixed(2).replace('.', ',')}</div>
             <div class="product-price">R$ ${preco.toFixed(2).replace('.', ',')}</div>
-            <div id="${timerElementId}" class="product-timer">Carregando...</div>
+            <div id="${timerElementId}" class="product-timer">Calculando oferta...</div>
           </div>
           <div class="mercado-pago-button" id="mp-button-${produtoId}">
-            ${produto.mercadoPagoId ? `<button class="buy-button" onclick='openProductModal(${JSON.stringify(produto).replace(/"/g, '&quot;')})'>Comprar</button>` : '<button class="buy-button" disabled>Indisponível</button>'}
+            ${produto.mercadoPagoId ? `<button class="buy-button" onclick='openProductModal(${JSON.stringify(produto).replace(/'/g, "&apos;").replace(/"/g, '&quot;')})'>Comprar</button>` : '<button class="buy-button" disabled>Indisponível</button>'}
           </div>
         </div>
       </div>
     </div>
   `;
   container.insertAdjacentHTML('beforeend', produtoHTML);
-  
-  // Iniciar o timer para este produto
+
+  // Iniciar o timer para este produto após um pequeno delay para garantir que o elemento exista no DOM
   setTimeout(() => {
     iniciarTimer(produtoId, timerElementId);
-  }, 100);
+  }, 50);
 }
 
-// Função para renderizar produtos com botão de compra normal
+// Função para renderizar produtos com botão de compra normal (link externo)
 function renderizarProduto(produto, container) {
    // Validação básica
-   if (!produto) {
+   if (!produto || !produto.id) {
        console.warn("Tentativa de renderizar produto inválido:", produto);
        return;
    }
-  const produtoId = produto.id || Math.random().toString(36).substring(7);
+  const produtoId = produto.id;
   const preco = produto.preco || 0;
   const precoAntigo = preco * 2; // Preço 100% maior
-  
+  const imagemSrc = produto.imagem || 'templates/layout/placeholder.png';
+  const imagemAlt = produto.alt || 'Produto';
+  const titulo = produto.titulo || 'Produto s/ título';
+  const linkCompra = produto.link || '#';
+  const isLinkValido = linkCompra && linkCompra !== '#';
+
   const produtoHTML = `
     <div class="carousel-item">
       <div class="product-card">
         <div class="product-img-container">
-          <img src="${produto.imagem || 'templates/layout/placeholder.png'}" alt="${produto.alt || 'Produto'}" class="product-img" loading="lazy" onerror="this.onerror=null;this.src='templates/layout/placeholder.png';">
+          <img src="${imagemSrc}" alt="${imagemAlt}" class="product-img" loading="lazy" onerror="this.onerror=null;this.src='templates/layout/placeholder.png';">
         </div>
         <div class="product-info">
           <div>
-            <h3 class="product-title">${produto.titulo || 'Produto s/ título'}</h3>
+            <h3 class="product-title">${titulo}</h3>
             <div class="product-old-price">R$ ${precoAntigo.toFixed(2).replace('.', ',')}</div>
             <div class="product-price">R$ ${preco.toFixed(2).replace('.', ',')}</div>
           </div>
-          <button class="buy-button" data-link="${produto.link || '#'}" ${!(produto.link && produto.link !== '#') ? 'disabled' : ''}>
-            ${(produto.link && produto.link !== '#') ? 'Comprar' : 'Indisponível'}
+          <button class="buy-button" data-link="${linkCompra}" ${!isLinkValido ? 'disabled' : ''}>
+            ${isLinkValido ? 'Ver na Loja' : 'Indisponível'}
           </button>
         </div>
       </div>
@@ -1302,84 +1264,71 @@ function renderizarProduto(produto, container) {
   container.insertAdjacentHTML('beforeend', produtoHTML);
 }
 
+
 // Função para renderizar cupons
 function renderizarCupom(cupom, container) {
    // Validação básica
-   if (!cupom) {
+   if (!cupom || !cupom.codigo) {
         console.warn("Tentativa de renderizar cupom inválido:", cupom);
         return;
    }
+   const desconto = cupom.desconto || '';
+   const titulo = cupom.titulo || 'Cupom de Desconto';
+   const descricao = cupom.descricao || '';
+   const codigo = cupom.codigo;
+   const validade = cupom.validade || '';
+
   const cupomHTML = `
     <div class="coupon-card">
-      <div class="coupon-discount">${cupom.desconto || ''}</div>
-      <h3 class="coupon-title">${cupom.titulo || 'Cupom'}</h3>
-      <p class="coupon-description">${cupom.descricao || ''}</p>
+      ${desconto ? `<div class="coupon-discount">${desconto}</div>` : ''}
+      <h3 class="coupon-title">${titulo}</h3>
+      ${descricao ? `<p class="coupon-description">${descricao}</p>` : ''}
       <div class="coupon-code">
-        <div class="code-display">${cupom.codigo || '------'}</div>
-        <button class="copy-button" data-code="${cupom.codigo || ''}" ${!cupom.codigo ? 'disabled' : ''}>Copiar</button>
+        <div class="code-display">${codigo}</div>
+        <button class="copy-button" data-code="${codigo}">Copiar</button>
       </div>
       <button class="shopee-button" onclick="window.open('https://shopee.com.br/CarollShop', '_blank', 'noopener,noreferrer')">Usar na Shopee</button>
-      <p class="coupon-validity">${cupom.validade || ''}</p>
+      ${validade ? `<p class="coupon-validity">${validade}</p>` : ''}
     </div>
   `;
   container.insertAdjacentHTML('beforeend', cupomHTML);
 }
 
-// Função para inicializar conteúdo
+// Função para inicializar conteúdo (carregar dados e renderizar)
 async function inicializarConteudo() {
-  console.log("Iniciando carregamento de dados...");
-  
-  // Forçar carregamento do vídeo
-  garantirReproducaoVideo();
+  console.log("Iniciando carregamento de dados JSON...");
+
+  // Define os caminhos RELATIVOS para os arquivos JSON
+  // IMPORTANTE: Verifique se estes caminhos estão corretos em relação ao index.html no seu servidor
+  const paths = {
+    moldes: 'dados/moldes/moldes.json',
+    personalizados: 'dados/personalizados/personalizados.json',
+    parceiros: 'dados/parceiros/parceiros.json',
+    cupons: 'dados/cupons/cupons.json'
+  };
 
   try {
-    // Tentar carregar os dados JSON
-    console.log("Tentando carregar arquivos JSON...");
-    
-    // Tentar diferentes caminhos para os arquivos JSON
-    const caminhos = [
-      // Caminhos relativos
-      {
-        moldes: 'dados/moldes/moldes.json',
-        personalizados: 'dados/personalizados/personalizados.json',
-        parceiros: 'dados/parceiros/parceiros.json',
-        cupons: 'dados/cupons/cupons.json'
-      },
-      // Caminhos absolutos baseados na URL atual
-      {
-        moldes: window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + 'dados/moldes/moldes.json',
-        personalizados: window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + 'dados/personalizados/personalizados.json',
-        parceiros: window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + 'dados/parceiros/parceiros.json',
-        cupons: window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + 'dados/cupons/cupons.json'
-      }
-    ];
-    
-    let moldesData = null, personalizadosData = null, parceirosData = null, cuponsData = null;
-    
-    // Tentar cada caminho até conseguir carregar os dados
-    for (const caminho of caminhos) {
-      console.log("Tentando caminho:", caminho);
-      
-      // Tentar carregar os dados de cada tipo
-      if (!moldesData) moldesData = await carregarDados(caminho.moldes);
-      if (!personalizadosData) personalizadosData = await carregarDados(caminho.personalizados);
-      if (!parceirosData) parceirosData = await carregarDados(caminho.parceiros);
-      if (!cuponsData) cuponsData = await carregarDados(caminho.cupons);
-      
-      // Se todos os dados foram carregados, parar de tentar
-      if (moldesData && personalizadosData && parceirosData && cuponsData) {
-        console.log("Todos os dados foram carregados com sucesso!");
-        break;
-      }
-    }
-    
-    // Usar dados de exemplo se os dados reais não forem carregados
+    // Tenta carregar todos os dados JSON em paralelo
+    const [moldesData, personalizadosData, parceirosData, cuponsData] = await Promise.all([
+      carregarDados(paths.moldes),
+      carregarDados(paths.personalizados),
+      carregarDados(paths.parceiros),
+      carregarDados(paths.cupons)
+    ]);
+
+    // Usa dados carregados ou fallback para dados de exemplo se o carregamento falhar
+    // O operador || garante que se o fetch retornar null (erro), use o dadosExemplo
     const moldes = moldesData || dadosExemplo.moldes;
     const personalizados = personalizadosData || dadosExemplo.personalizados;
     const parceiros = parceirosData || dadosExemplo.parceiros;
     const cupons = cuponsData || dadosExemplo.cupons;
 
-    console.log("Dados carregados. Renderizando...");
+    // Log para indicar quais dados estão sendo usados (real ou exemplo)
+    console.log(`Usando dados ${moldesData ? 'REAIS' : 'de EXEMPLO'} para moldes.`);
+    console.log(`Usando dados ${personalizadosData ? 'REAIS' : 'de EXEMPLO'} para personalizados.`);
+    console.log(`Usando dados ${parceirosData ? 'REAIS' : 'de EXEMPLO'} para parceiros.`);
+    console.log(`Usando dados ${cuponsData ? 'REAIS' : 'de EXEMPLO'} para cupons.`);
+
 
     const renderMap = {
       'moldes-carousel': { data: moldes, renderer: renderizarProdutoMercadoPago, emptyMsg: 'Nenhum molde digital encontrado.' },
@@ -1388,17 +1337,19 @@ async function inicializarConteudo() {
       'cupons-container': { data: cupons, renderer: renderizarCupom, emptyMsg: 'Nenhum cupom disponível.' }
     };
 
-    // Render content synchronously after data is fetched
+    // Renderiza o conteúdo para cada seção
     for (const id in renderMap) {
       const container = document.getElementById(id);
       const { data, renderer, emptyMsg } = renderMap[id];
       if (container) {
-        container.innerHTML = ''; // Clear spinner first
-        if (data && data.length > 0) { // Check if data is valid array
+        container.innerHTML = ''; // Limpa o spinner/conteúdo anterior
+        // Verifica se 'data' é um array e tem itens antes de renderizar
+        if (Array.isArray(data) && data.length > 0) {
           data.forEach(item => renderer(item, container));
         } else {
-          console.log(`Container ${id} sem dados ou dados inválidos.`);
-          const emptyClass = id.includes('carousel') ? 'carousel-empty' : 'coupon-empty';
+          // Exibe mensagem se não houver dados ou se 'data' for inválido
+          console.log(`Container ${id}: Nenhum dado válido para renderizar.`);
+          const emptyClass = id.includes('carousel') ? 'carousel-empty' : 'coupon-empty'; // Define classe CSS apropriada
            container.innerHTML = `<p class="${emptyClass}">${emptyMsg}</p>`;
         }
       } else {
@@ -1406,24 +1357,43 @@ async function inicializarConteudo() {
       }
     }
 
-    console.log("Conteúdo renderizado (inicialmente).");
-    
-    // Ajustar layout após renderização
+    console.log("Renderização inicial do conteúdo concluída.");
+
+    // Ajusta o layout dos carrosséis após a renderização
+    // Usar setTimeout para garantir que o DOM foi atualizado
     setTimeout(adjustCarouselLayout, 100);
+    // Adiciona listeners de scroll aos carrosséis recém-populados
+    document.querySelectorAll('.carousel').forEach(carousel => {
+        // Remove listener antigo para evitar duplicação se a função for chamada novamente
+        carousel.removeEventListener('scroll', debouncedUpdateArrows);
+        carousel.addEventListener('scroll', debouncedUpdateArrows);
+        // Atualiza visibilidade inicial das setas
+        updateArrowVisibility(carousel);
+    });
+
 
   } catch (erro) {
-    console.error('Erro durante a inicialização do conteúdo:', erro);
-    document.querySelectorAll('.loading-spinner, #cupons-container').forEach(c => {
-         if (c.querySelector('.spinner')) {
-             c.innerHTML = '<p style="color: red; text-align: center;">Erro ao carregar conteúdo.</p>';
-         } else if (c.id === 'cupons-container' && !c.hasChildNodes()) {
-              c.innerHTML = '<p style="color: red; text-align: center;">Erro ao carregar cupons.</p>';
-         }
+    console.error('Erro GERAL durante a inicialização do conteúdo:', erro);
+    // Informa o usuário sobre o erro no carregamento em todas as seções
+    document.querySelectorAll('.loading-spinner').forEach(spinner => {
+         spinner.innerHTML = '<p style="color: red; text-align: center;">Erro ao carregar. Tente recarregar a página.</p>';
      });
+     const cuponsContainer = document.getElementById('cupons-container');
+     if(cuponsContainer) {
+         cuponsContainer.innerHTML = '<p style="color: red; text-align: center;">Erro ao carregar cupons.</p>';
+     }
   } finally {
-     console.log("Função inicializarConteudo concluída.");
+     console.log("Função inicializarConteudo finalizada.");
   }
 }
+
+// Criar uma versão debounced da função de atualização das setas
+const debouncedUpdateArrows = debounce((event) => {
+    if(event.target.classList.contains('carousel')) {
+        updateArrowVisibility(event.target);
+    }
+}, 150);
+
 
 // Navegação entre seções
 document.querySelectorAll('.nav-item').forEach(item => {
@@ -1440,105 +1410,99 @@ document.querySelectorAll('.nav-item').forEach(item => {
       if (currentSection) currentSection.classList.remove('active');
       targetSection.classList.add('active');
 
-      if (window.scrollY > 100) {
+      // Scroll para o topo suavemente ao trocar de aba, se não estiver já no topo
+      if (window.scrollY > 10) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      // Reajusta layout caso a seção contenha carrosséis que estavam escondidos
+      if (targetSection.querySelectorAll('.carousel').length > 0) {
+          setTimeout(adjustCarouselLayout, 50); // Pequeno delay para garantir visibilidade
       }
     }
   });
 });
 
-// Listener de clique para botões (delegação)
+// Listener de clique DELEGADO para botões (mais eficiente)
 document.addEventListener('click', function(e) {
-  // Botões 'Comprar' normais
+  // Botões 'Comprar' / 'Ver na Loja' (que possuem data-link)
   const buyButton = e.target.closest('.buy-button:not([disabled])');
-  if (buyButton && buyButton.hasAttribute('data-link')) {
-    const link = buyButton.getAttribute('data-link');
+  if (buyButton && buyButton.dataset.link) {
+    const link = buyButton.dataset.link;
     if (link && link !== '#') {
       window.open(link, '_blank', 'noopener,noreferrer');
     }
+    return; // Evita que outros handlers de clique sejam acionados desnecessariamente
   }
 
   // Botões 'Copiar' cupom
   const copyButton = e.target.closest('.copy-button:not([disabled])');
   if (copyButton) {
-    const code = copyButton.getAttribute('data-code');
+    const code = copyButton.dataset.code;
     if (code) {
       if (navigator.clipboard) {
         navigator.clipboard.writeText(code).then(() => {
           const originalText = copyButton.textContent;
           copyButton.textContent = 'Copiado!';
           copyButton.disabled = true;
-          setTimeout(() => { copyButton.textContent = originalText; copyButton.disabled = false; }, 2000);
-
+          // Mostra botão da Shopee ao copiar
           const couponCard = copyButton.closest('.coupon-card');
           if (couponCard) {
-            const shopeeButton = couponCard.querySelector('.shopee-button');
-            if (shopeeButton) shopeeButton.style.display = 'block';
+              const shopeeButton = couponCard.querySelector('.shopee-button');
+              if (shopeeButton) shopeeButton.style.display = 'block';
           }
+          // Volta ao normal depois de 2 segundos
+          setTimeout(() => {
+              copyButton.textContent = originalText;
+              copyButton.disabled = false;
+               // Esconde botão da Shopee novamente (opcional)
+              // if (shopeeButton) shopeeButton.style.display = 'none';
+          }, 2000);
         }).catch(err => {
-          console.error('Erro ao copiar:', err);
-          alert('Falha ao copiar. Verifique as permissões ou tente manualmente.');
+          console.error('Erro ao copiar código:', err);
+          alert('Falha ao copiar o código. Tente manualmente.');
         });
       } else {
-        alert('Função de copiar não suportada neste navegador.');
+        // Fallback para navegadores sem clipboard API (raro hoje em dia)
+        alert('Seu navegador não suporta a cópia automática. Copie manualmente: ' + code);
       }
     }
+    return; // Evita outros handlers
   }
 });
 
 // Inicializar conteúdo quando o DOM estiver pronto
 document.addEventListener('DOMContentLoaded', function() {
-  console.log("DOM carregado, inicializando...");
-  
-  // Forçar carregamento do vídeo
+  console.log("DOM carregado. Iniciando aplicação...");
+
+  // CORREÇÃO: Removida a tentativa explícita de carregar/reproduzir vídeo aqui.
+  // Confiar nos atributos HTML5 <video autoplay muted loop playsinline>.
+  // O navegador deve lidar com isso automaticamente.
+
+  // Adiciona listener para erro no vídeo para diagnóstico
   const video = document.getElementById('header-video');
   if (video) {
-    console.log("Vídeo encontrado, tentando carregar...");
-    
-    // Tentar carregar o vídeo novamente
-    video.load();
-    
-    // Adicionar listeners para depuração
-    video.addEventListener('loadeddata', () => console.log("Vídeo carregado com sucesso!"));
-    video.addEventListener('error', (e) => console.error("Erro ao carregar vídeo:", e));
-    
-    // Verificar se o vídeo está sendo carregado
-    setTimeout(() => {
-      if (video.readyState === 0) {
-        console.warn("Vídeo não está carregando. Tentando novamente...");
-        // Tentar com um caminho absoluto
-        const videoSource = video.querySelector('source');
-        if (videoSource) {
-          const currentSrc = videoSource.getAttribute('src');
-          console.log("Caminho atual do vídeo:", currentSrc);
-          
-          // Tentar com um caminho absoluto se necessário
-          if (currentSrc.startsWith('templates/')) {
-            const absolutePath = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + currentSrc;
-            console.log("Tentando caminho absoluto:", absolutePath);
-            videoSource.setAttribute('src', absolutePath);
-            video.load();
-            video.play().catch(err => console.error("Erro ao reproduzir vídeo:", err));
-          }
-        }
-      }
-    }, 1000);
+      video.addEventListener('error', (e) => {
+          console.error("Erro ao carregar ou reproduzir o vídeo:", e);
+          // Poderia tentar carregar um poster ou imagem fallback aqui se o vídeo falhar
+      });
+       video.addEventListener('canplay', () => {
+          console.log("Vídeo pronto para reprodução.");
+          // Tenta garantir a reprodução se o autoplay falhar por alguma política do navegador
+          video.play().catch(err => console.warn("Tentativa de play() falhou (provavelmente devido a políticas do navegador, mas deve tocar por causa do 'muted'):", err));
+      });
   }
-  
-  // Inicializar conteúdo
-  inicializarConteudo().then(() => {
-    console.log("Conteúdo inicializado, ajustando layout...");
-    adjustCarouselLayout();
-    
-    // Adicionar listeners para scroll nos carrosséis
-    document.querySelectorAll('.carousel').forEach(carousel => {
-      carousel.addEventListener('scroll', debounce(() => updateArrowVisibility(carousel), 100));
-    });
-  });
+
+
+  // Chama a função principal para carregar dados e renderizar
+  inicializarConteudo();
+
+  // Ajusta o layout inicial (importante para cálculo de itens visíveis)
+  adjustCarouselLayout();
 });
 
-// Ajustar layout ao redimensionar a janela
-window.addEventListener('resize', debounce(adjustCarouselLayout, 200));
+// Ajustar layout ao redimensionar a janela (com debounce)
+window.addEventListener('resize', debounce(adjustCarouselLayout, 250));
+
 </script>
 </body>
 </html>
