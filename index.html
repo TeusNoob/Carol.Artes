@@ -30,6 +30,10 @@
       --white: #ffffff;
       --black: #000000;
     }
+    /* CORREÇÃO: Definir altura para html */
+    html {
+        height: 100%;
+    }
     * {
       margin: 0;
       padding: 0;
@@ -38,6 +42,9 @@
       font-family: 'Poppins', sans-serif;
     }
     body {
+      /* CORREÇÃO: Usar height 100% e manter min-height */
+      height: 100%;
+      min-height: 100%;
       background-color: var(--white);
       color: var(--gray-800);
       line-height: 1.5;
@@ -47,11 +54,10 @@
       position: relative;
       max-width: 500px; /* Constrains overall width */
       margin: 0 auto; /* Centers the content */
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
       background-image: url('templates/layout/background.jpg');
-      background-attachment: fixed;
+      background-attachment: fixed; /* Atenção: pode causar problemas em mobile */
       background-size: cover;
       background-position: center;
       padding-top: 60px; /* Add padding to prevent overlap with fixed top bar */
@@ -206,7 +212,7 @@
     main {
       flex: 1;
       overflow-y: auto; /* Scroll vertical principal */
-      /* CORREÇÃO: Adiciona padding-bottom para garantir espaço para o nav fixo */
+      /* Padding inferior para espaço do nav fixo */
       padding-bottom: 7rem;
     }
     .section {
@@ -446,8 +452,7 @@
         position: fixed;
         bottom: 1rem;
         left: 50%;
-        /* CORREÇÃO: Adicionado translateZ(0) para tentar forçar aceleração por hardware */
-        transform: translateX(-50%) translateZ(0);
+        transform: translateX(-50%) translateZ(0); /* Manter translateZ(0) */
         background-color: rgba(255, 255, 255, 0.95);
         border-radius: 2rem;
         display: flex;
@@ -455,8 +460,7 @@
         z-index: 999;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         padding: 0 1rem;
-        /* Adicionado para garantir que não seja afetado por transformações pai */
-        will-change: transform;
+        will-change: transform; /* Manter */
      }
      .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; color: var(--gray-500); text-decoration: none; position: relative; padding: 0 1.5rem; transition: color 0.3s ease; }
      .nav-item.active { color: var(--pink-500); }
@@ -477,8 +481,6 @@
         padding: 1.5rem 1rem;
         text-align: center;
         position: relative;
-        /* CORREÇÃO: Removido margin-bottom, espaço agora é dado pelo padding do main */
-        /* margin-bottom: 6rem; */
     }
     .footer-content { background-color: rgba(255, 255, 255, 0.95); border-radius: 1rem; padding: 1rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); position: relative; }
     .footer-decoration { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--pink-400); }
@@ -670,13 +672,17 @@
 
     // Função auxiliar para obter quantos itens estão visíveis
     function getItemsPerView() {
+        // Ajustar para telas menores primeiro
         if (window.innerWidth <= 480) return 2;
         if (window.innerWidth <= 768) return 3;
-        return 4; // Mantido 4 para telas maiores
+        return 4; // Para telas maiores
     }
+
 
     // Função para atualizar visibilidade das setas baseado no scroll
     function updateArrowVisibility(carouselElement) {
+        // Adicionar verificação se carouselElement existe
+        if (!carouselElement) return;
         const container = carouselElement.closest('.carousel-container');
         if (!container) return;
         const prevButton = container.querySelector('.carousel-prev');
@@ -686,13 +692,15 @@
         const scrollLeft = carouselElement.scrollLeft;
         const scrollWidth = carouselElement.scrollWidth;
         const clientWidth = carouselElement.clientWidth;
-        const tolerance = 5;
+        const tolerance = 5; // Pequena tolerância para evitar problemas de arredondamento
 
-        // Always show arrows if scrollable, hide if not
-        const isScrollable = scrollWidth > clientWidth + tolerance;
+        // Garante que clientWidth seja maior que 0 antes de verificar scrollWidth
+        const isScrollable = clientWidth > 0 && scrollWidth > clientWidth + tolerance;
+
         prevButton.classList.toggle('hidden', !isScrollable || scrollLeft <= tolerance);
         nextButton.classList.toggle('hidden', !isScrollable || scrollLeft >= (scrollWidth - clientWidth - tolerance));
     }
+
 
     // Função para mover o carrossel usando scroll
     function moveCarousel(carouselId, direction) {
@@ -702,15 +710,10 @@
             return;
         }
         const items = carousel.querySelectorAll('.carousel-item');
-        if (!items.length) return;
+        if (!items.length) return; // Sai se não houver itens
 
-        const itemsPerView = getItemsPerView();
-        // Calculate based on visible width for more accurate scrolling
-        const itemWidth = items[0].offsetWidth;
-        const gap = parseFloat(getComputedStyle(carousel).gap) || 15;
-        const totalItemWidth = itemWidth + gap;
-        // Scroll by the width of visible items instead of a fixed number
-        const scrollAmount = carousel.clientWidth; // Scroll one viewport width
+        // Usa clientWidth que é a largura visível real
+        const scrollAmount = carousel.clientWidth;
         const targetScrollLeft = carousel.scrollLeft + (direction * scrollAmount);
 
         carousel.scrollTo({
@@ -725,23 +728,31 @@
         const resposta = await fetch(url);
         if (!resposta.ok) {
           console.error(`Erro HTTP ${resposta.status} ao carregar ${url}`);
-          return [];
+          return []; // Retorna array vazio em caso de erro
         }
         const contentType = resposta.headers.get("content-type");
+        // Verifica se a resposta é JSON antes de tentar parsear
         if (contentType && contentType.indexOf("application/json") !== -1) {
           return await resposta.json();
         } else {
           console.error(`Resposta de ${url} não é JSON. Tipo: ${contentType}`);
-          return [];
+          return []; // Retorna array vazio se não for JSON
         }
       } catch (erro) {
         console.error(`Falha na rede ou ao processar ${url}:`, erro);
-        return [];
+        return []; // Retorna array vazio em caso de falha de rede/parse
       }
     }
 
     // Função para renderizar produtos com botão do Mercado Pago
     function renderizarProdutoMercadoPago(produto, container) {
+      // Validação básica do produto
+      if (!produto || !produto.id) {
+         console.warn("Tentativa de renderizar produto inválido (Mercado Pago):", produto);
+         return;
+      }
+      const produtoId = produto.id || Math.random().toString(36).substring(7); // Gera ID se faltar
+
       const produtoHTML = `
         <div class="carousel-item">
           <div class="product-card">
@@ -753,7 +764,7 @@
                 <h3 class="product-title">${produto.titulo || 'Produto s/ título'}</h3>
                 <div class="product-price">R$ ${(produto.preco || 0).toFixed(2).replace('.', ',')}</div>
               </div>
-              <div class="mercado-pago-button" id="mp-button-${produto.id || Math.random().toString(36).substring(7)}">
+              <div class="mercado-pago-button" id="mp-button-${produtoId}">
                 ${produto.mercadoPagoId ? '' : '<button class="buy-button" disabled>Indisponível</button>'}
               </div>
             </div>
@@ -763,24 +774,36 @@
       container.insertAdjacentHTML('beforeend', produtoHTML);
 
       if (produto.mercadoPagoId) {
-        const mpButtonContainer = document.getElementById(`mp-button-${produto.id}`);
+        const mpButtonContainer = document.getElementById(`mp-button-${produtoId}`);
         if (mpButtonContainer) {
-          // Delay MP script injection slightly
+          // Atraso um pouco maior para garantir que o elemento exista no DOM, especialmente em mobile
           setTimeout(() => {
-              const script = document.createElement('script');
-              script.src = "https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js";
-              script.setAttribute('data-preference-id', produto.mercadoPagoId);
-              script.setAttribute('data-source', 'button');
-              mpButtonContainer.appendChild(script);
-          }, 100); // Delay helps sometimes with dynamic rendering
+              try {
+                  const script = document.createElement('script');
+                  script.src = "https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js";
+                  script.setAttribute('data-preference-id', produto.mercadoPagoId);
+                  script.setAttribute('data-source', 'button');
+                  // Limpa container antes de adicionar, caso haja script antigo
+                  mpButtonContainer.innerHTML = '';
+                  mpButtonContainer.appendChild(script);
+              } catch(e) {
+                  console.error(`Erro ao adicionar script do Mercado Pago para ${produtoId}:`, e);
+                  mpButtonContainer.innerHTML = '<button class="buy-button" disabled>Erro MP</button>';
+              }
+          }, 200); // Aumentar ligeiramente o delay pode ajudar
         } else {
-          console.warn(`MP Button container not found: mp-button-${produto.id}`);
+          console.warn(`MP Button container not found: mp-button-${produtoId}`);
         }
       }
     }
 
     // Função para renderizar produtos com botão de compra normal
     function renderizarProduto(produto, container) {
+       // Validação básica
+       if (!produto) {
+           console.warn("Tentativa de renderizar produto inválido:", produto);
+           return;
+       }
       const produtoHTML = `
         <div class="carousel-item">
           <div class="product-card">
@@ -804,6 +827,11 @@
 
     // Função para renderizar cupons
     function renderizarCupom(cupom, container) {
+       // Validação básica
+       if (!cupom) {
+            console.warn("Tentativa de renderizar cupom inválido:", cupom);
+            return;
+       }
       const cupomHTML = `
         <div class="coupon-card">
           <div class="coupon-discount">${cupom.desconto || ''}</div>
@@ -820,9 +848,9 @@
       container.insertAdjacentHTML('beforeend', cupomHTML);
     }
 
-    // Função para inicializar conteúdo (modificada para ser async e retornar Promise)
+    // Função para inicializar conteúdo
     async function inicializarConteudo() {
-      console.log("Iniciando carregamento...");
+      console.log("Iniciando carregamento de dados...");
       const spinnerContainers = document.querySelectorAll('.loading-spinner');
 
       try {
@@ -833,6 +861,8 @@
           carregarDados('dados/parceiros/parceiros.json'),
           carregarDados('dados/cupons/cupons.json')
         ]);
+
+        console.log("Dados carregados. Renderizando...");
 
         const renderMap = {
           'moldes-carousel': { data: moldes, renderer: renderizarProdutoMercadoPago, emptyMsg: 'Nenhum molde digital encontrado.' },
@@ -846,13 +876,16 @@
           const container = document.getElementById(id);
           const { data, renderer, emptyMsg } = renderMap[id];
           if (container) {
-            container.innerHTML = ''; // Clear spinner
-            if (data.length > 0) {
+            container.innerHTML = ''; // Clear spinner first
+            if (data && data.length > 0) { // Check if data is valid array
               data.forEach(item => renderer(item, container));
             } else {
+              console.log(`Container ${id} sem dados ou dados inválidos.`);
               const emptyClass = id.includes('carousel') ? 'carousel-empty' : 'coupon-empty';
                container.innerHTML = `<p class="${emptyClass}">${emptyMsg}</p>`;
             }
+          } else {
+             console.warn(`Container element not found: ${id}`);
           }
         }
 
@@ -860,9 +893,7 @@
 
       } catch (erro) {
         console.error('Erro durante a inicialização do conteúdo:', erro);
-        // Display error message in all loading containers
         document.querySelectorAll('.loading-spinner, #cupons-container').forEach(c => {
-             // Check if it's already showing an error or empty message
              if (c.querySelector('.spinner')) {
                  c.innerHTML = '<p style="color: red; text-align: center;">Erro ao carregar conteúdo.</p>';
              } else if (c.id === 'cupons-container' && !c.hasChildNodes()) {
@@ -872,8 +903,7 @@
       } finally {
          console.log("Função inicializarConteudo concluída.");
       }
-      // Return a resolved promise to indicate completion of this phase
-      return Promise.resolve();
+      // Não precisa retornar Promise explícita aqui, pois é async
     }
 
     // Navegação entre seções
@@ -884,13 +914,15 @@
         const currentSection = document.querySelector('.content-section.active');
         const targetSectionId = this.getAttribute('data-section');
         const targetSection = document.getElementById(targetSectionId);
+
+        // Verifica se o item clicado já não está ativo e se a seção alvo existe
         if (currentActive !== this && targetSection) {
           if (currentActive) currentActive.classList.remove('active');
           this.classList.add('active');
           if (currentSection) currentSection.classList.remove('active');
           targetSection.classList.add('active');
 
-          // Scroll to top when changing sections only if not already near the top
+          // Scroll to top only if necessary
           if (window.scrollY > 100) {
               window.scrollTo({ top: 0, behavior: 'smooth' });
           }
@@ -900,34 +932,43 @@
 
     // Listener de clique para botões (delegação)
     document.addEventListener('click', function(e) {
-      // Handle buy buttons inside carousels
-      const buyButton = e.target.closest('.buy-button');
-      if (buyButton && !buyButton.disabled) {
+      // Botões 'Comprar' normais
+      const buyButton = e.target.closest('.buy-button:not([disabled])'); // Seleciona apenas botões habilitados
+      if (buyButton) {
         const link = buyButton.getAttribute('data-link');
         if (link && link !== '#') {
           window.open(link, '_blank', 'noopener,noreferrer');
         }
       }
-      // Handle copy buttons for coupons
-      const copyButton = e.target.closest('.copy-button');
-      if (copyButton && !copyButton.disabled) {
+
+      // Botões 'Copiar' cupom
+      const copyButton = e.target.closest('.copy-button:not([disabled])'); // Apenas botões habilitados
+      if (copyButton) {
         const code = copyButton.getAttribute('data-code');
         if (code) {
-          navigator.clipboard.writeText(code).then(() => {
-            const originalText = copyButton.textContent;
-            copyButton.textContent = 'Copiado!';
-            copyButton.disabled = true;
-            setTimeout(() => { copyButton.textContent = originalText; copyButton.disabled = false; }, 2000);
-            const couponCard = copyButton.closest('.coupon-card');
-            if (couponCard) {
-              const shopeeButton = couponCard.querySelector('.shopee-button');
-              if (shopeeButton) shopeeButton.style.display = 'block';
-            }
-          }).catch(err => {
-            console.error('Erro ao copiar:', err);
-            // Inform user about potential copy issue (e.g., if not on HTTPS or iframe)
-            alert('Não foi possível copiar o código. Certifique-se de que a página está segura (HTTPS).');
-          });
+           // Usa navigator.clipboard que é mais moderno e seguro (requer HTTPS ou localhost)
+           if (navigator.clipboard) {
+               navigator.clipboard.writeText(code).then(() => {
+                 const originalText = copyButton.textContent;
+                 copyButton.textContent = 'Copiado!';
+                 copyButton.disabled = true;
+                 setTimeout(() => { copyButton.textContent = originalText; copyButton.disabled = false; }, 2000);
+
+                 // Mostra botão Shopee apenas se a cópia funcionou
+                 const couponCard = copyButton.closest('.coupon-card');
+                 if (couponCard) {
+                   const shopeeButton = couponCard.querySelector('.shopee-button');
+                   if (shopeeButton) shopeeButton.style.display = 'block';
+                 }
+               }).catch(err => {
+                 console.error('Erro ao copiar com navigator.clipboard:', err);
+                 alert('Falha ao copiar. Verifique as permissões ou tente manualmente.');
+               });
+           } else {
+               // Fallback para navegadores muito antigos (raro)
+               console.warn('navigator.clipboard não disponível.');
+               alert('Função de copiar não suportada neste navegador.');
+           }
         }
       }
     });
@@ -938,34 +979,43 @@
         console.log("Ajustando layout do carrossel...");
         const gap = 15;
         document.querySelectorAll('.carousel').forEach(carousel => {
+            // Verifica se o carrossel existe e está visível
+            if (!carousel || carousel.offsetParent === null) {
+                // console.log(`Carrossel ${carousel ? carousel.id : 'desconhecido'} não está visível, pulando ajuste.`);
+                return; // Pula ajuste se o carrossel ou seu container não estiverem visíveis
+            }
+
             const items = carousel.querySelectorAll('.carousel-item');
             if (!items.length) {
-                console.log(`Carrossel ${carousel.id} vazio, atualizando setas.`);
-                updateArrowVisibility(carousel); // Hide arrows if no items
+                // console.log(`Carrossel ${carousel.id} vazio, atualizando setas.`);
+                updateArrowVisibility(carousel);
                 return;
             };
 
             const itemsToShow = getItemsPerView();
             const availableWidth = carousel.clientWidth;
-            // Ensure availableWidth is positive before calculation
+
             if (availableWidth <= 0) {
-                console.warn(`Largura do carrossel ${carousel.id} é 0 ou negativa.`);
-                return; // Avoid calculation if width is not ready
+                console.warn(`Largura do carrossel ${carousel.id} é 0 ou negativa. Tentando novamente em breve...`);
+                 // Tenta novamente após um pequeno delay se a largura for 0 (pode acontecer durante a renderização inicial)
+                 // setTimeout(() => adjustCarouselLayout(), 100); // CUIDADO: pode causar loop se o problema persistir
+                return;
             }
 
             const totalGapWidth = Math.max(0, (itemsToShow - 1)) * gap;
             let itemWidth = (availableWidth > totalGapWidth) ? (availableWidth - totalGapWidth) / itemsToShow : availableWidth;
-            itemWidth = Math.max(100, itemWidth); // Minimum item width
+            // Garante uma largura mínima razoável
+            itemWidth = Math.max(100, Math.floor(itemWidth)); // Arredonda para baixo
 
             items.forEach(item => {
                 item.style.width = `${itemWidth}px`;
             });
 
-            console.log(`Layout do carrossel ${carousel.id} ajustado. Items: ${items.length}, Width: ${itemWidth}px`);
-            // Update arrows after adjusting layout
-             updateArrowVisibility(carousel);
+            // console.log(`Layout do carrossel ${carousel.id} ajustado. Items: ${items.length}, Width: ${itemWidth}px`);
+            updateArrowVisibility(carousel);
         });
     }
+
 
     // Ajustar ao redimensionar (com debounce)
     const debouncedResize = debounce(() => {
@@ -974,29 +1024,43 @@
     }, 250);
 
 
-    // Inicializar após o DOM estar pronto, esperando o conteúdo ser carregado
-    document.addEventListener('DOMContentLoaded', async () => {
-        console.log("DOM carregado. Iniciando conteúdo...");
-        // Espera a função assíncrona carregar dados e fazer a renderização inicial
-        await inicializarConteudo();
-        console.log("Conteúdo inicializado. Ajustando layout e adicionando listeners...");
+    // --- CORREÇÃO APLICADA AQUI (window.onload) ---
+    // Inicializar após TUDO (incluindo imagens) carregar
+    window.addEventListener('load', async () => {
+        console.log("Página e recursos totalmente carregados (window.onload). Iniciando conteúdo...");
+        try {
+            // Espera a função assíncrona carregar dados e fazer a renderização inicial
+            await inicializarConteudo();
+            console.log("Conteúdo inicializado. Ajustando layout e adicionando listeners...");
 
-        // Ajusta o layout DEPOIS que o conteúdo foi carregado e renderizado
-        adjustCarouselLayout();
+            // Adiciona um pequeno delay extra antes do ajuste inicial do layout,
+            // especialmente útil em mobile após 'load'
+            setTimeout(() => {
+                console.log("Ajustando layout inicial (após delay)...");
+                adjustCarouselLayout();
 
-        // Adiciona listeners de scroll e verifica visibilidade das setas APÓS layout inicial
-        document.querySelectorAll('.carousel').forEach(carousel => {
-            const debouncedUpdateArrows = debounce(() => updateArrowVisibility(carousel), 150);
-            carousel.addEventListener('scroll', debouncedUpdateArrows);
-            // Verifica a visibilidade inicial das setas após o primeiro ajuste de layout
-            updateArrowVisibility(carousel);
-        });
+                // Adiciona listeners de scroll e verifica visibilidade das setas APÓS layout inicial
+                document.querySelectorAll('.carousel').forEach(carousel => {
+                    // Verifica se o carrossel existe antes de adicionar listener
+                    if(carousel) {
+                        const debouncedUpdateArrows = debounce(() => updateArrowVisibility(carousel), 150);
+                        carousel.addEventListener('scroll', debouncedUpdateArrows);
+                        // Verifica a visibilidade inicial das setas
+                        updateArrowVisibility(carousel);
+                    }
+                });
+            }, 100); // Pequeno delay de 100ms
 
-        // Adiciona listener de redimensionamento
-        window.addEventListener('resize', debouncedResize);
+            // Adiciona listener de redimensionamento
+            window.addEventListener('resize', debouncedResize);
 
-        console.log("Inicialização completa.");
+            console.log("Inicialização (eventos e layout pós-load) completa.");
+
+        } catch (error) {
+            console.error("Erro crítico durante a inicialização pós-load:", error);
+        }
     });
+    // --- FIM DA CORREÇÃO ---
 
   </script>
 </body>
