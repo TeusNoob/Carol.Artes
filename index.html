@@ -1,1308 +1,1285 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Personalizados da Carol</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --pink-50: #fdf2f5;
-      --pink-100: #fce8ee;
-      --pink-200: #fad1dd;
-      --pink-300: #f7a9c2;
-      --pink-400: #f47aa0;
-      --pink-500: #f04c7e;
-      --pink-600: #e12c5e;
-      --pink-700: #c11a47;
-      --gray-50: #f9fafb;
-      --gray-100: #f3f4f6;
-      --gray-200: #e5e7eb;
-      --gray-300: #d1d5db;
-      --gray-400: #9ca3af;
-      --gray-500: #6b7280;
-      --gray-600: #4b5563;
-      --gray-700: #374151;
-      --gray-800: #1f2937;
-      --gray-900: #111827;
-      --white: #ffffff;
-      --black: #000000;
-    }
-    /* CORREÇÃO: Definir altura para html */
-    html {
-        height: 100%;
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-      font-family: 'Poppins', sans-serif;
-    }
-    body {
-      /* CORREÇÃO: Usar height 100% e manter min-height */
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Personalizados da Carol</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink-50: #fdf2f5;
+    --pink-100: #fce8ee;
+    --pink-200: #fad1dd;
+    --pink-300: #f7a9c2;
+    --pink-400: #f47aa0;
+    --pink-500: #f04c7e;
+    --pink-600: #e12c5e;
+    --pink-700: #c11a47;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --white: #ffffff;
+    --black: #000000;
+  }
+  /* CORREÇÃO: Definir altura para html */
+  html {
       height: 100%;
-      min-height: 100%;
-      background-color: var(--white);
-      color: var(--gray-800);
-      line-height: 1.5;
-      overscroll-behavior: none;
-      -webkit-user-select: none;
-      user-select: none;
-      position: relative;
-      max-width: 500px; /* Constrains overall width */
-      margin: 0 auto; /* Centers the content */
-      display: flex;
-      flex-direction: column;
-      background-image: url('templates/layout/background.jpg');
-      background-attachment: fixed; /* Atenção: pode causar problemas em mobile */
-      background-size: cover;
-      background-position: center;
-      padding-top: 60px; /* Add padding to prevent overlap with fixed top bar */
-    }
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    font-family: 'Poppins', sans-serif;
+  }
+  body {
+    /* CORREÇÃO: Usar height 100% e manter min-height */
+    height: 100%;
+    min-height: 100%;
+    background-color: var(--white);
+    color: var(--gray-800);
+    line-height: 1.5;
+    overscroll-behavior: none;
+    -webkit-user-select: none;
+    user-select: none;
+    position: relative;
+    max-width: 500px; /* Constrains overall width */
+    margin: 0 auto; /* Centers the content */
+    display: flex;
+    flex-direction: column;
+    background-image: url('templates/layout/background.jpg');
+    background-attachment: fixed; /* Atenção: pode causar problemas em mobile */
+    background-size: cover;
+    background-position: center;
+    padding-top: 60px; /* Add padding to prevent overlap with fixed top bar */
+  }
 
-    /* --- Fixed Top Bar --- */
-    .fixed-top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.5rem 1rem; /* Adjusted padding */
-      background-color: var(--white);
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      border-radius: 1.5rem; /* Rounded corners like image */
-      position: fixed; /* Fixed positioning */
-      top: 0.5rem; /* Space from top */
-      left: 50%; /* Center horizontally */
-      transform: translateX(-50%); /* Correct centering */
-      width: calc(100% - 2rem); /* Full width minus margin */
-      max-width: 480px; /* Match body max-width minus padding */
-      z-index: 1000; /* Ensure it's above everything */
+  /* --- Fixed Top Bar --- */
+  .fixed-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem; /* Adjusted padding */
+    background-color: var(--white);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 1.5rem; /* Rounded corners like image */
+    position: fixed; /* Fixed positioning */
+    top: 0.5rem; /* Space from top */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Correct centering */
+    width: calc(100% - 2rem); /* Full width minus margin */
+    max-width: 480px; /* Match body max-width minus padding */
+    z-index: 1000; /* Ensure it's above everything */
+    box-sizing: border-box;
+  }
+
+  .fixed-top-bar-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.3rem; /* Slightly larger */
+    font-weight: 700;
+    color: var(--pink-600);
+    flex-shrink: 0;
+    margin-right: 0.5rem; /* Add space between title and icons */
+  }
+
+  .fixed-top-bar-icons {
+    display: flex;
+    gap: 0.7rem; /* Spacing between icons - adjusted */
+    flex-grow: 1; /* Allow icons area to grow */
+    justify-content: center; /* Center icons within their space */
+  }
+
+  .fixed-top-bar-icon {
+    width: 2rem; /* Increased icon button size */
+    height: 2rem; /* Increased icon button size */
+    vertical-align: middle;
+    transition: transform 0.2s ease;
+    background-color: var(--white);
+    padding: 0.2rem;
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; /* Prevent icons from shrinking */
+  }
+   .fixed-top-bar-icon img {
+      width: 80%; /* Adjusted icon size inside the circle */
+      height: 80%; /* Adjusted icon size inside the circle */
+      object-fit: contain; /* Ensure image fits */
+   }
+
+  .fixed-top-bar-icon:hover {
+      transform: scale(1.1);
+  }
+
+  .fixed-top-bar-button {
+    background-color: var(--pink-500);
+    color: var(--white);
+    padding: 0.5rem 0.8rem; /* Adjusted padding */
+    border-radius: 0.8rem; /* Rounded corners like image */
+    text-decoration: none;
+    font-size: 0.7rem; /* Smaller font */
+    font-weight: 600; /* Slightly bolder */
+    white-space: nowrap;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+    line-height: 1.2; /* Adjust line height */
+    text-align: center;
+    margin-left: 0.5rem; /* Add space between icons and button */
+  }
+
+  .fixed-top-bar-button:hover {
+    background-color: var(--pink-600);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+  }
+  /* --- End Fixed Top Bar --- */
+
+
+  /* --- Header Video --- */
+  .header-video-container {
+      width: 100%;
+      padding: 0 1rem; /* Match header padding */
+      margin: 0.5rem 0 0.5rem; /* Reduced top margin to decrease space */
       box-sizing: border-box;
-    }
-
-    .fixed-top-bar-title {
-      font-family: 'Dancing Script', cursive;
-      font-size: 1.3rem; /* Slightly larger */
-      font-weight: 700;
-      color: var(--pink-600);
-      flex-shrink: 0;
-      margin-right: 0.5rem; /* Add space between title and icons */
-    }
-
-    .fixed-top-bar-icons {
-      display: flex;
-      gap: 0.7rem; /* Spacing between icons - adjusted */
-      flex-grow: 1; /* Allow icons area to grow */
-      justify-content: center; /* Center icons within their space */
-    }
-
-    .fixed-top-bar-icon {
-      width: 2rem; /* Increased icon button size */
-      height: 2rem; /* Increased icon button size */
-      vertical-align: middle;
-      transition: transform 0.2s ease;
-      background-color: var(--white);
-      padding: 0.2rem;
-      border-radius: 50%;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0; /* Prevent icons from shrinking */
-    }
-     .fixed-top-bar-icon img {
-        width: 80%; /* Adjusted icon size inside the circle */
-        height: 80%; /* Adjusted icon size inside the circle */
-        object-fit: contain; /* Ensure image fits */
-     }
-
-    .fixed-top-bar-icon:hover {
-        transform: scale(1.1);
-    }
-
-    .fixed-top-bar-button {
-      background-color: var(--pink-500);
-      color: var(--white);
-      padding: 0.5rem 0.8rem; /* Adjusted padding */
-      border-radius: 0.8rem; /* Rounded corners like image */
-      text-decoration: none;
-      font-size: 0.7rem; /* Smaller font */
-      font-weight: 600; /* Slightly bolder */
-      white-space: nowrap;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      flex-shrink: 0;
-      line-height: 1.2; /* Adjust line height */
-      text-align: center;
-      margin-left: 0.5rem; /* Add space between icons and button */
-    }
-
-    .fixed-top-bar-button:hover {
-      background-color: var(--pink-600);
-      transform: translateY(-2px);
-      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-    }
-    /* --- End Fixed Top Bar --- */
+  }
+  .header-video {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border-radius: 1.5rem; /* Rounded corners like header */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border: 2px solid var(--pink-200); /* Match header border */
+      background-color: var(--pink-50); /* Fallback background */
+  }
+  /* --- End Header Video --- */
 
 
-    /* --- Header Video --- */
-    .header-video-container {
-        width: 100%;
-        padding: 0 1rem; /* Match header padding */
-        margin: 0.5rem 0 0.5rem; /* Reduced top margin to decrease space */
-        box-sizing: border-box;
-    }
-    .header-video {
-        display: block;
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        border-radius: 1.5rem; /* Rounded corners like header */
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        border: 2px solid var(--pink-200); /* Match header border */
-        background-color: var(--pink-50); /* Fallback background */
-    }
-    /* --- End Header Video --- */
+  /* Hide scrollbar visually but keep functionality */
+  .hide-scrollbar::-webkit-scrollbar {
+      display: none; /* Safari and Chrome */
+  }
+  .hide-scrollbar {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+  }
+
+  /* Original Header Styles (needed for Coupon section) */
+  .header { /* Keep general header styling for coupon section */
+    padding: 1.5rem 1rem 1rem; /* Reduced bottom padding slightly */
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 10;
+    margin: 1rem 1rem 0.5rem;
+    border: 2px solid var(--pink-200);
+  }
+  .site-title { /* Keep site title style */
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--pink-600);
+    margin-bottom: 0.25rem;
+  }
+  .site-subtitle { /* Keep site subtitle style */
+    font-size: 0.875rem;
+    color: var(--gray-600);
+    font-weight: 300;
+  }
+  /* Ensure specific font for coupon title if needed, though global .site-title should work */
+  #cupons .site-title {
+     font-family: 'Dancing Script', cursive;
+  }
+
+  /* --- REMOVED Scroll Indicator Styles --- */
+  /* --- REMOVED Social buttons Styles --- */
+
+  /* Main content */
+  main {
+    flex: 1;
+    overflow-y: auto; /* Scroll vertical principal */
+    /* Padding inferior para espaço do nav fixo */
+    padding-bottom: 7rem;
+  }
+  .section {
+    padding: 1.5rem 1rem;
+    margin: 1rem 0.5rem;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden; /* Contain floats/margins */
+  }
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: 1rem;
+    text-align: center;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--pink-400);
+    border-radius: 2px;
+  }
+  .section-subtitle {
+    font-size: 1rem;
+    color: var(--gray-600);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 300;
+  }
+
+  /* Products carousel */
+  .carousel-container {
+    position: relative;
+    width: 100%;
+  }
+
+  .carousel {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.5rem 0 1rem 0;
+    margin: 0 -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    align-items: stretch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .carousel::-webkit-scrollbar {
+      display: none;
+  }
+
+  .carousel-item {
+    flex: 0 0 auto;
+    width: calc((100% - 30px) / 3); /* Default width, JS adjusts */
+    display: flex;
+    scroll-snap-align: start;
+  }
+
+  .carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 5;
+    transition: opacity 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .carousel-nav:hover {
+    background-color: var(--white);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  }
+  .carousel-prev {
+    left: -0.75rem;
+  }
+  .carousel-next {
+    right: -0.75rem;
+  }
+  .carousel-nav.hidden {
+      opacity: 0;
+      pointer-events: none;
+  }
+  .carousel-nav-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  /* Products grid */
+  .product-card {
+    background-color: var(--white);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  .product-img-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    background-color: var(--gray-100);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .product-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .product-card:hover .product-img {
+    transform: scale(1.05);
+  }
+  .product-info {
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+  }
+  .product-title {
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    color: var(--gray-800);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: calc(2 * 1.5 * 0.75rem);
+  }
+  .product-price {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--pink-600);
+    margin-bottom: 0.5rem;
+    margin-top: auto;
+  }
+  .buy-button, .mercado-pago-button {
+    width: 100%;
+    margin-top: 0.5rem;
+    min-height: calc(0.5rem * 2 + 1.5 * 0.75rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .buy-button {
+    padding: 0.5rem;
+    background-color: var(--pink-500);
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .buy-button:hover {
+    background-color: var(--pink-600);
+  }
+  .buy-button[disabled] {
+      background-color: var(--gray-300);
+      cursor: not-allowed;
+  }
+
+  .see-more-button {
+    display: block;
+    width: 80%;
+    margin: 1.5rem auto 0;
+    padding: 0.75rem;
+    background-color: var(--pink-500);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  .see-more-button:hover {
+    background-color: var(--pink-600);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+
+  /* Coupons */
+  .coupon-card { background-color: var(--white); border-radius: 0.75rem; padding: 1rem; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); border: 1px dashed var(--pink-400); position: relative; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .coupon-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
+  .coupon-discount { position: absolute; top: -0.75rem; right: 1rem; background-color: var(--pink-500); color: white; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.875rem; font-weight: 600; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+  .coupon-title { font-size: 1rem; font-weight: 600; color: var(--gray-900); margin-bottom: 0.5rem; }
+  .coupon-description { font-size: 0.75rem; color: var(--gray-600); margin-bottom: 0.75rem; }
+  .coupon-code { display: flex; align-items: center; margin-bottom: 0.75rem; }
+  .code-display { flex: 1; padding: 0.5rem; background-color: var(--gray-100); border-radius: 0.25rem; font-size: 0.875rem; font-weight: 600; color: var(--gray-900); text-align: center; letter-spacing: 1px; margin-right: 0.5rem; border: 1px dashed var(--gray-300); }
+  .copy-button { padding: 0.5rem; background-color: var(--pink-500); color: white; border: none; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500; cursor: pointer; transition: background-color 0.3s ease; line-height: 1.5; }
+  .copy-button:hover { background-color: var(--pink-600); }
+  .copy-button[disabled] { background-color: var(--gray-300); cursor: not-allowed; }
+  .coupon-validity { font-size: 0.75rem; color: var(--gray-500); text-align: center; }
+  .shopee-button { display: none; width: 100%; margin-top: 0.5rem; padding: 0.5rem; background-color: #ee4d2d; color: white; border: none; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500; cursor: pointer; text-align: center; transition: background-color 0.3s ease; line-height: 1.5; }
+  .shopee-button:hover { background-color: #d03a18; }
 
 
-    /* Hide scrollbar visually but keep functionality */
-    .hide-scrollbar::-webkit-scrollbar {
-        display: none; /* Safari and Chrome */
-    }
-    .hide-scrollbar {
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
-    }
-
-    /* Original Header Styles (needed for Coupon section) */
-    .header { /* Keep general header styling for coupon section */
-      padding: 1.5rem 1rem 1rem; /* Reduced bottom padding slightly */
-      text-align: center;
+  /* Bottom navigation */
+   .bottom-nav {
+      position: fixed;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%) translateZ(0); /* Manter translateZ(0) */
       background-color: rgba(255, 255, 255, 0.95);
       border-radius: 2rem;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      position: relative;
-      z-index: 10;
-      margin: 1rem 1rem 0.5rem;
-      border: 2px solid var(--pink-200);
-    }
-    .site-title { /* Keep site title style */
-      font-family: 'Dancing Script', cursive;
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--pink-600);
-      margin-bottom: 0.25rem;
-    }
-    .site-subtitle { /* Keep site subtitle style */
-      font-size: 0.875rem;
-      color: var(--gray-600);
-      font-weight: 300;
-    }
-    /* Ensure specific font for coupon title if needed, though global .site-title should work */
-    #cupons .site-title {
-       font-family: 'Dancing Script', cursive;
-    }
+      display: flex;
+      height: 3.5rem;
+      z-index: 999;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 0 1rem;
+      will-change: transform; /* Manter */
+   }
+   .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; color: var(--gray-500); text-decoration: none; position: relative; padding: 0 1.5rem; transition: color 0.3s ease; }
+   .nav-item.active { color: var(--pink-500); }
+   .nav-item::after { content: ''; position: absolute; bottom: 0.5rem; width: 0; height: 2px; background-color: var(--pink-500); border-radius: 9999px; transition: width 0.3s ease; }
+   .nav-item.active::after { width: 1.5rem; }
+   .nav-icon { width: 1.25rem; height: 1.25rem; }
+   .nav-text { font-size: 0.625rem; font-weight: 500; }
 
-    /* --- REMOVED Scroll Indicator Styles --- */
-    /* --- REMOVED Social buttons Styles --- */
 
-    /* Main content */
-    main {
-      flex: 1;
-      overflow-y: auto; /* Scroll vertical principal */
-      /* Padding inferior para espaço do nav fixo */
-      padding-bottom: 7rem;
-    }
-    .section {
+  /* Content sections */
+  .content-section { display: none; animation: fadeIn 0.5s ease; }
+  .content-section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+
+  /* Footer */
+  .footer {
       padding: 1.5rem 1rem;
-      margin: 1rem 0.5rem;
-      background-color: rgba(255, 255, 255, 0.95);
-      border-radius: 1rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-      position: relative;
-      overflow: hidden; /* Contain floats/margins */
-    }
-    .section-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--gray-900);
-      margin-bottom: 1rem;
       text-align: center;
       position: relative;
-      display: inline-block;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background-color: var(--pink-400);
-      border-radius: 2px;
-    }
-    .section-subtitle {
-      font-size: 1rem;
-      color: var(--gray-600);
-      margin-bottom: 1.5rem;
-      text-align: center;
-      font-weight: 300;
-    }
-
-    /* Products carousel */
-    .carousel-container {
-      position: relative;
-      width: 100%;
-    }
-
-    .carousel {
-      display: flex;
-      gap: 15px;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      padding: 0.5rem 0 1rem 0;
-      margin: 0 -1rem;
-      padding-left: 1rem;
-      padding-right: 1rem;
-      align-items: stretch;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-    .carousel::-webkit-scrollbar {
-        display: none;
-    }
-
-    .carousel-item {
-      flex: 0 0 auto;
-      width: calc((100% - 30px) / 3); /* Default width, JS adjusts */
-      display: flex;
-      scroll-snap-align: start;
-    }
-
-    .carousel-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 2.5rem;
-      height: 2.5rem;
-      background-color: rgba(255, 255, 255, 0.9);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      z-index: 5;
-      transition: opacity 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .carousel-nav:hover {
-      background-color: var(--white);
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-    }
-    .carousel-prev {
-      left: -0.75rem;
-    }
-    .carousel-next {
-      right: -0.75rem;
-    }
-    .carousel-nav.hidden {
-        opacity: 0;
-        pointer-events: none;
-    }
-    .carousel-nav-icon {
-      width: 1.2rem;
-      height: 1.2rem;
-    }
-
-    /* Products grid */
-    .product-card {
-      background-color: var(--white);
-      border-radius: 0.75rem;
-      overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-    .product-img-container {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 1/1;
-      background-color: var(--gray-100);
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-    .product-img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-    .product-card:hover .product-img {
-      transform: scale(1.05);
-    }
-    .product-info {
-      padding: 0.75rem;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-      justify-content: space-between;
-    }
-    .product-title {
-      font-size: 0.75rem;
-      font-weight: 500;
-      margin-bottom: 0.25rem;
-      color: var(--gray-800);
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-height: calc(2 * 1.5 * 0.75rem);
-    }
-    .product-price {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--pink-600);
-      margin-bottom: 0.5rem;
-      margin-top: auto;
-    }
-    .buy-button, .mercado-pago-button {
-      width: 100%;
-      margin-top: 0.5rem;
-      min-height: calc(0.5rem * 2 + 1.5 * 0.75rem);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .buy-button {
-      padding: 0.5rem;
-      background-color: var(--pink-500);
-      color: white;
-      border: none;
-      border-radius: 0.25rem;
-      font-size: 0.75rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      text-align: center;
-      line-height: 1.5;
-    }
-    .buy-button:hover {
-      background-color: var(--pink-600);
-    }
-    .buy-button[disabled] {
-        background-color: var(--gray-300);
-        cursor: not-allowed;
-    }
-
-    .see-more-button {
-      display: block;
-      width: 80%;
-      margin: 1.5rem auto 0;
-      padding: 0.75rem;
-      background-color: var(--pink-500);
-      color: white;
-      border: none;
-      border-radius: 0.5rem;
-      font-size: 0.875rem;
-      font-weight: 500;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: none;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-    }
-    .see-more-button:hover {
-      background-color: var(--pink-600);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-      transform: translateY(-2px);
-    }
-
-    /* Coupons */
-    .coupon-card { background-color: var(--white); border-radius: 0.75rem; padding: 1rem; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); border: 1px dashed var(--pink-400); position: relative; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .coupon-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
-    .coupon-discount { position: absolute; top: -0.75rem; right: 1rem; background-color: var(--pink-500); color: white; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.875rem; font-weight: 600; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
-    .coupon-title { font-size: 1rem; font-weight: 600; color: var(--gray-900); margin-bottom: 0.5rem; }
-    .coupon-description { font-size: 0.75rem; color: var(--gray-600); margin-bottom: 0.75rem; }
-    .coupon-code { display: flex; align-items: center; margin-bottom: 0.75rem; }
-    .code-display { flex: 1; padding: 0.5rem; background-color: var(--gray-100); border-radius: 0.25rem; font-size: 0.875rem; font-weight: 600; color: var(--gray-900); text-align: center; letter-spacing: 1px; margin-right: 0.5rem; border: 1px dashed var(--gray-300); }
-    .copy-button { padding: 0.5rem; background-color: var(--pink-500); color: white; border: none; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500; cursor: pointer; transition: background-color 0.3s ease; line-height: 1.5; }
-    .copy-button:hover { background-color: var(--pink-600); }
-    .copy-button[disabled] { background-color: var(--gray-300); cursor: not-allowed; }
-    .coupon-validity { font-size: 0.75rem; color: var(--gray-500); text-align: center; }
-    .shopee-button { display: none; width: 100%; margin-top: 0.5rem; padding: 0.5rem; background-color: #ee4d2d; color: white; border: none; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500; cursor: pointer; text-align: center; transition: background-color 0.3s ease; line-height: 1.5; }
-    .shopee-button:hover { background-color: #d03a18; }
+  }
+  .footer-content { background-color: rgba(255, 255, 255, 0.95); border-radius: 1rem; padding: 1rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); position: relative; }
+  .footer-decoration { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--pink-400); }
+  .stationery-icon { position: absolute; width: 1.5rem; height: 1.5rem; opacity: 0.2; }
+  .icon-1 { top: 0.5rem; left: 1rem; transform: rotate(-15deg); }
+  .icon-2 { top: 1rem; right: 1rem; transform: rotate(25deg); }
+  .icon-3 { bottom: 0.5rem; left: 2rem; transform: rotate(10deg); }
+  .icon-4 { bottom: 1rem; right: 2rem; transform: rotate(-20deg); }
 
 
-    /* Bottom navigation */
-     .bottom-nav {
-        position: fixed;
-        bottom: 1rem;
-        left: 50%;
-        transform: translateX(-50%) translateZ(0); /* Manter translateZ(0) */
-        background-color: rgba(255, 255, 255, 0.95);
-        border-radius: 2rem;
-        display: flex;
-        height: 3.5rem;
-        z-index: 999;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        padding: 0 1rem;
-        will-change: transform; /* Manter */
-     }
-     .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; color: var(--gray-500); text-decoration: none; position: relative; padding: 0 1.5rem; transition: color 0.3s ease; }
-     .nav-item.active { color: var(--pink-500); }
-     .nav-item::after { content: ''; position: absolute; bottom: 0.5rem; width: 0; height: 2px; background-color: var(--pink-500); border-radius: 9999px; transition: width 0.3s ease; }
-     .nav-item.active::after { width: 1.5rem; }
-     .nav-icon { width: 1.25rem; height: 1.25rem; }
-     .nav-text { font-size: 0.625rem; font-weight: 500; }
+  /* --- REMOVED Botão flutuante Styles --- */
+
+  /* Loading spinner */
+  .loading-spinner { display: flex; justify-content: center; align-items: center; padding: 2rem; width: 100%; }
+  .spinner { width: 40px; height: 40px; border: 4px solid var(--gray-200); border-top: 4px solid var(--pink-500); border-radius: 50%; animation: spin 1s linear infinite; }
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
 
-    /* Content sections */
-    .content-section { display: none; animation: fadeIn 0.5s ease; }
-    .content-section.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  /* Responsive adjustments */
+  @media (min-width: 769px) {
+     /* item width handled by JS */
+  }
+  @media (max-width: 768px) {
+      /* item width handled by JS */
+       body { padding-top: 55px; } /* Adjust padding for smaller screens if needed */
+  }
+  @media (max-width: 480px) {
+      .fixed-top-bar { width: calc(100% - 1rem); top: 0.5rem;} /* Adjust width for smaller screens */
+      body { padding-top: 55px; } /* Adjust padding - slightly more needed with larger icons */
 
+      .nav-item {
+          padding: 0 1rem;
+      }
+      .carousel-prev { left: -0.5rem; }
+      .carousel-next { right: -0.5rem; }
+      /* item width handled by JS */
 
-    /* Footer */
-    .footer {
-        padding: 1.5rem 1rem;
-        text-align: center;
-        position: relative;
-    }
-    .footer-content { background-color: rgba(255, 255, 255, 0.95); border-radius: 1rem; padding: 1rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); position: relative; }
-    .footer-decoration { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--pink-400); }
-    .stationery-icon { position: absolute; width: 1.5rem; height: 1.5rem; opacity: 0.2; }
-    .icon-1 { top: 0.5rem; left: 1rem; transform: rotate(-15deg); }
-    .icon-2 { top: 1rem; right: 1rem; transform: rotate(25deg); }
-    .icon-3 { bottom: 0.5rem; left: 2rem; transform: rotate(10deg); }
-    .icon-4 { bottom: 1rem; right: 2rem; transform: rotate(-20deg); }
+      /* Adjust top bar elements slightly for very small screens if necessary */
+      .fixed-top-bar-title { font-size: 1.1rem; margin-right: 0.2rem;}
+      .fixed-top-bar-icons { gap: 0.4rem; } /* Adjust gap */
+      .fixed-top-bar-icon { width: 1.8rem; height: 1.8rem; } /* Slightly smaller */
+      .fixed-top-bar-button { font-size: 0.65rem; padding: 0.4rem 0.6rem; margin-left: 0.2rem;}
+  }
 
+  @media (max-width: 360px) {
+      body { padding-top: 50px; } /* Further adjust padding */
+      .fixed-top-bar-icons { gap: 0.3rem; } /* Adjust gap */
+      .fixed-top-bar-icon { width: 1.6rem; height: 1.6rem; } /* Slightly smaller */
+      .nav-item { padding: 0 0.8rem; }
+      .product-title { font-size: 0.7rem; min-height: calc(2 * 1.5 * 0.7rem); }
+      .product-price { font-size: 0.8rem; }
+      .buy-button, .copy-button, .shopee-button { font-size: 0.7rem; padding: 0.4rem; }
+      .buy-button, .mercado-pago-button { min-height: calc(0.4rem * 2 + 1.5 * 0.7rem); }
+      .carousel-prev { left: -0.25rem; }
+      .carousel-next { right: -0.25rem; }
+  }
+  /* Style for empty carousel message */
+  .carousel-empty {
+       text-align: center;
+       width: 100%;
+       color: var(--gray-500);
+       padding: 1rem;
+  }
 
-    /* --- REMOVED Botão flutuante Styles --- */
+  /* Estilos para o modal/popup */
+  .product-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
 
-    /* Loading spinner */
-    .loading-spinner { display: flex; justify-content: center; align-items: center; padding: 2rem; width: 100%; }
-    .spinner { width: 40px; height: 40px; border: 4px solid var(--gray-200); border-top: 4px solid var(--pink-500); border-radius: 50%; animation: spin 1s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  .product-modal-content {
+    background-color: var(--white);
+    border-radius: 1rem;
+    max-width: 90%;
+    width: 350px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: modalFadeIn 0.3s ease;
+  }
 
+  @keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-    /* Responsive adjustments */
-    @media (min-width: 769px) {
-       /* item width handled by JS */
-    }
-    @media (max-width: 768px) {
-        /* item width handled by JS */
-         body { padding-top: 55px; } /* Adjust padding for smaller screens if needed */
-    }
-    @media (max-width: 480px) {
-        .fixed-top-bar { width: calc(100% - 1rem); top: 0.5rem;} /* Adjust width for smaller screens */
-        body { padding-top: 55px; } /* Adjust padding - slightly more needed with larger icons */
+  .product-modal-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--gray-700);
+    z-index: 10;
+  }
 
-        .nav-item {
-            padding: 0 1rem;
-        }
-        .carousel-prev { left: -0.5rem; }
-        .carousel-next { right: -0.5rem; }
-        /* item width handled by JS */
+  .product-modal-image {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+  }
 
-        /* Adjust top bar elements slightly for very small screens if necessary */
-        .fixed-top-bar-title { font-size: 1.1rem; margin-right: 0.2rem;}
-        .fixed-top-bar-icons { gap: 0.4rem; } /* Adjust gap */
-        .fixed-top-bar-icon { width: 1.8rem; height: 1.8rem; } /* Slightly smaller */
-        .fixed-top-bar-button { font-size: 0.65rem; padding: 0.4rem 0.6rem; margin-left: 0.2rem;}
-    }
+  .product-modal-info {
+    padding: 1rem;
+  }
 
-    @media (max-width: 360px) {
-        body { padding-top: 50px; } /* Further adjust padding */
-        .fixed-top-bar-icons { gap: 0.3rem; } /* Adjust gap */
-        .fixed-top-bar-icon { width: 1.6rem; height: 1.6rem; } /* Slightly smaller */
-        .nav-item { padding: 0 0.8rem; }
-        .product-title { font-size: 0.7rem; min-height: calc(2 * 1.5 * 0.7rem); }
-        .product-price { font-size: 0.8rem; }
-        .buy-button, .copy-button, .shopee-button { font-size: 0.7rem; padding: 0.4rem; }
-        .buy-button, .mercado-pago-button { min-height: calc(0.4rem * 2 + 1.5 * 0.7rem); }
-        .carousel-prev { left: -0.25rem; }
-        .carousel-next { right: -0.25rem; }
-    }
-    /* Style for empty carousel message */
-    .carousel-empty {
-         text-align: center;
-         width: 100%;
-         color: var(--gray-500);
-         padding: 1rem;
-    }
+  .product-modal-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 0.5rem;
+  }
 
-    /* Estilos para o preço riscado */
-    .product-old-price {
-      font-size: 0.75rem;
-      text-decoration: line-through;
-      color: var(--gray-500);
-      margin-bottom: 0.25rem;
-    }
+  .product-modal-price-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
 
-    /* Estilos para o temporizador */
-    .product-timer {
-      font-size: 0.7rem;
-      color: var(--pink-600);
-      margin-top: 0.25rem;
-      font-weight: 500;
-    }
+  .product-modal-old-price {
+    font-size: 0.9rem;
+    text-decoration: line-through;
+    color: var(--gray-500);
+  }
 
-    /* Estilos para o modal/popup */
-    .product-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      z-index: 2000;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem;
-    }
+  .product-modal-price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--pink-600);
+  }
 
-    .product-modal-content {
-      background-color: var(--white);
-      border-radius: 1rem;
-      max-width: 90%;
-      width: 350px;
-      max-height: 90vh;
-      overflow-y: auto;
-      position: relative;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      animation: modalFadeIn 0.3s ease;
-    }
+  .product-modal-timer {
+    font-size: 0.8rem;
+    color: var(--pink-600);
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
 
-    @keyframes modalFadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+  .product-modal-warning {
+    background-color: var(--pink-50);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 0.8rem;
+    color: var(--gray-700);
+  }
 
-    .product-modal-close {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      width: 2rem;
-      height: 2rem;
-      background-color: rgba(255, 255, 255, 0.8);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.2rem;
-      color: var(--gray-700);
-      z-index: 10;
-    }
+  .product-modal-seal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+  }
 
-    .product-modal-image {
-      width: 100%;
-      aspect-ratio: 1/1;
-      object-fit: cover;
-      border-top-left-radius: 1rem;
-      border-top-right-radius: 1rem;
-    }
+  .product-modal-seal img {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 
-    .product-modal-info {
-      padding: 1rem;
-    }
+  .product-modal-seal-text {
+    font-size: 0.8rem;
+    color: var(--gray-700);
+    font-weight: 500;
+  }
 
-    .product-modal-title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--gray-800);
-      margin-bottom: 0.5rem;
-    }
+  .product-modal-buttons {
+    display: flex;
+    gap: 0.75rem;
+  }
 
-    .product-modal-price-container {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 1rem;
-    }
+  .product-modal-button {
+    flex: 1;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
 
-    .product-modal-old-price {
-      font-size: 0.9rem;
-      text-decoration: line-through;
-      color: var(--gray-500);
-    }
+  .product-modal-button-back {
+    background-color: var(--gray-200);
+    color: var(--gray-700);
+  }
 
-    .product-modal-price {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--pink-600);
-    }
+  .product-modal-button-back:hover {
+    background-color: var(--gray-300);
+  }
 
-    .product-modal-timer {
-      font-size: 0.8rem;
-      color: var(--pink-600);
-      margin-bottom: 1rem;
-      font-weight: 500;
-    }
+  .product-modal-button-buy {
+    background-color: var(--pink-500);
+    color: var(--white);
+  }
 
-    .product-modal-warning {
-      background-color: var(--pink-50);
-      border-radius: 0.5rem;
-      padding: 0.75rem;
-      margin-bottom: 1rem;
-      font-size: 0.8rem;
-      color: var(--gray-700);
-    }
-
-    .product-modal-seal {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1rem;
-      gap: 0.5rem;
-    }
-
-    .product-modal-seal img {
-      width: 1.5rem;
-      height: 1.5rem;
-    }
-
-    .product-modal-seal-text {
-      font-size: 0.8rem;
-      color: var(--gray-700);
-      font-weight: 500;
-    }
-
-    .product-modal-buttons {
-      display: flex;
-      gap: 0.75rem;
-    }
-
-    .product-modal-button {
-      flex: 1;
-      padding: 0.75rem;
-      border-radius: 0.5rem;
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .product-modal-button-back {
-      background-color: var(--gray-200);
-      color: var(--gray-700);
-    }
-
-    .product-modal-button-back:hover {
-      background-color: var(--gray-300);
-    }
-
-    .product-modal-button-buy {
-      background-color: var(--pink-500);
-      color: var(--white);
-    }
-
-    .product-modal-button-buy:hover {
-      background-color: var(--pink-600);
-    }
-  </style>
+  .product-modal-button-buy:hover {
+    background-color: var(--pink-600);
+  }
+</style>
 </head>
 <body>
 
-  <div class="fixed-top-bar">
-    <span class="fixed-top-bar-title">Carol Artes</span>
-    <div class="fixed-top-bar-icons">
-      <a href="https://instagram.com/carolartes.oficial" class="fixed-top-bar-icon" target="_blank" rel="noopener noreferrer" title="Instagram">
-        <img src="templates/layout/instagram.png" alt="Instagram">
-      </a>
-      <a href="https://tiktok.com/@carolartes.ofical" class="fixed-top-bar-icon" target="_blank" rel="noopener noreferrer" title="TikTok">
-           <img src="templates/layout/tiktok.png" alt="TikTok">
-      </a>
-      <a href="https://api.whatsapp.com/send/?phone=5531987426591" class="fixed-top-bar-icon" target="_blank" rel="noopener noreferrer" title="WhatsApp">
-        <img src="templates/layout/whatsapp.png" alt="WhatsApp">
-      </a>
-    </div>
-    <a href="https://shopee.com.br/CarollShop" class="fixed-top-bar-button" target="_blank" rel="noopener noreferrer">
-      Ir para a loja na Shopee
+<div class="fixed-top-bar">
+  <span class="fixed-top-bar-title">Carol Artes</span>
+  <div class="fixed-top-bar-icons">
+    <a href="https://instagram.com/carolartes.oficial" class="fixed-top-bar-icon" target="_blank" rel="noopener noreferrer" title="Instagram">
+      <img src="templates/layout/instagram.png" alt="Instagram">
+    </a>
+    <a href="https://tiktok.com/@carolartes.ofical" class="fixed-top-bar-icon" target="_blank" rel="noopener noreferrer" title="TikTok">
+         <img src="templates/layout/tiktok.png" alt="TikTok">
+    </a>
+    <a href="https://api.whatsapp.com/send/?phone=5531987426591" class="fixed-top-bar-icon" target="_blank" rel="noopener noreferrer" title="WhatsApp">
+      <img src="templates/layout/whatsapp.png" alt="WhatsApp">
     </a>
   </div>
+  <a href="https://shopee.com.br/CarollShop" class="fixed-top-bar-button" target="_blank" rel="noopener noreferrer">
+    Ir para a loja na Shopee
+  </a>
+</div>
 
-  <main>
-    <div id="inicio" class="content-section active">
+<main>
+  <div id="inicio" class="content-section active">
 
-      <div class="header-video-container">
-           <video class="header-video" autoplay loop muted playsinline poster="templates/layout/placeholder.png">
-               <source src="templates/video/carolartesloop.mp4" type="video/mp4">
-               Seu navegador não suporta a tag de vídeo. </video>
-       </div>
-
-      <section class="section">
-        <h2 class="section-title">Moldes Digitais</h2>
-        <div class="carousel-container">
-          <div class="carousel hide-scrollbar" id="moldes-carousel">
-            <div class="loading-spinner"><div class="spinner"></div></div>
-            </div>
-          <div class="carousel-nav carousel-prev hidden" onclick="moveCarousel('moldes-carousel', -1)">
-            <img src="templates/layout/arrow-left.png" alt="Anterior" class="carousel-nav-icon">
-          </div>
-          <div class="carousel-nav carousel-next hidden" onclick="moveCarousel('moldes-carousel', 1)">
-            <img src="templates/layout/arrow-right.png" alt="Próximo" class="carousel-nav-icon">
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2 class="section-title">Conheça nossos personalizados prontos</h2>
-        <div class="carousel-container">
-           <div class="carousel hide-scrollbar" id="personalizados-carousel">
-             <div class="loading-spinner"><div class="spinner"></div></div>
-             </div>
-           <div class="carousel-nav carousel-prev hidden" onclick="moveCarousel('personalizados-carousel', -1)">
-             <img src="templates/layout/arrow-left.png" alt="Anterior" class="carousel-nav-icon">
-           </div>
-           <div class="carousel-nav carousel-next hidden" onclick="moveCarousel('personalizados-carousel', 1)">
-             <img src="templates/layout/arrow-right.png" alt="Próximo" class="carousel-nav-icon">
-           </div>
-         </div>
-         <a href="https://shopee.com.br/CarollShop" class="see-more-button" target="_blank" rel="noopener noreferrer">Ver mais na Shopee</a>
-       </section>
-
-      <section class="section">
-        <h2 class="section-title">Produtos de vendedores parceiros</h2>
-        <div class="carousel-container">
-          <div class="carousel hide-scrollbar" id="parceiros-carousel">
-            <div class="loading-spinner"><div class="spinner"></div></div>
-             </div>
-          <div class="carousel-nav carousel-prev hidden" onclick="moveCarousel('parceiros-carousel', -1)">
-            <img src="templates/layout/arrow-left.png" alt="Anterior" class="carousel-nav-icon">
-          </div>
-          <div class="carousel-nav carousel-next hidden" onclick="moveCarousel('parceiros-carousel', 1)">
-            <img src="templates/layout/arrow-right.png" alt="Próximo" class="carousel-nav-icon">
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <div id="cupons" class="content-section">
-       <header class="header">
-         <h1 class="site-title">Cupons de Desconto</h1>
-         <p class="site-subtitle">Economize em suas compras</p>
-       </header>
-       <section class="section" style="border-bottom: none; margin-top: 0.5rem;"> <div id="cupons-container">
-           <div class="loading-spinner"><div class="spinner"></div></div>
-           </div>
-       </section>
+    <div class="header-video-container">
+         <video class="header-video" autoplay loop muted playsinline poster="templates/layout/placeholder.png">
+             <source src="templates/video/carolartesloop.mp4" type="video/mp4">
+             Seu navegador não suporta a tag de vídeo. </video>
      </div>
 
-    <footer class="footer">
-      <div class="footer-content">
-        <div class="footer-decoration">✨</div>
-        <img src="templates/layout/pencil.png" alt="Lápis" class="stationery-icon icon-1">
-        <img src="templates/layout/ruler.png" alt="Régua" class="stationery-icon icon-2">
-        <img src="templates/layout/paperclip.png" alt="Clipe" class="stationery-icon icon-3">
-        <img src="templates/layout/eraser.png" alt="Borracha" class="stationery-icon icon-4">
+    <section class="section">
+      <h2 class="section-title">Moldes Digitais</h2>
+      <div class="carousel-container">
+        <div class="carousel hide-scrollbar" id="moldes-carousel">
+          <div class="loading-spinner"><div class="spinner"></div></div>
+          </div>
+        <div class="carousel-nav carousel-prev hidden" onclick="moveCarousel('moldes-carousel', -1)">
+          <img src="templates/layout/arrow-left.png" alt="Anterior" class="carousel-nav-icon">
+        </div>
+        <div class="carousel-nav carousel-next hidden" onclick="moveCarousel('moldes-carousel', 1)">
+          <img src="templates/layout/arrow-right.png" alt="Próximo" class="carousel-nav-icon">
+        </div>
       </div>
-    </footer>
-  </main>
+    </section>
 
-  <nav class="bottom-nav">
-    <a href="#" class="nav-item active" data-section="inicio">
-      <img src="templates/layout/home.png" alt="Início" class="nav-icon">
-      <span class="nav-text">Início</span>
-    </a>
-    <a href="#" class="nav-item" data-section="cupons">
-      <img src="templates/layout/coupon.png" alt="Cupons" class="nav-icon">
-      <span class="nav-text">Cupons</span>
-    </a>
-  </nav>
+    <section class="section">
+      <h2 class="section-title">Conheça nossos personalizados prontos</h2>
+      <div class="carousel-container">
+         <div class="carousel hide-scrollbar" id="personalizados-carousel">
+           <div class="loading-spinner"><div class="spinner"></div></div>
+           </div>
+         <div class="carousel-nav carousel-prev hidden" onclick="moveCarousel('personalizados-carousel', -1)">
+           <img src="templates/layout/arrow-left.png" alt="Anterior" class="carousel-nav-icon">
+         </div>
+         <div class="carousel-nav carousel-next hidden" onclick="moveCarousel('personalizados-carousel', 1)">
+           <img src="templates/layout/arrow-right.png" alt="Próximo" class="carousel-nav-icon">
+         </div>
+       </div>
+       <a href="https://shopee.com.br/CarollShop" class="see-more-button" target="_blank" rel="noopener noreferrer">Ver mais na Shopee</a>
+     </section>
 
-  <!-- Modal para exibir produto -->
-  <div id="product-modal" class="product-modal">
-    <div class="product-modal-content">
-      <div class="product-modal-close" onclick="closeProductModal()">✕</div>
-      <img id="modal-product-image" src="/placeholder.svg" alt="Produto" class="product-modal-image">
-      <div class="product-modal-info">
-        <h3 id="modal-product-title" class="product-modal-title"></h3>
-        <div class="product-modal-price-container">
-          <span id="modal-product-old-price" class="product-modal-old-price"></span>
-          <span id="modal-product-price" class="product-modal-price"></span>
+    <section class="section">
+      <h2 class="section-title">Produtos de vendedores parceiros</h2>
+      <div class="carousel-container">
+        <div class="carousel hide-scrollbar" id="parceiros-carousel">
+          <div class="loading-spinner"><div class="spinner"></div></div>
+           </div>
+        <div class="carousel-nav carousel-prev hidden" onclick="moveCarousel('parceiros-carousel', -1)">
+          <img src="templates/layout/arrow-left.png" alt="Anterior" class="carousel-nav-icon">
         </div>
-        <div id="modal-product-timer" class="product-modal-timer"></div>
-        <div class="product-modal-warning">
-          ⚠️ Após o pagamento, você será redirecionado automaticamente para o link de download. Caso isso não aconteça, o link será enviado para o seu e-mail.
+        <div class="carousel-nav carousel-next hidden" onclick="moveCarousel('parceiros-carousel', 1)">
+          <img src="templates/layout/arrow-right.png" alt="Próximo" class="carousel-nav-icon">
         </div>
-        <div class="product-modal-seal">
-          <img src="templates/layout/mercadopago.png" alt="Mercado Pago" onerror="this.src='https://www.mercadopago.com/org-img/MP3/API/logos/mp-logo.svg'; this.onerror=null;">
-          <span class="product-modal-seal-text">Compra segura com Mercado Pago</span>
-        </div>
-        <div class="product-modal-buttons">
-          <div class="product-modal-button product-modal-button-back" onclick="closeProductModal()">Voltar</div>
-          <div id="modal-product-buy" class="product-modal-button product-modal-button-buy">Comprar</div>
-        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="cupons" class="content-section">
+     <header class="header">
+       <h1 class="site-title">Cupons de Desconto</h1>
+       <p class="site-subtitle">Economize em suas compras</p>
+     </header>
+     <section class="section" style="border-bottom: none; margin-top: 0.5rem;"> <div id="cupons-container">
+         <div class="loading-spinner"><div class="spinner"></div></div>
+         </div>
+     </section>
+   </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-decoration">✨</div>
+      <img src="templates/layout/pencil.png" alt="Lápis" class="stationery-icon icon-1">
+      <img src="templates/layout/ruler.png" alt="Régua" class="stationery-icon icon-2">
+      <img src="templates/layout/paperclip.png" alt="Clipe" class="stationery-icon icon-3">
+      <img src="templates/layout/eraser.png" alt="Borracha" class="stationery-icon icon-4">
+    </div>
+  </footer>
+</main>
+
+<nav class="bottom-nav">
+  <a href="#" class="nav-item active" data-section="inicio">
+    <img src="templates/layout/home.png" alt="Início" class="nav-icon">
+    <span class="nav-text">Início</span>
+  </a>
+  <a href="#" class="nav-item" data-section="cupons">
+    <img src="templates/layout/coupon.png" alt="Cupons" class="nav-icon">
+    <span class="nav-text">Cupons</span>
+  </a>
+</nav>
+
+<!-- Modal para exibir produto -->
+<div id="product-modal" class="product-modal">
+  <div class="product-modal-content">
+    <div class="product-modal-close" onclick="closeProductModal()">✕</div>
+    <img id="modal-product-image" src="/placeholder.svg" alt="Produto" class="product-modal-image">
+    <div class="product-modal-info">
+      <h3 id="modal-product-title" class="product-modal-title"></h3>
+      <div class="product-modal-price-container">
+        <span id="modal-product-old-price" class="product-modal-old-price"></span>
+        <span id="modal-product-price" class="product-modal-price"></span>
+      </div>
+      <div id="modal-product-timer" class="product-modal-timer"></div>
+      <div class="product-modal-warning">
+        ⚠️ Após o pagamento, você será redirecionado automaticamente para o link de download. Caso isso não aconteça, o link será enviado para o seu e-mail.
+      </div>
+      <div class="product-modal-seal">
+        <img src="templates/layout/mercadopago.png" alt="Mercado Pago" onerror="this.src='https://www.mercadopago.com/org-img/MP3/API/logos/mp-logo.svg'; this.onerror=null;">
+        <span class="product-modal-seal-text">Compra segura com Mercado Pago</span>
+      </div>
+      <div class="product-modal-buttons">
+        <div class="product-modal-button product-modal-button-back" onclick="closeProductModal()">Voltar</div>
+        <div id="modal-product-buy" class="product-modal-button product-modal-button-buy">Comprar</div>
       </div>
     </div>
   </div>
+</div>
 
-  <script>
-    // Debounce function
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
-
-    // Função auxiliar para obter quantos itens estão visíveis
-    function getItemsPerView() {
-        // Ajustar para telas menores primeiro
-        if (window.innerWidth <= 480) return 2;
-        if (window.innerWidth <= 768) return 3;
-        return 4; // Para telas maiores
-    }
-
-
-    // Função para atualizar visibilidade das setas baseado no scroll
-    function updateArrowVisibility(carouselElement) {
-        // Adicionar verificação se carouselElement existe
-        if (!carouselElement) return;
-        const container = carouselElement.closest('.carousel-container');
-        if (!container) return;
-        const prevButton = container.querySelector('.carousel-prev');
-        const nextButton = container.querySelector('.carousel-next');
-        if (!prevButton || !nextButton) return;
-
-        const scrollLeft = carouselElement.scrollLeft;
-        const scrollWidth = carouselElement.scrollWidth;
-        const clientWidth = carouselElement.clientWidth;
-        const tolerance = 5; // Pequena tolerância para evitar problemas de arredondamento
-
-        // Garante que clientWidth seja maior que 0 antes de verificar scrollWidth
-        const isScrollable = clientWidth > 0 && scrollWidth > clientWidth + tolerance;
-
-        prevButton.classList.toggle('hidden', !isScrollable || scrollLeft <= tolerance);
-        nextButton.classList.toggle('hidden', !isScrollable || scrollLeft >= (scrollWidth - clientWidth - tolerance));
-    }
-
-
-    // Função para mover o carrossel usando scroll
-    function moveCarousel(carouselId, direction) {
-        const carousel = document.getElementById(carouselId);
-        if (!carousel) {
-            console.error(`Carousel element not found: ${carouselId}`);
-            return;
-        }
-        const items = carousel.querySelectorAll('.carousel-item');
-        if (!items.length) return; // Sai se não houver itens
-
-        // Usa clientWidth que é a largura visível real
-        const scrollAmount = carousel.clientWidth;
-        const targetScrollLeft = carousel.scrollLeft + (direction * scrollAmount);
-
-        carousel.scrollTo({
-            left: targetScrollLeft,
-            behavior: 'smooth'
-        });
-    }
-
-    // Função para carregar dados JSON
-    async function carregarDados(url) {
-      try {
-        const resposta = await fetch(url);
-        if (!resposta.ok) {
-          console.error(`Erro HTTP ${resposta.status} ao carregar ${url}`);
-          return []; // Retorna array vazio em caso de erro
-        }
-        const contentType = resposta.headers.get("content-type");
-        // Verifica se a resposta é JSON antes de tentar parsear
-        if (contentType && contentType.indexOf("application/json") !== -1) {
-          return await resposta.json();
-        } else {
-          console.error(`Resposta de ${url} não é JSON. Tipo: ${contentType}`);
-          return []; // Retorna array vazio se não for JSON
-        }
-      } catch (erro) {
-        console.error(`Falha na rede ou ao processar ${url}:`, erro);
-        return []; // Retorna array vazio em caso de falha de rede/parse
-      }
-    }
-
-    // Função para gerar um temporizador aleatório
-    function gerarTempoAleatorio() {
-      const horas = Math.floor(Math.random() * 24);
-      const minutos = Math.floor(Math.random() * 60);
-      const segundos = Math.floor(Math.random() * 60);
-      return `${horas.toString().padStart(2, '0')}h ${minutos.toString().padStart(2, '0')}m ${segundos.toString().padStart(2, '0')}s`;
-    }
-
-    // Função para abrir o modal do produto
-    function openProductModal(produto) {
-      const modal = document.getElementById('product-modal');
-      const modalImage = document.getElementById('modal-product-image');
-      const modalTitle = document.getElementById('modal-product-title');
-      const modalOldPrice = document.getElementById('modal-product-old-price');
-      const modalPrice = document.getElementById('modal-product-price');
-      const modalTimer = document.getElementById('modal-product-timer');
-      const modalBuyButton = document.getElementById('modal-product-buy');
-
-      // Preencher dados do produto no modal
-      modalImage.src = produto.imagem || 'templates/layout/placeholder.png';
-      modalImage.alt = produto.alt || 'Produto';
-      modalTitle.textContent = produto.titulo || 'Produto sem título';
-      
-      const preco = produto.preco || 0;
-      const precoAntigo = preco * 2; // Preço 100% maior
-      
-      modalOldPrice.textContent = `R$ ${precoAntigo.toFixed(2).replace('.', ',')}`;
-      modalPrice.textContent = `R$ ${preco.toFixed(2).replace('.', ',')}`;
-      modalTimer.textContent = `Oferta válida por: ${gerarTempoAleatorio()}`;
-
-      // Configurar botão de compra
-      modalBuyButton.onclick = function() {
-        if (produto.mercadoPagoId) {
-          window.open(`https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=${produto.mercadoPagoId}`, '_blank');
-        } else {
-          alert('Este produto não está disponível para compra no momento.');
-        }
-        closeProductModal();
+<script>
+  // Debounce function
+  function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+          const later = () => {
+              clearTimeout(timeout);
+              func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
       };
+  }
 
-      // Exibir modal
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden'; // Impedir rolagem do body
-    }
+  // Função auxiliar para obter quantos itens estão visíveis
+  function getItemsPerView() {
+      // Ajustar para telas menores primeiro
+      if (window.innerWidth <= 480) return 2;
+      if (window.innerWidth <= 768) return 3;
+      return 4; // Para telas maiores
+  }
 
-    // Função para fechar o modal do produto
-    function closeProductModal() {
-      const modal = document.getElementById('product-modal');
-      modal.style.display = 'none';
-      document.body.style.overflow = ''; // Restaurar rolagem do body
-    }
 
-    // Fechar modal ao clicar fora do conteúdo
-    window.onclick = function(event) {
-      const modal = document.getElementById('product-modal');
-      if (event.target === modal) {
-        closeProductModal();
+  // Função para atualizar visibilidade das setas baseado no scroll
+  function updateArrowVisibility(carouselElement) {
+      // Adicionar verificação se carouselElement existe
+      if (!carouselElement) return;
+      const container = carouselElement.closest('.carousel-container');
+      if (!container) return;
+      const prevButton = container.querySelector('.carousel-prev');
+      const nextButton = container.querySelector('.carousel-next');
+      if (!prevButton || !nextButton) return;
+
+      const scrollLeft = carouselElement.scrollLeft;
+      const scrollWidth = carouselElement.scrollWidth;
+      const clientWidth = carouselElement.clientWidth;
+      const tolerance = 5; // Pequena tolerância para evitar problemas de arredondamento
+
+      // Garante que clientWidth seja maior que 0 antes de verificar scrollWidth
+      const isScrollable = clientWidth > 0 && scrollWidth > clientWidth + tolerance;
+
+      prevButton.classList.toggle('hidden', !isScrollable || scrollLeft <= tolerance);
+      nextButton.classList.toggle('hidden', !isScrollable || scrollLeft >= (scrollWidth - clientWidth - tolerance));
+  }
+
+
+  // Função para mover o carrossel usando scroll
+  function moveCarousel(carouselId, direction) {
+      const carousel = document.getElementById(carouselId);
+      if (!carousel) {
+          console.error(`Carousel element not found: ${carouselId}`);
+          return;
       }
+      const items = carousel.querySelectorAll('.carousel-item');
+      if (!items.length) return; // Sai se não houver itens
+
+      // Usa clientWidth que é a largura visível real
+      const scrollAmount = carousel.clientWidth;
+      const targetScrollLeft = carousel.scrollLeft + (direction * scrollAmount);
+
+      carousel.scrollTo({
+          left: targetScrollLeft,
+          behavior: 'smooth'
+      });
+  }
+
+  // Função para carregar dados JSON
+  async function carregarDados(url) {
+    try {
+      const resposta = await fetch(url);
+      if (!resposta.ok) {
+        console.error(`Erro HTTP ${resposta.status} ao carregar ${url}`);
+        return []; // Retorna array vazio em caso de erro
+      }
+      const contentType = resposta.headers.get("content-type");
+      // Verifica se a resposta é JSON antes de tentar parsear
+      if (contentType && contentType.indexOf("application/json") !== -1) {
+        return await resposta.json();
+      } else {
+        console.error(`Resposta de ${url} não é JSON. Tipo: ${contentType}`);
+        return []; // Retorna array vazio se não for JSON
+      }
+    } catch (erro) {
+      console.error(`Falha na rede ou ao processar ${url}:`, erro);
+      return []; // Retorna array vazio em caso de falha de rede/parse
+    }
+  }
+
+  // Função para gerar um temporizador aleatório
+  function gerarTempoAleatorio() {
+    const horas = Math.floor(Math.random() * 24);
+    const minutos = Math.floor(Math.random() * 60);
+    const segundos = Math.floor(Math.random() * 60);
+    return `${horas.toString().padStart(2, '0')}h ${minutos.toString().padStart(2, '0')}m ${segundos.toString().padStart(2, '0')}s`;
+  }
+
+  // Função para abrir o modal do produto
+  function openProductModal(produto) {
+    const modal = document.getElementById('product-modal');
+    const modalImage = document.getElementById('modal-product-image');
+    const modalTitle = document.getElementById('modal-product-title');
+    const modalOldPrice = document.getElementById('modal-product-old-price');
+    const modalPrice = document.getElementById('modal-product-price');
+    const modalTimer = document.getElementById('modal-product-timer');
+    const modalBuyButton = document.getElementById('modal-product-buy');
+
+    // Preencher dados do produto no modal
+    modalImage.src = produto.imagem || 'templates/layout/placeholder.png';
+    modalImage.alt = produto.alt || 'Produto';
+    modalTitle.textContent = produto.titulo || 'Produto sem título';
+    
+    const preco = produto.preco || 0;
+    const precoAntigo = preco * 2; // Preço 100% maior
+    
+    modalOldPrice.textContent = `R$ ${precoAntigo.toFixed(2).replace('.', ',')}`;
+    modalPrice.textContent = `R$ ${preco.toFixed(2).replace('.', ',')}`;
+    modalTimer.textContent = `Oferta válida por: ${gerarTempoAleatorio()}`;
+
+    // Configurar botão de compra
+    modalBuyButton.onclick = function() {
+      if (produto.mercadoPagoId) {
+        window.open(`https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=${produto.mercadoPagoId}`, '_blank');
+      } else {
+        alert('Este produto não está disponível para compra no momento.');
+      }
+      closeProductModal();
     };
 
-    // Função para renderizar produtos com botão do Mercado Pago
-    function renderizarProdutoMercadoPago(produto, container) {
-      // Validação básica do produto
-      if (!produto || !produto.id) {
-         console.warn("Tentativa de renderizar produto inválido (Mercado Pago):", produto);
+    // Exibir modal
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Impedir rolagem do body
+  }
+
+  // Função para fechar o modal do produto
+  function closeProductModal() {
+    const modal = document.getElementById('product-modal');
+    modal.style.display = 'none';
+    document.body.style.overflow = ''; // Restaurar rolagem do body
+  }
+
+  // Fechar modal ao clicar fora do conteúdo
+  window.onclick = function(event) {
+    const modal = document.getElementById('product-modal');
+    if (event.target === modal) {
+      closeProductModal();
+    }
+  };
+
+  // Função para renderizar produtos com botão do Mercado Pago
+  function renderizarProdutoMercadoPago(produto, container) {
+    // Validação básica do produto
+    if (!produto || !produto.id) {
+       console.warn("Tentativa de renderizar produto inválido (Mercado Pago):", produto);
+       return;
+    }
+    const produtoId = produto.id || Math.random().toString(36).substring(7); // Gera ID se faltar
+
+    const produtoHTML = `
+      <div class="carousel-item">
+        <div class="product-card">
+          <div class="product-img-container">
+            <img src="${produto.imagem || 'templates/layout/placeholder.png'}" alt="${produto.alt || 'Produto'}" class="product-img" loading="lazy" onerror="this.onerror=null;this.src='templates/layout/placeholder.png';">
+          </div>
+          <div class="product-info">
+            <div>
+              <h3 class="product-title">${produto.titulo || 'Produto s/ título'}</h3>
+              <div class="product-price">R$ ${(produto.preco || 0).toFixed(2).replace('.', ',')}</div>
+            </div>
+            <div class="mercado-pago-button" id="mp-button-${produtoId}">
+              ${produto.mercadoPagoId ? `<button class="buy-button" onclick='openProductModal(${JSON.stringify(produto).replace(/"/g, '&quot;')})'>Comprar</button>` : '<button class="buy-button" disabled>Indisponível</button>'}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    container.insertAdjacentHTML('beforeend', produtoHTML);
+  }
+
+  // Função para renderizar produtos com botão de compra normal
+  function renderizarProduto(produto, container) {
+     // Validação básica
+     if (!produto) {
+         console.warn("Tentativa de renderizar produto inválido:", produto);
          return;
-      }
-      const produtoId = produto.id || Math.random().toString(36).substring(7); // Gera ID se faltar
-      const preco = produto.preco || 0;
-      const precoAntigo = preco * 2; // Preço 100% maior
-      const tempoAleatorio = gerarTempoAleatorio();
-
-      const produtoHTML = `
-        <div class="carousel-item">
-          <div class="product-card">
-            <div class="product-img-container">
-              <img src="${produto.imagem || 'templates/layout/placeholder.png'}" alt="${produto.alt || 'Produto'}" class="product-img" loading="lazy" onerror="this.onerror=null;this.src='templates/layout/placeholder.png';">
+     }
+    const produtoHTML = `
+      <div class="carousel-item">
+        <div class="product-card">
+          <div class="product-img-container">
+            <img src="${produto.imagem || 'templates/layout/placeholder.png'}" alt="${produto.alt || 'Produto'}" class="product-img" loading="lazy" onerror="this.onerror=null;this.src='templates/layout/placeholder.png';">
+          </div>
+          <div class="product-info">
+            <div>
+              <h3 class="product-title">${produto.titulo || 'Produto s/ título'}</h3>
+              <div class="product-price">R$ ${(produto.preco || 0).toFixed(2).replace('.', ',')}</div>
             </div>
-            <div class="product-info">
-              <div>
-                <h3 class="product-title">${produto.titulo || 'Produto s/ título'}</h3>
-                <div class="product-old-price">R$ ${precoAntigo.toFixed(2).replace('.', ',')}</div>
-                <div class="product-price">R$ ${preco.toFixed(2).replace('.', ',')}</div>
-                <div class="product-timer">Oferta válida por: ${tempoAleatorio}</div>
-              </div>
-              <button class="buy-button" onclick="openProductModal(${JSON.stringify(produto).replace(/"/g, '&quot;')})">
-                Comprar
-              </button>
-            </div>
+            <button class="buy-button" data-link="${produto.link || '#'}" ${!(produto.link && produto.link !== '#') ? 'disabled' : ''}>
+              ${(produto.link && produto.link !== '#') ? 'Comprar' : 'Indisponível'}
+            </button>
           </div>
         </div>
-      `;
-      container.insertAdjacentHTML('beforeend', produtoHTML);
-    }
+      </div>
+    `;
+    container.insertAdjacentHTML('beforeend', produtoHTML);
+  }
 
-    // Função para renderizar produtos com botão de compra normal
-    function renderizarProduto(produto, container) {
-       // Validação básica
-       if (!produto) {
-           console.warn("Tentativa de renderizar produto inválido:", produto);
-           return;
-       }
-      const produtoHTML = `
-        <div class="carousel-item">
-          <div class="product-card">
-            <div class="product-img-container">
-              <img src="${produto.imagem || 'templates/layout/placeholder.png'}" alt="${produto.alt || 'Produto'}" class="product-img" loading="lazy" onerror="this.onerror=null;this.src='templates/layout/placeholder.png';">
-            </div>
-            <div class="product-info">
-              <div>
-                <h3 class="product-title">${produto.titulo || 'Produto s/ título'}</h3>
-                <div class="product-price">R$ ${(produto.preco || 0).toFixed(2).replace('.', ',')}</div>
-              </div>
-              <button class="buy-button" data-link="${produto.link || '#'}" ${!(produto.link && produto.link !== '#') ? 'disabled' : ''}>
-                ${(produto.link && produto.link !== '#') ? 'Comprar' : 'Indisponível'}
-              </button>
-            </div>
-          </div>
+  // Função para renderizar cupons
+  function renderizarCupom(cupom, container) {
+     // Validação básica
+     if (!cupom) {
+          console.warn("Tentativa de renderizar cupom inválido:", cupom);
+          return;
+     }
+    const cupomHTML = `
+      <div class="coupon-card">
+        <div class="coupon-discount">${cupom.desconto || ''}</div>
+        <h3 class="coupon-title">${cupom.titulo || 'Cupom'}</h3>
+        <p class="coupon-description">${cupom.descricao || ''}</p>
+        <div class="coupon-code">
+          <div class="code-display">${cupom.codigo || '------'}</div>
+          <button class="copy-button" data-code="${cupom.codigo || ''}" ${!cupom.codigo ? 'disabled' : ''}>Copiar</button>
         </div>
-      `;
-      container.insertAdjacentHTML('beforeend', produtoHTML);
-    }
+        <button class="shopee-button" onclick="window.open('https://shopee.com.br/CarollShop', '_blank', 'noopener,noreferrer')">Usar na Shopee</button>
+        <p class="coupon-validity">${cupom.validade || ''}</p>
+      </div>
+    `;
+    container.insertAdjacentHTML('beforeend', cupomHTML);
+  }
 
-    // Função para renderizar cupons
-    function renderizarCupom(cupom, container) {
-       // Validação básica
-       if (!cupom) {
-            console.warn("Tentativa de renderizar cupom inválido:", cupom);
-            return;
-       }
-      const cupomHTML = `
-        <div class="coupon-card">
-          <div class="coupon-discount">${cupom.desconto || ''}</div>
-          <h3 class="coupon-title">${cupom.titulo || 'Cupom'}</h3>
-          <p class="coupon-description">${cupom.descricao || ''}</p>
-          <div class="coupon-code">
-            <div class="code-display">${cupom.codigo || '------'}</div>
-            <button class="copy-button" data-code="${cupom.codigo || ''}" ${!cupom.codigo ? 'disabled' : ''}>Copiar</button>
-          </div>
-          <button class="shopee-button" onclick="window.open('https://shopee.com.br/CarollShop', '_blank', 'noopener,noreferrer')">Usar na Shopee</button>
-          <p class="coupon-validity">${cupom.validade || ''}</p>
-        </div>
-      `;
-      container.insertAdjacentHTML('beforeend', cupomHTML);
-    }
+  // Função para inicializar conteúdo
+  async function inicializarConteudo() {
+    console.log("Iniciando carregamento de dados...");
+    const spinnerContainers = document.querySelectorAll('.loading-spinner');
 
-    // Função para inicializar conteúdo
-    async function inicializarConteudo() {
-      console.log("Iniciando carregamento de dados...");
-      const spinnerContainers = document.querySelectorAll('.loading-spinner');
+    try {
+      // Fetch all data concurrently
+      const [moldes, personalizados, parceiros, cupons] = await Promise.all([
+        carregarDados('dados/moldes/moldes.json'),
+        carregarDados('dados/personalizados/personalizados.json'),
+        carregarDados('dados/parceiros/parceiros.json'),
+        carregarDados('dados/cupons/cupons.json')
+      ]);
 
-      try {
-        // Fetch all data concurrently
-        const [moldes, personalizados, parceiros, cupons] = await Promise.all([
-          carregarDados('dados/moldes/moldes.json'),
-          carregarDados('dados/personalizados/personalizados.json'),
-          carregarDados('dados/parceiros/parceiros.json'),
-          carregarDados('dados/cupons/cupons.json')
-        ]);
+      console.log("Dados carregados. Renderizando...");
 
-        console.log("Dados carregados. Renderizando...");
+      const renderMap = {
+        'moldes-carousel': { data: moldes, renderer: renderizarProdutoMercadoPago, emptyMsg: 'Nenhum molde digital encontrado.' },
+        'personalizados-carousel': { data: personalizados, renderer: renderizarProduto, emptyMsg: 'Nenhum personalizado encontrado.' },
+        'parceiros-carousel': { data: parceiros, renderer: renderizarProduto, emptyMsg: 'Nenhum produto de parceiro encontrado.' },
+        'cupons-container': { data: cupons, renderer: renderizarCupom, emptyMsg: 'Nenhum cupom disponível.' }
+      };
 
-        const renderMap = {
-          'moldes-carousel': { data: moldes, renderer: renderizarProdutoMercadoPago, emptyMsg: 'Nenhum molde digital encontrado.' },
-          'personalizados-carousel': { data: personalizados, renderer: renderizarProduto, emptyMsg: 'Nenhum personalizado encontrado.' },
-          'parceiros-carousel': { data: parceiros, renderer: renderizarProduto, emptyMsg: 'Nenhum produto de parceiro encontrado.' },
-          'cupons-container': { data: cupons, renderer: renderizarCupom, emptyMsg: 'Nenhum cupom disponível.' }
-        };
-
-        // Render content synchronously after data is fetched
-        for (const id in renderMap) {
-          const container = document.getElementById(id);
-          const { data, renderer, emptyMsg } = renderMap[id];
-          if (container) {
-            container.innerHTML = ''; // Clear spinner first
-            if (data && data.length > 0) { // Check if data is valid array
-              data.forEach(item => renderer(item, container));
-            } else {
-              console.log(`Container ${id} sem dados ou dados inválidos.`);
-              const emptyClass = id.includes('carousel') ? 'carousel-empty' : 'coupon-empty';
-               container.innerHTML = `<p class="${emptyClass}">${emptyMsg}</p>`;
-            }
+      // Render content synchronously after data is fetched
+      for (const id in renderMap) {
+        const container = document.getElementById(id);
+        const { data, renderer, emptyMsg } = renderMap[id];
+        if (container) {
+          container.innerHTML = ''; // Clear spinner first
+          if (data && data.length > 0) { // Check if data is valid array
+            data.forEach(item => renderer(item, container));
           } else {
-             console.warn(`Container element not found: ${id}`);
+            console.log(`Container ${id} sem dados ou dados inválidos.`);
+            const emptyClass = id.includes('carousel') ? 'carousel-empty' : 'coupon-empty';
+             container.innerHTML = `<p class="${emptyClass}">${emptyMsg}</p>`;
           }
-        }
-
-        console.log("Conteúdo renderizado (inicialmente).");
-
-      } catch (erro) {
-        console.error('Erro durante a inicialização do conteúdo:', erro);
-        document.querySelectorAll('.loading-spinner, #cupons-container').forEach(c => {
-             if (c.querySelector('.spinner')) {
-                 c.innerHTML = '<p style="color: red; text-align: center;">Erro ao carregar conteúdo.</p>';
-             } else if (c.id === 'cupons-container' && !c.hasChildNodes()) {
-                  c.innerHTML = '<p style="color: red; text-align: center;">Erro ao carregar cupons.</p>';
-             }
-         });
-      } finally {
-         console.log("Função inicializarConteudo concluída.");
-      }
-      // Não precisa retornar Promise explícita aqui, pois é async
-    }
-
-    // Navegação entre seções
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.addEventListener('click', function(e) {
-        e.preventDefault();
-        const currentActive = document.querySelector('.nav-item.active');
-        const currentSection = document.querySelector('.content-section.active');
-        const targetSectionId = this.getAttribute('data-section');
-        const targetSection = document.getElementById(targetSectionId);
-
-        // Verifica se o item clicado já não está ativo e se a seção alvo existe
-        if (currentActive !== this && targetSection) {
-          if (currentActive) currentActive.classList.remove('active');
-          this.classList.add('active');
-          if (currentSection) currentSection.classList.remove('active');
-          targetSection.classList.add('active');
-
-          // Scroll to top only if necessary
-          if (window.scrollY > 100) {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        }
-      });
-    });
-
-    // Listener de clique para botões (delegação)
-    document.addEventListener('click', function(e) {
-      // Botões 'Comprar' normais
-      const buyButton = e.target.closest('.buy-button:not([disabled])'); // Seleciona apenas botões habilitados
-      if (buyButton && buyButton.hasAttribute('data-link')) {
-        const link = buyButton.getAttribute('data-link');
-        if (link && link !== '#') {
-          window.open(link, '_blank', 'noopener,noreferrer');
+        } else {
+           console.warn(`Container element not found: ${id}`);
         }
       }
 
-      // Botões 'Copiar' cupom
-      const copyButton = e.target.closest('.copy-button:not([disabled])'); // Apenas botões habilitados
-      if (copyButton) {
-        const code = copyButton.getAttribute('data-code');
-        if (code) {
-           // Usa navigator.clipboard que é mais moderno e seguro (requer HTTPS ou localhost)
-           if (navigator.clipboard) {
-               navigator.clipboard.writeText(code).then(() => {
-                 const originalText = copyButton.textContent;
-                 copyButton.textContent = 'Copiado!';
-                 copyButton.disabled = true;
-                 setTimeout(() => { copyButton.textContent = originalText; copyButton.disabled = false; }, 2000);
+      console.log("Conteúdo renderizado (inicialmente).");
 
-                 // Mostra botão Shopee apenas se a cópia funcionou
-                 const couponCard = copyButton.closest('.coupon-card');
-                 if (couponCard) {
-                   const shopeeButton = couponCard.querySelector('.shopee-button');
-                   if (shopeeButton) shopeeButton.style.display = 'block';
-                 }
-               }).catch(err => {
-                 console.error('Erro ao copiar com navigator.clipboard:', err);
-                 alert('Falha ao copiar. Verifique as permissões ou tente manualmente.');
-               });
-           } else {
-               // Fallback para navegadores muito antigos (raro)
-               console.warn('navigator.clipboard não disponível.');
-               alert('Função de copiar não suportada neste navegador.');
+    } catch (erro) {
+      console.error('Erro durante a inicialização do conteúdo:', erro);
+      document.querySelectorAll('.loading-spinner, #cupons-container').forEach(c => {
+           if (c.querySelector('.spinner')) {
+               c.innerHTML = '<p style="color: red; text-align: center;">Erro ao carregar conteúdo.</p>';
+           } else if (c.id === 'cupons-container' && !c.hasChildNodes()) {
+                c.innerHTML = '<p style="color: red; text-align: center;">Erro ao carregar cupons.</p>';
            }
+       });
+    } finally {
+       console.log("Função inicializarConteudo concluída.");
+    }
+    // Não precisa retornar Promise explícita aqui, pois é async
+  }
+
+  // Navegação entre seções
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function(e) {
+      e.preventDefault();
+      const currentActive = document.querySelector('.nav-item.active');
+      const currentSection = document.querySelector('.content-section.active');
+      const targetSectionId = this.getAttribute('data-section');
+      const targetSection = document.getElementById(targetSectionId);
+
+      // Verifica se o item clicado já não está ativo e se a seção alvo existe
+      if (currentActive !== this && targetSection) {
+        if (currentActive) currentActive.classList.remove('active');
+        this.classList.add('active');
+        if (currentSection) currentSection.classList.remove('active');
+        targetSection.classList.add('active');
+
+        // Scroll to top only if necessary
+        if (window.scrollY > 100) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       }
     });
+  });
 
-
-    // Ajustar layout dos carrosséis
-    function adjustCarouselLayout() {
-        console.log("Ajustando layout do carrossel...");
-        const gap = 15;
-        document.querySelectorAll('.carousel').forEach(carousel => {
-            // Verifica se o carrossel existe e está visível
-            if (!carousel || carousel.offsetParent === null) {
-                // console.log(`Carrossel ${carousel ? carousel.id : 'desconhecido'} não está visível, pulando ajuste.`);
-                return; // Pula ajuste se o carrossel ou seu container não estiverem visíveis
-            }
-
-            const items = carousel.querySelectorAll('.carousel-item');
-            if (!items.length) {
-                // console.log(`Carrossel ${carousel.id} vazio, atualizando setas.`);
-                updateArrowVisibility(carousel);
-                return;
-            };
-
-            const itemsToShow = getItemsPerView();
-            const availableWidth = carousel.clientWidth;
-
-            if (availableWidth <= 0) {
-                console.warn(`Largura do carrossel ${carousel.id} é 0 ou negativa. Tentando novamente em breve...`);
-                 // Tenta novamente após um pequeno delay se a largura for 0 (pode acontecer durante a renderização inicial)
-                 // setTimeout(() => adjustCarouselLayout(), 100); // CUIDADO: pode causar loop se o problema persistir
-                return;
-            }
-
-            const totalGapWidth = Math.max(0, (itemsToShow - 1)) * gap;
-            let itemWidth = (availableWidth > totalGapWidth) ? (availableWidth - totalGapWidth) / itemsToShow : availableWidth;
-            // Garante uma largura mínima razoável
-            itemWidth = Math.max(100, Math.floor(itemWidth)); // Arredonda para baixo
-
-            items.forEach(item => {
-                item.style.width = `${itemWidth}px`;
-            });
-
-            // console.log(`Layout do carrossel ${carousel.id} ajustado. Items: ${items.length}, Width: ${itemWidth}px`);
-            updateArrowVisibility(carousel);
-        });
+  // Listener de clique para botões (delegação)
+  document.addEventListener('click', function(e) {
+    // Botões 'Comprar' normais
+    const buyButton = e.target.closest('.buy-button:not([disabled])'); // Seleciona apenas botões habilitados
+    if (buyButton && buyButton.hasAttribute('data-link')) {
+      const link = buyButton.getAttribute('data-link');
+      if (link && link !== '#') {
+        window.open(link, '_blank', 'noopener,noreferrer');
+      }
     }
 
+    // Botões 'Copiar' cupom
+    const copyButton = e.target.closest('.copy-button:not([disabled])'); // Apenas botões habilitados
+    if (copyButton) {
+      const code = copyButton.getAttribute('data-code');
+      if (code) {
+         // Usa navigator.clipboard que é mais moderno e seguro (requer HTTPS ou localhost)
+         if (navigator.clipboard) {
+             navigator.clipboard.writeText(code).then(() => {
+               const originalText = copyButton.textContent;
+               copyButton.textContent = 'Copiado!';
+               copyButton.disabled = true;
+               setTimeout(() => { copyButton.textContent = originalText; copyButton.disabled = false; }, 2000);
 
-    // Ajustar ao redimensionar (com debounce)
-    const debouncedResize = debounce(() => {
-        console.log("Janela redimensionada, ajustando...");
-        adjustCarouselLayout();
-    }, 250);
+               // Mostra botão Shopee apenas se a cópia funcionou
+               const couponCard = copyButton.closest('.coupon-card');
+               if (couponCard) {
+                 const shopeeButton = couponCard.querySelector('.shopee-button');
+                 if (shopeeButton) shopeeButton.style.display = 'block';
+               }
+             }).catch(err => {
+               console.error('Erro ao copiar com navigator.clipboard:', err);
+               alert('Falha ao copiar. Verifique as permissões ou tente manualmente.');
+             });
+         } else {
+             // Fallback para navegadores muito antigos (raro)
+             console.warn('navigator.clipboard não disponível.');
+             alert('Função de copiar não suportada neste navegador.');
+         }
+      }
+    }
+  });
 
 
-    // --- CORREÇÃO APLICADA AQUI (window.onload) ---
-    // Inicializar após TUDO (incluindo imagens) carregar
-    window.addEventListener('load', async () => {
-        console.log("Página e recursos totalmente carregados (window.onload). Iniciando conteúdo...");
-        try {
-            // Espera a função assíncrona carregar dados e fazer a renderização inicial
-            await inicializarConteudo();
-            console.log("Conteúdo inicializado. Ajustando layout e adicionando listeners...");
+  // Ajustar layout dos carrosséis
+  function adjustCarouselLayout() {
+      console.log("Ajustando layout do carrossel...");
+      const gap = 15;
+      document.querySelectorAll('.carousel').forEach(carousel => {
+          // Verifica se o carrossel existe e está visível
+          if (!carousel || carousel.offsetParent === null) {
+              // console.log(`Carrossel ${carousel ? carousel.id : 'desconhecido'} não está visível, pulando ajuste.`);
+              return; // Pula ajuste se o carrossel ou seu container não estiverem visíveis
+          }
 
-            // Adiciona um pequeno delay extra antes do ajuste inicial do layout,
-            // especialmente útil em mobile após 'load'
-            setTimeout(() => {
-                console.log("Ajustando layout inicial (após delay)...");
-                adjustCarouselLayout();
+          const items = carousel.querySelectorAll('.carousel-item');
+          if (!items.length) {
+              // console.log(`Carrossel ${carousel.id} vazio, atualizando setas.`);
+              updateArrowVisibility(carousel);
+              return;
+          };
 
-                // Adiciona listeners de scroll e verifica visibilidade das setas APÓS layout inicial
-                document.querySelectorAll('.carousel').forEach(carousel => {
-                    // Verifica se o carrossel existe antes de adicionar listener
-                    if(carousel) {
-                        const debouncedUpdateArrows = debounce(() => updateArrowVisibility(carousel), 150);
-                        carousel.addEventListener('scroll', debouncedUpdateArrows);
-                        // Verifica a visibilidade inicial das setas
-                        updateArrowVisibility(carousel);
-                    }
-                });
-            }, 100); // Pequeno delay de 100ms
+          const itemsToShow = getItemsPerView();
+          const availableWidth = carousel.clientWidth;
 
-            // Adiciona listener de redimensionamento
-            window.addEventListener('resize', debouncedResize);
+          if (availableWidth <= 0) {
+              console.warn(`Largura do carrossel ${carousel.id} é 0 ou negativa. Tentando novamente em breve...`);
+               // Tenta novamente após um pequeno delay se a largura for 0 (pode acontecer durante a renderização inicial)
+               // setTimeout(() => adjustCarouselLayout(), 100); // CUIDADO: pode causar loop se o problema persistir
+              return;
+          }
 
-            console.log("Inicialização (eventos e layout pós-load) completa.");
+          const totalGapWidth = Math.max(0, (itemsToShow - 1)) * gap;
+          let itemWidth = (availableWidth > totalGapWidth) ? (availableWidth - totalGapWidth) / itemsToShow : availableWidth;
+          // Garante uma largura mínima razoável
+          itemWidth = Math.max(100, Math.floor(itemWidth)); // Arredonda para baixo
 
-        } catch (error) {
-            console.error("Erro crítico durante a inicialização pós-load:", error);
-          {
-            console.error("Erro crítico durante a inicialização pós-load:", error);
-        }
-    });
-    // --- FIM DA CORREÇÃO ---
+          items.forEach(item => {
+              item.style.width = `${itemWidth}px`;
+          });
 
-  </script>
+          // console.log(`Layout do carrossel ${carousel.id} ajustado. Items: ${items.length}, Width: ${itemWidth}px`);
+          updateArrowVisibility(carousel);
+      });
+  }
+
+
+  // Ajustar ao redimensionar (com debounce)
+  const debouncedResize = debounce(() => {
+      console.log("Janela redimensionada, ajustando...");
+      adjustCarouselLayout();
+  }, 250);
+
+
+  // --- CORREÇÃO APLICADA AQUI (window.onload) ---
+  // Inicializar após TUDO (incluindo imagens) carregar
+  window.addEventListener('load', async () => {
+      console.log("Página e recursos totalmente carregados (window.onload). Iniciando conteúdo...");
+      try {
+          // Espera a função assíncrona carregar dados e fazer a renderização inicial
+          await inicializarConteudo();
+          console.log("Conteúdo inicializado. Ajustando layout e adicionando listeners...");
+
+          // Adiciona um pequeno delay extra antes do ajuste inicial do layout,
+          // especialmente útil em mobile após 'load'
+          setTimeout(() => {
+              console.log("Ajustando layout inicial (após delay)...");
+              adjustCarouselLayout();
+
+              // Adiciona listeners de scroll e verifica visibilidade das setas APÓS layout inicial
+              document.querySelectorAll('.carousel').forEach(carousel => {
+                  // Verifica se o carrossel existe antes de adicionar listener
+                  if(carousel) {
+                      const debouncedUpdateArrows = debounce(() => updateArrowVisibility(carousel), 150);
+                      carousel.addEventListener('scroll', debouncedUpdateArrows);
+                      // Verifica a visibilidade inicial das setas
+                      updateArrowVisibility(carousel);
+                  }
+              });
+          }, 100); // Pequeno delay de 100ms
+
+          // Adiciona listener de redimensionamento
+          window.addEventListener('resize', debouncedResize);
+
+          console.log("Inicialização (eventos e layout pós-load) completa.");
+
+      } catch (error) {
+          console.error("Erro crítico durante a inicialização pós-load:", error);
+      }
+  });
+  // --- FIM DA CORREÇÃO ---
+
+</script>
 </body>
 </html>
