@@ -545,6 +545,176 @@
          padding: 1rem;
     }
 
+    /* Estilos para o preço riscado */
+    .product-old-price {
+      font-size: 0.75rem;
+      text-decoration: line-through;
+      color: var(--gray-500);
+      margin-bottom: 0.25rem;
+    }
+
+    /* Estilos para o temporizador */
+    .product-timer {
+      font-size: 0.7rem;
+      color: var(--pink-600);
+      margin-top: 0.25rem;
+      font-weight: 500;
+    }
+
+    /* Estilos para o modal/popup */
+    .product-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .product-modal-content {
+      background-color: var(--white);
+      border-radius: 1rem;
+      max-width: 90%;
+      width: 350px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      animation: modalFadeIn 0.3s ease;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .product-modal-close {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      width: 2rem;
+      height: 2rem;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: var(--gray-700);
+      z-index: 10;
+    }
+
+    .product-modal-image {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+    }
+
+    .product-modal-info {
+      padding: 1rem;
+    }
+
+    .product-modal-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gray-800);
+      margin-bottom: 0.5rem;
+    }
+
+    .product-modal-price-container {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1rem;
+    }
+
+    .product-modal-old-price {
+      font-size: 0.9rem;
+      text-decoration: line-through;
+      color: var(--gray-500);
+    }
+
+    .product-modal-price {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--pink-600);
+    }
+
+    .product-modal-timer {
+      font-size: 0.8rem;
+      color: var(--pink-600);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .product-modal-warning {
+      background-color: var(--pink-50);
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      font-size: 0.8rem;
+      color: var(--gray-700);
+    }
+
+    .product-modal-seal {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      gap: 0.5rem;
+    }
+
+    .product-modal-seal img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .product-modal-seal-text {
+      font-size: 0.8rem;
+      color: var(--gray-700);
+      font-weight: 500;
+    }
+
+    .product-modal-buttons {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .product-modal-button {
+      flex: 1;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .product-modal-button-back {
+      background-color: var(--gray-200);
+      color: var(--gray-700);
+    }
+
+    .product-modal-button-back:hover {
+      background-color: var(--gray-300);
+    }
+
+    .product-modal-button-buy {
+      background-color: var(--pink-500);
+      color: var(--white);
+    }
+
+    .product-modal-button-buy:hover {
+      background-color: var(--pink-600);
+    }
   </style>
 </head>
 <body>
@@ -656,6 +826,33 @@
     </a>
   </nav>
 
+  <!-- Modal para exibir produto -->
+  <div id="product-modal" class="product-modal">
+    <div class="product-modal-content">
+      <div class="product-modal-close" onclick="closeProductModal()">✕</div>
+      <img id="modal-product-image" src="/placeholder.svg" alt="Produto" class="product-modal-image">
+      <div class="product-modal-info">
+        <h3 id="modal-product-title" class="product-modal-title"></h3>
+        <div class="product-modal-price-container">
+          <span id="modal-product-old-price" class="product-modal-old-price"></span>
+          <span id="modal-product-price" class="product-modal-price"></span>
+        </div>
+        <div id="modal-product-timer" class="product-modal-timer"></div>
+        <div class="product-modal-warning">
+          ⚠️ Após o pagamento, você será redirecionado automaticamente para o link de download. Caso isso não aconteça, o link será enviado para o seu e-mail.
+        </div>
+        <div class="product-modal-seal">
+          <img src="templates/layout/mercadopago.png" alt="Mercado Pago" onerror="this.src='https://www.mercadopago.com/org-img/MP3/API/logos/mp-logo.svg'; this.onerror=null;">
+          <span class="product-modal-seal-text">Compra segura com Mercado Pago</span>
+        </div>
+        <div class="product-modal-buttons">
+          <div class="product-modal-button product-modal-button-back" onclick="closeProductModal()">Voltar</div>
+          <div id="modal-product-buy" class="product-modal-button product-modal-button-buy">Comprar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Debounce function
     function debounce(func, wait) {
@@ -744,6 +941,66 @@
       }
     }
 
+    // Função para gerar um temporizador aleatório
+    function gerarTempoAleatorio() {
+      const horas = Math.floor(Math.random() * 24);
+      const minutos = Math.floor(Math.random() * 60);
+      const segundos = Math.floor(Math.random() * 60);
+      return `${horas.toString().padStart(2, '0')}h ${minutos.toString().padStart(2, '0')}m ${segundos.toString().padStart(2, '0')}s`;
+    }
+
+    // Função para abrir o modal do produto
+    function openProductModal(produto) {
+      const modal = document.getElementById('product-modal');
+      const modalImage = document.getElementById('modal-product-image');
+      const modalTitle = document.getElementById('modal-product-title');
+      const modalOldPrice = document.getElementById('modal-product-old-price');
+      const modalPrice = document.getElementById('modal-product-price');
+      const modalTimer = document.getElementById('modal-product-timer');
+      const modalBuyButton = document.getElementById('modal-product-buy');
+
+      // Preencher dados do produto no modal
+      modalImage.src = produto.imagem || 'templates/layout/placeholder.png';
+      modalImage.alt = produto.alt || 'Produto';
+      modalTitle.textContent = produto.titulo || 'Produto sem título';
+      
+      const preco = produto.preco || 0;
+      const precoAntigo = preco * 2; // Preço 100% maior
+      
+      modalOldPrice.textContent = `R$ ${precoAntigo.toFixed(2).replace('.', ',')}`;
+      modalPrice.textContent = `R$ ${preco.toFixed(2).replace('.', ',')}`;
+      modalTimer.textContent = `Oferta válida por: ${gerarTempoAleatorio()}`;
+
+      // Configurar botão de compra
+      modalBuyButton.onclick = function() {
+        if (produto.mercadoPagoId) {
+          window.open(`https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=${produto.mercadoPagoId}`, '_blank');
+        } else {
+          alert('Este produto não está disponível para compra no momento.');
+        }
+        closeProductModal();
+      };
+
+      // Exibir modal
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden'; // Impedir rolagem do body
+    }
+
+    // Função para fechar o modal do produto
+    function closeProductModal() {
+      const modal = document.getElementById('product-modal');
+      modal.style.display = 'none';
+      document.body.style.overflow = ''; // Restaurar rolagem do body
+    }
+
+    // Fechar modal ao clicar fora do conteúdo
+    window.onclick = function(event) {
+      const modal = document.getElementById('product-modal');
+      if (event.target === modal) {
+        closeProductModal();
+      }
+    };
+
     // Função para renderizar produtos com botão do Mercado Pago
     function renderizarProdutoMercadoPago(produto, container) {
       // Validação básica do produto
@@ -752,6 +1009,9 @@
          return;
       }
       const produtoId = produto.id || Math.random().toString(36).substring(7); // Gera ID se faltar
+      const preco = produto.preco || 0;
+      const precoAntigo = preco * 2; // Preço 100% maior
+      const tempoAleatorio = gerarTempoAleatorio();
 
       const produtoHTML = `
         <div class="carousel-item">
@@ -762,40 +1022,18 @@
             <div class="product-info">
               <div>
                 <h3 class="product-title">${produto.titulo || 'Produto s/ título'}</h3>
-                <div class="product-price">R$ ${(produto.preco || 0).toFixed(2).replace('.', ',')}</div>
+                <div class="product-old-price">R$ ${precoAntigo.toFixed(2).replace('.', ',')}</div>
+                <div class="product-price">R$ ${preco.toFixed(2).replace('.', ',')}</div>
+                <div class="product-timer">Oferta válida por: ${tempoAleatorio}</div>
               </div>
-              <div class="mercado-pago-button" id="mp-button-${produtoId}">
-                ${produto.mercadoPagoId ? '' : '<button class="buy-button" disabled>Indisponível</button>'}
-              </div>
-          ${produto.mercadoPagoId ? '<p style="font-size: 0.7rem; color: var(--gray-600); margin-top: 0.5rem; text-align: center;">⚠️ Após o pagamento, você será redirecionado automaticamente para o link de download. Caso isso não aconteça, o link será enviado para o seu e-mail.</p>' : ''}
+              <button class="buy-button" onclick="openProductModal(${JSON.stringify(produto).replace(/"/g, '&quot;')})">
+                Comprar
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  `;
+      `;
       container.insertAdjacentHTML('beforeend', produtoHTML);
-
-      if (produto.mercadoPagoId) {
-        const mpButtonContainer = document.getElementById(`mp-button-${produtoId}`);
-        if (mpButtonContainer) {
-          // Atraso um pouco maior para garantir que o elemento exista no DOM, especialmente em mobile
-          setTimeout(() => {
-              try {
-                  const script = document.createElement('script');
-                  script.src = "https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js";
-                  script.setAttribute('data-preference-id', produto.mercadoPagoId);
-                  script.setAttribute('data-source', 'button');
-                  // Limpa container antes de adicionar, caso haja script antigo
-                  mpButtonContainer.innerHTML = '';
-                  mpButtonContainer.appendChild(script);
-              } catch(e) {
-                  console.error(`Erro ao adicionar script do Mercado Pago para ${produtoId}:`, e);
-                  mpButtonContainer.innerHTML = '<button class="buy-button" disabled>Erro MP</button>';
-              }
-          }, 200); // Aumentar ligeiramente o delay pode ajudar
-        } else {
-          console.warn(`MP Button container not found: mp-button-${produtoId}`);
-        }
-      }
     }
 
     // Função para renderizar produtos com botão de compra normal
@@ -935,7 +1173,7 @@
     document.addEventListener('click', function(e) {
       // Botões 'Comprar' normais
       const buyButton = e.target.closest('.buy-button:not([disabled])'); // Seleciona apenas botões habilitados
-      if (buyButton) {
+      if (buyButton && buyButton.hasAttribute('data-link')) {
         const link = buyButton.getAttribute('data-link');
         if (link && link !== '#') {
           window.open(link, '_blank', 'noopener,noreferrer');
@@ -1058,6 +1296,8 @@
             console.log("Inicialização (eventos e layout pós-load) completa.");
 
         } catch (error) {
+            console.error("Erro crítico durante a inicialização pós-load:", error);
+          {
             console.error("Erro crítico durante a inicialização pós-load:", error);
         }
     });
