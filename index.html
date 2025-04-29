@@ -469,11 +469,11 @@
       border-radius: 2rem;
       display: flex;
       height: 3.5rem;
-      z-index: 1999; /* Aumentado para garantir que fique acima de outros elementos */
+      z-index: 1001; /* Aumentado para garantir que fique acima de outros elementos */
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       padding: 0 1rem;
       will-change: transform; /* Manter */
-      visibility: visible !important; /* Garantir que sempre esteja visível */
+      visibility: visible !important; /* Garantir que seja sempre visível */
    }
    .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; color: var(--gray-500); text-decoration: none; position: relative; padding: 0 1.5rem; transition: color 0.3s ease; }
    .nav-item.active { color: var(--pink-500); }
@@ -738,9 +738,11 @@
   <div id="inicio" class="content-section active">
 
     <div class="header-video-container">
-         <video class="header-video" autoplay loop muted playsinline preload="auto" poster="templates/layout/placeholder.png">
+         <!-- Corrigido: adicionado preload="auto" e controlado via JavaScript -->
+         <video id="header-video" class="header-video" autoplay loop muted playsinline preload="auto" poster="templates/layout/placeholder.png">
              <source src="templates/video/carolartesloop.mp4" type="video/mp4">
-             Seu navegador não suporta a tag de vídeo. </video>
+             Seu navegador não suporta a tag de vídeo.
+         </video>
      </div>
 
     <section class="section">
@@ -851,6 +853,73 @@
 </div>
 
 <script>
+  // Dados de exemplo para teste (caso os arquivos JSON não sejam carregados)
+  const dadosExemplo = {
+    moldes: [
+      {
+        id: "molde1",
+        titulo: "Molde Digital Teste 1",
+        preco: 19.90,
+        imagem: "templates/layout/placeholder.png",
+        alt: "Molde Digital",
+        mercadoPagoId: "123456789"
+      },
+      {
+        id: "molde2",
+        titulo: "Molde Digital Teste 2",
+        preco: 24.90,
+        imagem: "templates/layout/placeholder.png",
+        alt: "Molde Digital",
+        mercadoPagoId: "987654321"
+      }
+    ],
+    personalizados: [
+      {
+        id: "pers1",
+        titulo: "Personalizado Teste 1",
+        preco: 39.90,
+        imagem: "templates/layout/placeholder.png",
+        alt: "Personalizado",
+        link: "https://shopee.com.br/CarollShop"
+      },
+      {
+        id: "pers2",
+        titulo: "Personalizado Teste 2",
+        preco: 49.90,
+        imagem: "templates/layout/placeholder.png",
+        alt: "Personalizado",
+        link: "https://shopee.com.br/CarollShop"
+      }
+    ],
+    parceiros: [
+      {
+        id: "parc1",
+        titulo: "Produto Parceiro Teste 1",
+        preco: 29.90,
+        imagem: "templates/layout/placeholder.png",
+        alt: "Produto Parceiro",
+        link: "https://shopee.com.br"
+      },
+      {
+        id: "parc2",
+        titulo: "Produto Parceiro Teste 2",
+        preco: 34.90,
+        imagem: "templates/layout/placeholder.png",
+        alt: "Produto Parceiro",
+        link: "https://shopee.com.br"
+      }
+    ],
+    cupons: [
+      {
+        titulo: "Cupom de Desconto",
+        desconto: "10% OFF",
+        descricao: "Válido para todos os produtos",
+        codigo: "CAROL10",
+        validade: "Válido até 31/12/2023"
+      }
+    ]
+  };
+
   // Debounce function
   function debounce(func, wait) {
       let timeout;
@@ -872,6 +941,39 @@
       return 4; // Para telas maiores
   }
 
+  // Função para garantir que o vídeo seja reproduzido
+  function garantirReproducaoVideo() {
+      const video = document.getElementById('header-video');
+      if (video) {
+          console.log("Tentando reproduzir o vídeo...");
+          
+          // Verificar se o vídeo está pronto para reprodução
+          if (video.readyState >= 2) {
+              video.play().catch(err => {
+                  console.error("Erro ao reproduzir vídeo:", err);
+              });
+          } else {
+              // Se o vídeo não estiver pronto, adicionar evento para tentar novamente quando estiver
+              video.addEventListener('loadeddata', function() {
+                  video.play().catch(err => {
+                      console.error("Erro ao reproduzir vídeo após carregamento:", err);
+                  });
+              });
+          }
+          
+          // Verificar se o vídeo está sendo reproduzido após um curto período
+          setTimeout(() => {
+              if (video.paused) {
+                  console.log("Vídeo ainda pausado, tentando novamente...");
+                  video.play().catch(err => {
+                      console.error("Erro ao reproduzir vídeo após timeout:", err);
+                  });
+              } else {
+                  console.log("Vídeo está sendo reproduzido com sucesso!");
+              }
+          }, 1000);
+      }
+  }
 
   // Função para atualizar visibilidade das setas baseado no scroll
   function updateArrowVisibility(carouselElement) {
@@ -919,22 +1021,25 @@
   // Função para carregar dados JSON
   async function carregarDados(url) {
     try {
+      console.log(`Tentando carregar dados de: ${url}`);
       const resposta = await fetch(url);
       if (!resposta.ok) {
         console.error(`Erro HTTP ${resposta.status} ao carregar ${url}`);
-        return []; // Retorna array vazio em caso de erro
+        return null; // Retorna null em caso de erro para usar dados de exemplo
       }
       const contentType = resposta.headers.get("content-type");
       // Verifica se a resposta é JSON antes de tentar parsear
       if (contentType && contentType.indexOf("application/json") !== -1) {
-        return await resposta.json();
+        const dados = await resposta.json();
+        console.log(`Dados carregados com sucesso de ${url}:`, dados);
+        return dados;
       } else {
         console.error(`Resposta de ${url} não é JSON. Tipo: ${contentType}`);
-        return []; // Retorna array vazio se não for JSON
+        return null; // Retorna null se não for JSON para usar dados de exemplo
       }
     } catch (erro) {
       console.error(`Falha na rede ou ao processar ${url}:`, erro);
-      return []; // Retorna array vazio em caso de falha de rede/parse
+      return null; // Retorna null em caso de falha para usar dados de exemplo
     }
   }
 
@@ -1095,6 +1200,10 @@
          console.warn("Tentativa de renderizar produto inválido:", produto);
          return;
      }
+    const produtoId = produto.id || Math.random().toString(36).substring(7);
+    const preco = produto.preco || 0;
+    const precoAntigo = preco * 2; // Preço 100% maior
+    
     const produtoHTML = `
       <div class="carousel-item">
         <div class="product-card">
@@ -1104,7 +1213,8 @@
           <div class="product-info">
             <div>
               <h3 class="product-title">${produto.titulo || 'Produto s/ título'}</h3>
-              <div class="product-price">R$ ${(produto.preco || 0).toFixed(2).replace('.', ',')}</div>
+              <div class="product-old-price">R$ ${precoAntigo.toFixed(2).replace('.', ',')}</div>
+              <div class="product-price">R$ ${preco.toFixed(2).replace('.', ',')}</div>
             </div>
             <button class="buy-button" data-link="${produto.link || '#'}" ${!(produto.link && produto.link !== '#') ? 'disabled' : ''}>
               ${(produto.link && produto.link !== '#') ? 'Comprar' : 'Indisponível'}
@@ -1146,12 +1256,18 @@
 
     try {
       // Fetch all data concurrently
-      const [moldes, personalizados, parceiros, cupons] = await Promise.all([
+      const [moldesData, personalizadosData, parceirosData, cuponsData] = await Promise.all([
         carregarDados('dados/moldes/moldes.json'),
         carregarDados('dados/personalizados/personalizados.json'),
         carregarDados('dados/parceiros/parceiros.json'),
         carregarDados('dados/cupons/cupons.json')
       ]);
+
+      // Usar dados de exemplo se os dados reais não forem carregados
+      const moldes = moldesData || dadosExemplo.moldes;
+      const personalizados = personalizadosData || dadosExemplo.personalizados;
+      const parceiros = parceirosData || dadosExemplo.parceiros;
+      const cupons = cuponsData || dadosExemplo.cupons;
 
       console.log("Dados carregados. Renderizando...");
 
@@ -1194,7 +1310,6 @@
     } finally {
        console.log("Função inicializarConteudo concluída.");
     }
-    // Não precisa retornar Promise explícita aqui, pois é async
   }
 
   // Navegação entre seções
@@ -1206,109 +1321,4 @@
       const targetSectionId = this.getAttribute('data-section');
       const targetSection = document.getElementById(targetSectionId);
 
-      // Verifica se o item clicado já não está ativo e se a seção alvo existe
-      if (currentActive !== this && targetSection) {
-        if (currentActive) currentActive.classList.remove('active');
-        this.classList.add('active');
-        if (currentSection) currentSection.classList.remove('active');
-        targetSection.classList.add('active');
-
-        // Scroll to top only if necessary
-        if (window.scrollY > 100) {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      }
-    });
-  });
-
-  // Listener de clique para botões (delegação)
-  document.addEventListener('click', function(e) {
-    // Botões 'Comprar' normais
-    const buyButton = e.target.closest('.buy-button:not([disabled])'); // Seleciona apenas botões habilitados
-    if (buyButton && buyButton.hasAttribute('data-link')) {
-      const link = buyButton.getAttribute('data-link');
-      if (link && link !== '#') {
-        window.open(link, '_blank', 'noopener,noreferrer');
-      }
-    }
-
-    // Botões 'Copiar' cupom
-    const copyButton = e.target.closest('.copy-button:not([disabled])'); // Apenas botões habilitados
-    if (copyButton) {
-      const code = copyButton.getAttribute('data-code');
-      if (code) {
-         // Usa navigator.clipboard que é mais moderno e seguro (requer HTTPS ou localhost)
-         if (navigator.clipboard) {
-             navigator.clipboard.writeText(code).then(() => {
-               const originalText = copyButton.textContent;
-               copyButton.textContent = 'Copiado!';
-               copyButton.disabled = true;
-               setTimeout(() => { copyButton.textContent = originalText; copyButton.disabled = false; }, 2000);
-
-               // Mostra botão Shopee apenas se a cópia funcionou
-               const couponCard = copyButton.closest('.coupon-card');
-               if (couponCard) {
-                 const shopeeButton = couponCard.querySelector('.shopee-button');
-                 if (shopeeButton) shopeeButton.style.display = 'block';
-               }
-             }).catch(err => {
-               console.error('Erro ao copiar com navigator.clipboard:', err);
-               alert('Falha ao copiar. Verifique as permissões ou tente manualmente.');
-             });
-         } else {
-             // Fallback para navegadores muito antigos (raro)
-             console.warn('navigator.clipboard não disponível.');
-             alert('Função de copiar não suportada neste navegador.');
-         }
-      }
-    }
-  });
-
-
-  // Ajustar layout dos carrosséis
-  function adjustCarouselLayout() {
-      console.log("Ajustando layout do carrossel...");
-      const gap = 15;
-      document.querySelectorAll('.carousel').forEach(carousel => {
-          // Verifica se o carrossel existe e está visível
-          if (!carousel || carousel.offsetParent === null) {
-              // console.log(`Carrossel ${carousel ? carousel.id : 'desconhecido'} não está visível, pulando ajuste.`);
-              return; // Pula ajuste se o carrossel ou seu container não estiverem visíveis
-          }
-
-          const items = carousel.querySelectorAll('.carousel-item');
-          if (!items.length) {
-              // console.log(`Carrossel ${carousel.id} vazio, atualizando setas.`);
-              updateArrowVisibility(carousel);
-              return;
-          };
-
-          const itemsToShow = getItemsPerView();
-          const availableWidth = carousel.clientWidth;
-
-          if (availableWidth <= 0) {
-              console.warn(`Largura do carrossel ${carousel.id} é 0 ou negativa. Tentando novamente em breve...`);
-               // Tenta novamente após um pequeno delay se a largura for 0 (pode acontecer durante a renderização inicial)
-               // setTimeout(() => adjustCarouselLayout(), 100); // CUIDADO: pode causar loop se o problema persistir
-              return;
-          }
-
-          const totalGapWidth = Math.max(0, (itemsToShow - 1)) * gap;
-          let itemWidth = (availableWidth > totalGapWidth) ? (availableWidth - totalGapWidth) / itemsToShow : availableWidth;
-          // Garante uma largura mínima razoável
-          itemWidth = Math.max(100, Math.floor(itemWidth)); // Arredonda para baixo
-
-          items.forEach(item => {
-              item.style.width = `${itemWidth}px`;
-          });
-
-          // console.log(`Layout do carrossel ${carousel.id} ajustado. Items: ${items.length}, Width: ${itemWidth}px`);
-          updateArrowVisibility(carousel);
-      });
-  }
-
-
-  // Ajustar ao redimensionar
-</script>
-</body>
-</html>
+      // Verifica se o item clicado já não
