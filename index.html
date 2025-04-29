@@ -815,12 +815,13 @@
       container.insertAdjacentHTML('beforeend', cupomHTML);
     }
 
-    // Função para inicializar conteúdo
+    // Função para inicializar conteúdo (modificada para ser async e retornar Promise)
     async function inicializarConteudo() {
       console.log("Iniciando carregamento...");
       const spinnerContainers = document.querySelectorAll('.loading-spinner');
 
       try {
+        // Fetch all data concurrently
         const [moldes, personalizados, parceiros, cupons] = await Promise.all([
           carregarDados('dados/moldes/moldes.json'),
           carregarDados('dados/personalizados/personalizados.json'),
@@ -835,6 +836,7 @@
           'cupons-container': { data: cupons, renderer: renderizarCupom, emptyMsg: 'Nenhum cupom disponível.' }
         };
 
+        // Render content synchronously after data is fetched
         for (const id in renderMap) {
           const container = document.getElementById(id);
           const { data, renderer, emptyMsg } = renderMap[id];
@@ -849,22 +851,24 @@
           }
         }
 
-         // Initial adjustment and arrow update after content is added
-         adjustCarouselLayout();
-
-         // Add scroll listeners after content is loaded
-         document.querySelectorAll('.carousel').forEach(carousel => {
-             const debouncedUpdateArrows = debounce(() => updateArrowVisibility(carousel), 150);
-             carousel.addEventListener('scroll', debouncedUpdateArrows);
-         });
-
+        console.log("Conteúdo renderizado (inicialmente).");
 
       } catch (erro) {
-        console.error('Erro fatal ao inicializar:', erro);
-        document.querySelectorAll('.loading-spinner').forEach(c => c.innerHTML = '<p style="color: red;">Erro ao carregar.</p>');
+        console.error('Erro durante a inicialização do conteúdo:', erro);
+        // Display error message in all loading containers
+        document.querySelectorAll('.loading-spinner, #cupons-container').forEach(c => {
+             // Check if it's already showing an error or empty message
+             if (c.querySelector('.spinner')) {
+                 c.innerHTML = '<p style="color: red; text-align: center;">Erro ao carregar conteúdo.</p>';
+             } else if (c.id === 'cupons-container' && !c.hasChildNodes()) {
+                  c.innerHTML = '<p style="color: red; text-align: center;">Erro ao carregar cupons.</p>';
+             }
+         });
       } finally {
-        console.log("Inicialização concluída.");
+         console.log("Função inicializarConteudo concluída.");
       }
+      // Return a resolved promise to indicate completion of this phase
+      return Promise.resolve();
     }
 
     // Navegação entre seções
@@ -916,7 +920,8 @@
             }
           }).catch(err => {
             console.error('Erro ao copiar:', err);
-            alert('Não foi possível copiar o código.');
+            // Inform user about potential copy issue (e.g., if not on HTTPS or iframe)
+            alert('Não foi possível copiar o código. Certifique-se de que a página está segura (HTTPS).');
           });
         }
       }
@@ -925,10 +930,12 @@
 
     // Ajustar layout dos carrosséis
     function adjustCarouselLayout() {
+        console.log("Ajustando layout do carrossel...");
         const gap = 15;
         document.querySelectorAll('.carousel').forEach(carousel => {
             const items = carousel.querySelectorAll('.carousel-item');
             if (!items.length) {
+                console.log(`Carrossel ${carousel.id} vazio, atualizando setas.`);
                 updateArrowVisibility(carousel); // Hide arrows if no items
                 return;
             };
@@ -936,7 +943,10 @@
             const itemsToShow = getItemsPerView();
             const availableWidth = carousel.clientWidth;
             // Ensure availableWidth is positive before calculation
-            if (availableWidth <= 0) return;
+            if (availableWidth <= 0) {
+                console.warn(`Largura do carrossel ${carousel.id} é 0 ou negativa.`);
+                return; // Avoid calculation if width is not ready
+            }
 
             const totalGapWidth = Math.max(0, (itemsToShow - 1)) * gap;
             let itemWidth = (availableWidth > totalGapWidth) ? (availableWidth - totalGapWidth) / itemsToShow : availableWidth;
@@ -946,6 +956,7 @@
                 item.style.width = `${itemWidth}px`;
             });
 
+            console.log(`Layout do carrossel ${carousel.id} ajustado. Items: ${items.length}, Width: ${itemWidth}px`);
             // Update arrows after adjusting layout
              updateArrowVisibility(carousel);
         });
@@ -953,20 +964,36 @@
 
     // Ajustar ao redimensionar (com debounce)
     const debouncedResize = debounce(() => {
-        console.log("Window resized, adjusting...");
+        console.log("Janela redimensionada, ajustando...");
         adjustCarouselLayout();
     }, 250);
-    window.addEventListener('resize', debouncedResize);
 
-    // Inicializar
-    document.addEventListener('DOMContentLoaded', () => {
-        inicializarConteudo();
-        // Adjust layout once on load after content might affect widths
-        // Use requestAnimationFrame for potentially smoother initial layout
-        requestAnimationFrame(() => {
-            setTimeout(adjustCarouselLayout, 50); // Small delay still helps ensure rendering
+
+    // --- CORREÇÃO APLICADA AQUI ---
+    // Inicializar após o DOM estar pronto, esperando o conteúdo ser carregado
+    document.addEventListener('DOMContentLoaded', async () => {
+        console.log("DOM carregado. Iniciando conteúdo...");
+        // Espera a função assíncrona carregar dados e fazer a renderização inicial
+        await inicializarConteudo();
+        console.log("Conteúdo inicializado. Ajustando layout e adicionando listeners...");
+
+        // Ajusta o layout DEPOIS que o conteúdo foi carregado e renderizado
+        adjustCarouselLayout();
+
+        // Adiciona listeners de scroll e verifica visibilidade das setas APÓS layout inicial
+        document.querySelectorAll('.carousel').forEach(carousel => {
+            const debouncedUpdateArrows = debounce(() => updateArrowVisibility(carousel), 150);
+            carousel.addEventListener('scroll', debouncedUpdateArrows);
+            // Verifica a visibilidade inicial das setas após o primeiro ajuste de layout
+            updateArrowVisibility(carousel);
         });
+
+        // Adiciona listener de redimensionamento
+        window.addEventListener('resize', debouncedResize);
+
+        console.log("Inicialização completa.");
     });
+    // --- FIM DA CORREÇÃO ---
 
   </script>
 </body>
