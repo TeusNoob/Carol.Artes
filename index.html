@@ -379,6 +379,18 @@
     margin-bottom: 0.5rem;
     margin-top: auto;
   }
+  .product-old-price {
+    font-size: 0.75rem;
+    text-decoration: line-through;
+    color: var(--gray-500);
+    margin-bottom: 0.25rem;
+  }
+  .product-timer {
+    font-size: 0.7rem;
+    color: var(--pink-600);
+    margin-top: 0.25rem;
+    font-weight: 500;
+  }
   .buy-button, .mercado-pago-button {
     width: 100%;
     margin-top: 0.5rem;
@@ -457,10 +469,11 @@
       border-radius: 2rem;
       display: flex;
       height: 3.5rem;
-      z-index: 999;
+      z-index: 1999; /* Aumentado para garantir que fique acima de outros elementos */
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       padding: 0 1rem;
       will-change: transform; /* Manter */
+      visibility: visible !important; /* Garantir que sempre esteja visível */
    }
    .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; color: var(--gray-500); text-decoration: none; position: relative; padding: 0 1.5rem; transition: color 0.3s ease; }
    .nav-item.active { color: var(--pink-500); }
@@ -725,7 +738,7 @@
   <div id="inicio" class="content-section active">
 
     <div class="header-video-container">
-         <video class="header-video" autoplay loop muted playsinline poster="templates/layout/placeholder.png">
+         <video class="header-video" autoplay loop muted playsinline preload="auto" poster="templates/layout/placeholder.png">
              <source src="templates/video/carolartesloop.mp4" type="video/mp4">
              Seu navegador não suporta a tag de vídeo. </video>
      </div>
@@ -925,12 +938,58 @@
     }
   }
 
+  // Armazenar os timers de cada produto
+  const produtoTimers = {};
+
   // Função para gerar um temporizador aleatório
   function gerarTempoAleatorio() {
-    const horas = Math.floor(Math.random() * 24);
+    // Gerar entre 1 e 24 horas
+    const horas = Math.floor(Math.random() * 24) + 1;
     const minutos = Math.floor(Math.random() * 60);
     const segundos = Math.floor(Math.random() * 60);
-    return `${horas.toString().padStart(2, '0')}h ${minutos.toString().padStart(2, '0')}m ${segundos.toString().padStart(2, '0')}s`;
+    
+    // Retornar o tempo total em segundos
+    return horas * 3600 + minutos * 60 + segundos;
+  }
+
+  // Função para formatar o tempo em formato legível
+  function formatarTempo(segundos) {
+    const horas = Math.floor(segundos / 3600);
+    const minutos = Math.floor((segundos % 3600) / 60);
+    const segs = segundos % 60;
+    
+    return `${horas.toString().padStart(2, '0')}h ${minutos.toString().padStart(2, '0')}m ${segs.toString().padStart(2, '0')}s`;
+  }
+
+  // Função para iniciar o timer de um produto
+  function iniciarTimer(produtoId, elementoId) {
+    // Gerar tempo aleatório se não existir
+    if (!produtoTimers[produtoId]) {
+      produtoTimers[produtoId] = gerarTempoAleatorio();
+    }
+    
+    // Atualizar o elemento com o tempo formatado
+    const elemento = document.getElementById(elementoId);
+    if (elemento) {
+      elemento.textContent = `Oferta válida por: ${formatarTempo(produtoTimers[produtoId])}`;
+    }
+    
+    // Decrementar o tempo a cada segundo
+    const timer = setInterval(() => {
+      produtoTimers[produtoId]--;
+      
+      // Atualizar o elemento com o novo tempo
+      if (elemento) {
+        elemento.textContent = `Oferta válida por: ${formatarTempo(produtoTimers[produtoId])}`;
+      }
+      
+      // Se o tempo acabou, reiniciar
+      if (produtoTimers[produtoId] <= 0) {
+        produtoTimers[produtoId] = gerarTempoAleatorio();
+      }
+    }, 1000);
+    
+    return timer;
   }
 
   // Função para abrir o modal do produto
@@ -953,7 +1012,11 @@
     
     modalOldPrice.textContent = `R$ ${precoAntigo.toFixed(2).replace('.', ',')}`;
     modalPrice.textContent = `R$ ${preco.toFixed(2).replace('.', ',')}`;
-    modalTimer.textContent = `Oferta válida por: ${gerarTempoAleatorio()}`;
+    
+    // Iniciar o timer no modal
+    const produtoId = produto.id || 'produto-sem-id';
+    const timerElementId = 'modal-product-timer';
+    iniciarTimer(produtoId, timerElementId);
 
     // Configurar botão de compra
     modalBuyButton.onclick = function() {
@@ -993,6 +1056,9 @@
        return;
     }
     const produtoId = produto.id || Math.random().toString(36).substring(7); // Gera ID se faltar
+    const preco = produto.preco || 0;
+    const precoAntigo = preco * 2; // Preço 100% maior
+    const timerElementId = `timer-${produtoId}`;
 
     const produtoHTML = `
       <div class="carousel-item">
@@ -1003,7 +1069,9 @@
           <div class="product-info">
             <div>
               <h3 class="product-title">${produto.titulo || 'Produto s/ título'}</h3>
-              <div class="product-price">R$ ${(produto.preco || 0).toFixed(2).replace('.', ',')}</div>
+              <div class="product-old-price">R$ ${precoAntigo.toFixed(2).replace('.', ',')}</div>
+              <div class="product-price">R$ ${preco.toFixed(2).replace('.', ',')}</div>
+              <div id="${timerElementId}" class="product-timer">Carregando...</div>
             </div>
             <div class="mercado-pago-button" id="mp-button-${produtoId}">
               ${produto.mercadoPagoId ? `<button class="buy-button" onclick='openProductModal(${JSON.stringify(produto).replace(/"/g, '&quot;')})'>Comprar</button>` : '<button class="buy-button" disabled>Indisponível</button>'}
@@ -1013,6 +1081,11 @@
       </div>
     `;
     container.insertAdjacentHTML('beforeend', produtoHTML);
+    
+    // Iniciar o timer para este produto
+    setTimeout(() => {
+      iniciarTimer(produtoId, timerElementId);
+    }, 100);
   }
 
   // Função para renderizar produtos com botão de compra normal
@@ -1235,51 +1308,7 @@
   }
 
 
-  // Ajustar ao redimensionar (com debounce)
-  const debouncedResize = debounce(() => {
-      console.log("Janela redimensionada, ajustando...");
-      adjustCarouselLayout();
-  }, 250);
-
-
-  // --- CORREÇÃO APLICADA AQUI (window.onload) ---
-  // Inicializar após TUDO (incluindo imagens) carregar
-  window.addEventListener('load', async () => {
-      console.log("Página e recursos totalmente carregados (window.onload). Iniciando conteúdo...");
-      try {
-          // Espera a função assíncrona carregar dados e fazer a renderização inicial
-          await inicializarConteudo();
-          console.log("Conteúdo inicializado. Ajustando layout e adicionando listeners...");
-
-          // Adiciona um pequeno delay extra antes do ajuste inicial do layout,
-          // especialmente útil em mobile após 'load'
-          setTimeout(() => {
-              console.log("Ajustando layout inicial (após delay)...");
-              adjustCarouselLayout();
-
-              // Adiciona listeners de scroll e verifica visibilidade das setas APÓS layout inicial
-              document.querySelectorAll('.carousel').forEach(carousel => {
-                  // Verifica se o carrossel existe antes de adicionar listener
-                  if(carousel) {
-                      const debouncedUpdateArrows = debounce(() => updateArrowVisibility(carousel), 150);
-                      carousel.addEventListener('scroll', debouncedUpdateArrows);
-                      // Verifica a visibilidade inicial das setas
-                      updateArrowVisibility(carousel);
-                  }
-              });
-          }, 100); // Pequeno delay de 100ms
-
-          // Adiciona listener de redimensionamento
-          window.addEventListener('resize', debouncedResize);
-
-          console.log("Inicialização (eventos e layout pós-load) completa.");
-
-      } catch (error) {
-          console.error("Erro crítico durante a inicialização pós-load:", error);
-      }
-  });
-  // --- FIM DA CORREÇÃO ---
-
+  // Ajustar ao redimensionar
 </script>
 </body>
 </html>
