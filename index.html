@@ -386,7 +386,7 @@ main {
   margin-bottom: 0.25rem;
 }
 .product-timer {
-  font-size: 0.7rem;
+  font-size: 0.65rem; /* Diminuído o tamanho do timer */
   color: var(--pink-600);
   margin-top: 0.25rem;
   font-weight: 500;
@@ -645,7 +645,7 @@ main {
 }
 
 .product-modal-timer {
-  font-size: 0.8rem;
+  font-size: 0.75rem; /* Diminuído o tamanho do timer */
   color: var(--pink-600);
   margin-bottom: 1rem;
   font-weight: 500;
@@ -838,7 +838,7 @@ main {
     </div>
     <div id="modal-product-timer" class="product-modal-timer"></div>
     <div class="product-modal-warning">
-      ⚠️ Após o pagamento, você será redirecionado automaticamente para o link de download. Caso isso não aconteça, o link será enviado para o seu e-mail.
+      ⚠️ Após o pagamento, você será redirecionado automaticamente para o link de download.
     </div>
     <div class="product-modal-seal">
       <img src="templates/layout/mercadopago.png" alt="Mercado Pago" onerror="this.src='https://www.mercadopago.com/org-img/MP3/API/logos/mp-logo.svg'; this.onerror=null;">
@@ -976,19 +976,16 @@ function garantirReproducaoVideo() {
     if (video) {
         console.log("Tentando reproduzir o vídeo...");
         
-        // Verificar se o vídeo está pronto para reprodução
-        if (video.readyState >= 2) {
+        // Forçar carregamento do vídeo
+        video.load();
+        
+        // Tentar reproduzir o vídeo após o carregamento
+        video.addEventListener('loadeddata', function() {
+            console.log("Vídeo carregado, tentando reproduzir...");
             video.play().catch(err => {
                 console.error("Erro ao reproduzir vídeo:", err);
             });
-        } else {
-            // Se o vídeo não estiver pronto, adicionar evento para tentar novamente quando estiver
-            video.addEventListener('loadeddata', function() {
-                video.play().catch(err => {
-                    console.error("Erro ao reproduzir vídeo após carregamento:", err);
-                });
-            });
-        }
+        });
         
         // Verificar se o vídeo está sendo reproduzido após um curto período
         setTimeout(() => {
@@ -1051,67 +1048,41 @@ async function carregarDados(url) {
   try {
     console.log(`Tentando carregar dados de: ${url}`);
     
-    // Adicionar timestamp para evitar cache
-    const urlComTimestamp = `${url}?t=${new Date().getTime()}`;
-    const resposta = await fetch(urlComTimestamp, {
-      method: 'GET',
-      headers: {
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0'
-      }
+    // Tentar com caminho relativo primeiro
+    let resposta = await fetch(url, {
+      cache: 'no-store' // Evitar cache
     });
     
+    // Se falhar, tentar com caminho absoluto
     if (!resposta.ok) {
-      console.error(`Erro HTTP ${resposta.status} ao carregar ${url}`);
+      console.log(`Falha ao carregar com caminho relativo, tentando caminho absoluto...`);
+      const baseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+      const absoluteUrl = baseUrl + url;
       
-      // Tentar com caminho absoluto
-      const baseUrl = window.location.href.split('/').slice(0, -1).join('/');
-      const absoluteUrl = `${baseUrl}/${url}?t=${new Date().getTime()}`;
       console.log(`Tentando caminho absoluto: ${absoluteUrl}`);
-      
-      const respostaAbsoluta = await fetch(absoluteUrl, {
-        method: 'GET',
-        headers: {
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          'Pragma': 'no-cache',
-          'Expires': '0'
-        }
+      resposta = await fetch(absoluteUrl, {
+        cache: 'no-store' // Evitar cache
       });
       
-      if (!respostaAbsoluta.ok) {
-        console.error(`Erro HTTP ${respostaAbsoluta.status} ao carregar caminho absoluto ${absoluteUrl}`);
-        return null; // Retorna null em caso de erro para usar dados de exemplo
-      }
-      
-      const contentType = respostaAbsoluta.headers.get("content-type");
-      if (contentType && contentType.indexOf("application/json") !== -1) {
-        const dados = await respostaAbsoluta.json();
-        console.log(`Dados carregados com sucesso de ${absoluteUrl}:`, dados);
-        return dados;
-      } else {
-        console.error(`Resposta de ${absoluteUrl} não é JSON. Tipo: ${contentType}`);
+      if (!resposta.ok) {
+        console.error(`Erro HTTP ${resposta.status} ao carregar ${absoluteUrl}`);
         return null;
       }
     }
     
+    // Processar a resposta
     const contentType = resposta.headers.get("content-type");
-    // Verifica se a resposta é JSON antes de tentar parsear
     if (contentType && contentType.indexOf("application/json") !== -1) {
       const dados = await resposta.json();
-      console.log(`Dados carregados com sucesso de ${url}:`, dados);
+      console.log(`Dados carregados com sucesso:`, dados);
       return dados;
     } else {
-      console.error(`Resposta de ${url} não é JSON. Tipo: ${contentType}`);
-      
-      // Tentar ler como texto e parsear manualmente
+      console.log(`Resposta não é JSON, tentando parsear texto...`);
       const texto = await resposta.text();
-      console.log(`Conteúdo recebido como texto: ${texto.substring(0, 100)}...`);
-      
       try {
-        const dadosParseados = JSON.parse(texto);
-        console.log(`Texto parseado com sucesso como JSON:`, dadosParseados);
-        return dadosParseados;
+        const dados = JSON.parse(texto);
+        console.log(`Texto parseado com sucesso como JSON:`, dados);
+        return dados;
       } catch (erroParser) {
         console.error(`Erro ao parsear texto como JSON:`, erroParser);
         return null;
@@ -1119,21 +1090,25 @@ async function carregarDados(url) {
     }
   } catch (erro) {
     console.error(`Falha na rede ou ao processar ${url}:`, erro);
-    return null; // Retorna null em caso de falha para usar dados de exemplo
+    return null;
   }
 }
 
-// Armazenar os timers de cada produto
-const produtoTimers = {};
-
-// Função para gerar um temporizador aleatório
-function gerarTempoAleatorio() {
-  // Gerar entre 1 e 24 horas
-  const horas = Math.floor(Math.random() * 24) + 1;
-  const minutos = Math.floor(Math.random() * 60);
-  const segundos = Math.floor(Math.random() * 60);
+// Gerar tempos fixos para cada produto (usando hash do ID)
+function gerarTempoFixo(produtoId) {
+  // Função simples de hash para gerar um número consistente baseado no ID
+  let hash = 0;
+  for (let i = 0; i < produtoId.length; i++) {
+    hash = ((hash << 5) - hash) + produtoId.charCodeAt(i);
+    hash |= 0; // Converter para inteiro de 32 bits
+  }
   
-  // Retornar o tempo total em segundos
+  // Usar o hash para gerar um tempo entre 1 e 24 horas
+  const seed = Math.abs(hash);
+  const horas = 1 + (seed % 24); // Entre 1 e 24 horas
+  const minutos = seed % 60; // Entre 0 e 59 minutos
+  const segundos = (seed * 13) % 60; // Entre 0 e 59 segundos
+  
   return horas * 3600 + minutos * 60 + segundos;
 }
 
@@ -1146,33 +1121,48 @@ function formatarTempo(segundos) {
   return `${horas.toString().padStart(2, '0')}h ${minutos.toString().padStart(2, '0')}m ${segs.toString().padStart(2, '0')}s`;
 }
 
+// Armazenar os timers ativos para poder limpar quando necessário
+const timersAtivos = {};
+
 // Função para iniciar o timer de um produto
 function iniciarTimer(produtoId, elementoId) {
-  // Gerar tempo aleatório se não existir
-  if (!produtoTimers[produtoId]) {
-    produtoTimers[produtoId] = gerarTempoAleatorio();
+  // Limpar timer anterior se existir
+  if (timersAtivos[elementoId]) {
+    clearInterval(timersAtivos[elementoId]);
   }
+  
+  // Gerar tempo fixo baseado no ID do produto
+  const tempoTotal = gerarTempoFixo(produtoId);
+  
+  // Calcular tempo restante baseado no tempo atual
+  const agora = Math.floor(Date.now() / 1000);
+  const cicloCompleto = tempoTotal;
+  const tempoPassado = agora % cicloCompleto;
+  let tempoRestante = cicloCompleto - tempoPassado;
   
   // Atualizar o elemento com o tempo formatado
   const elemento = document.getElementById(elementoId);
   if (elemento) {
-    elemento.textContent = `Oferta válida por: ${formatarTempo(produtoTimers[produtoId])}`;
+    elemento.textContent = `Oferta válida por: ${formatarTempo(tempoRestante)}`;
   }
   
   // Decrementar o tempo a cada segundo
   const timer = setInterval(() => {
-    produtoTimers[produtoId]--;
+    tempoRestante--;
     
     // Atualizar o elemento com o novo tempo
     if (elemento) {
-      elemento.textContent = `Oferta válida por: ${formatarTempo(produtoTimers[produtoId])}`;
+      elemento.textContent = `Oferta válida por: ${formatarTempo(tempoRestante)}`;
     }
     
     // Se o tempo acabou, reiniciar
-    if (produtoTimers[produtoId] <= 0) {
-      produtoTimers[produtoId] = gerarTempoAleatorio();
+    if (tempoRestante <= 0) {
+      tempoRestante = cicloCompleto;
     }
   }, 1000);
+  
+  // Armazenar o timer para poder limpar depois
+  timersAtivos[elementoId] = timer;
   
   return timer;
 }
@@ -1223,6 +1213,12 @@ function closeProductModal() {
   const modal = document.getElementById('product-modal');
   modal.style.display = 'none';
   document.body.style.overflow = ''; // Restaurar rolagem do body
+  
+  // Limpar o timer do modal
+  if (timersAtivos['modal-product-timer']) {
+    clearInterval(timersAtivos['modal-product-timer']);
+    delete timersAtivos['modal-product-timer'];
+  }
 }
 
 // Fechar modal ao clicar fora do conteúdo
@@ -1240,7 +1236,7 @@ function renderizarProdutoMercadoPago(produto, container) {
      console.warn("Tentativa de renderizar produto inválido (Mercado Pago):", produto);
      return;
   }
-  const produtoId = produto.id || Math.random().toString(36).substring(7); // Gera ID se faltar
+  const produtoId = produto.id;
   const preco = produto.preco || 0;
   const precoAntigo = preco * 2; // Preço 100% maior
   const timerElementId = `timer-${produtoId}`;
@@ -1334,45 +1330,51 @@ async function inicializarConteudo() {
   console.log("Iniciando carregamento de dados...");
   
   // Forçar carregamento do vídeo
-  const video = document.getElementById('header-video');
-  if (video) {
-    console.log("Forçando carregamento do vídeo...");
-    
-    // Tentar carregar o vídeo com caminho absoluto
-    const videoSource = video.querySelector('source');
-    if (videoSource) {
-      const currentSrc = videoSource.getAttribute('src');
-      const baseUrl = window.location.href.split('/').slice(0, -1).join('/');
-      const absolutePath = `${baseUrl}/${currentSrc}`;
-      
-      console.log("Caminho atual do vídeo:", currentSrc);
-      console.log("Tentando caminho absoluto:", absolutePath);
-      
-      videoSource.setAttribute('src', absolutePath);
-      video.load();
-      
-      video.addEventListener('loadeddata', () => {
-        console.log("Vídeo carregado com sucesso!");
-        video.play().catch(err => console.error("Erro ao reproduzir vídeo:", err));
-      });
-      
-      video.addEventListener('error', (e) => {
-        console.error("Erro ao carregar vídeo:", e);
-      });
-    }
-  }
+  garantirReproducaoVideo();
 
   try {
-    // Fetch all data concurrently
-    const [moldesData, personalizadosData, parceirosData, cuponsData] = await Promise.all([
-      carregarDados('dados/moldes/moldes.json'),
-      carregarDados('dados/personalizados/personalizados.json'),
-      carregarDados('dados/parceiros/parceiros.json'),
-      carregarDados('dados/cupons/cupons.json')
-    ]);
-
+    // Tentar carregar os dados JSON
+    console.log("Tentando carregar arquivos JSON...");
+    
+    // Tentar diferentes caminhos para os arquivos JSON
+    const caminhos = [
+      // Caminhos relativos
+      {
+        moldes: 'dados/moldes/moldes.json',
+        personalizados: 'dados/personalizados/personalizados.json',
+        parceiros: 'dados/parceiros/parceiros.json',
+        cupons: 'dados/cupons/cupons.json'
+      },
+      // Caminhos absolutos baseados na URL atual
+      {
+        moldes: window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + 'dados/moldes/moldes.json',
+        personalizados: window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + 'dados/personalizados/personalizados.json',
+        parceiros: window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + 'dados/parceiros/parceiros.json',
+        cupons: window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + 'dados/cupons/cupons.json'
+      }
+    ];
+    
+    let moldesData = null, personalizadosData = null, parceirosData = null, cuponsData = null;
+    
+    // Tentar cada caminho até conseguir carregar os dados
+    for (const caminho of caminhos) {
+      console.log("Tentando caminho:", caminho);
+      
+      // Tentar carregar os dados de cada tipo
+      if (!moldesData) moldesData = await carregarDados(caminho.moldes);
+      if (!personalizadosData) personalizadosData = await carregarDados(caminho.personalizados);
+      if (!parceirosData) parceirosData = await carregarDados(caminho.parceiros);
+      if (!cuponsData) cuponsData = await carregarDados(caminho.cupons);
+      
+      // Se todos os dados foram carregados, parar de tentar
+      if (moldesData && personalizadosData && parceirosData && cuponsData) {
+        console.log("Todos os dados foram carregados com sucesso!");
+        break;
+      }
+    }
+    
     // Usar dados de exemplo se os dados reais não forem carregados
-    const moldes = moldesData || dadosExemplo;
+    const moldes = moldesData || dadosExemplo.moldes;
     const personalizados = personalizadosData || dadosExemplo.personalizados;
     const parceiros = parceirosData || dadosExemplo.parceiros;
     const cupons = cuponsData || dadosExemplo.cupons;
@@ -1512,7 +1514,7 @@ document.addEventListener('DOMContentLoaded', function() {
           
           // Tentar com um caminho absoluto se necessário
           if (currentSrc.startsWith('templates/')) {
-            const absolutePath = window.location.href.split('/').slice(0, -1).join('/') + '/' + currentSrc;
+            const absolutePath = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + currentSrc;
             console.log("Tentando caminho absoluto:", absolutePath);
             videoSource.setAttribute('src', absolutePath);
             video.load();
@@ -1534,39 +1536,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
-
-// Verificar se os dados JSON estão sendo carregados corretamente
-async function testarAcessoJSON() {
-  console.log("Testando acesso aos arquivos JSON...");
-  
-  const arquivos = [
-    'dados/moldes/moldes.json',
-    'dados/personalizados/personalizados.json',
-    'dados/parceiros/parceiros.json',
-    'dados/cupons/cupons.json'
-  ];
-  
-  for (const arquivo of arquivos) {
-    try {
-      const resposta = await fetch(arquivo);
-      console.log(`Teste de acesso a ${arquivo}: ${resposta.ok ? 'OK' : 'Falhou'} (Status: ${resposta.status})`);
-      
-      if (!resposta.ok) {
-        // Tentar com caminho absoluto
-        const absolutePath = window.location.href.split('/').slice(0, -1).join('/') + '/' + arquivo;
-        console.log(`Tentando caminho absoluto para ${arquivo}: ${absolutePath}`);
-        
-        const respostaAbsoluta = await fetch(absolutePath);
-        console.log(`Teste de acesso absoluto a ${arquivo}: ${respostaAbsoluta.ok ? 'OK' : 'Falhou'} (Status: ${respostaAbsoluta.status})`);
-      }
-    } catch (erro) {
-      console.error(`Erro ao acessar ${arquivo}:`, erro);
-    }
-  }
-}
-
-// Executar teste de acesso aos arquivos JSON
-testarAcessoJSON();
 
 // Ajustar layout ao redimensionar a janela
 window.addEventListener('resize', debounce(adjustCarouselLayout, 200));
