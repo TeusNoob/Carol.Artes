@@ -1042,33 +1042,42 @@ async function carregarDados(url) {
 }
 
 
-// MODIFICADO: Gerar tempos fixos variando entre 6h e 3 dias (em segundos)
+// *** MODIFICADO: Gerar tempos fixos variando mais entre 6h e 3 dias (em segundos) ***
 function gerarTempoFixo(produtoId) {
-  // Função simples de hash para gerar um número consistente baseado no ID
+  // 1. Gerar um hash base do ID
   let hash = 0;
   for (let i = 0; i < produtoId.length; i++) {
     const char = produtoId.charCodeAt(i);
     hash = ((hash << 5) - hash) + char;
-    hash |= 0; // Converter para inteiro de 32 bits
+    hash = hash & hash; // Converter para inteiro de 32 bits (mantém consistência)
   }
-
-  // Usar o hash para gerar um tempo pseudo-aleatório consistente
   const seed = Math.abs(hash);
 
-  // Definir limites em segundos (6 horas a 72 horas/3 dias)
+  // 2. Introduzir mais variação (exemplo: usando comprimento e código do primeiro caractere)
+  let variationFactor = produtoId.length * 13; // Fator baseado no comprimento
+  if (produtoId.length > 0) {
+      variationFactor += produtoId.charCodeAt(0) * 7; // Fator baseado no primeiro caractere
+  }
+
+  // 3. Combinar a seed com o fator de variação
+  // Usar uma operação que não seja apenas adição simples pode ajudar
+  const combinedSeed = Math.abs(seed ^ variationFactor + (seed >> 5)); // Exemplo de combinação
+
+  // 4. Definir limites em segundos (6 horas a 72 horas/3 dias)
   const minSegundos = 6 * 3600;
   const maxSegundos = 72 * 3600;
-
-  // Calcular um valor dentro do range usando o seed
   const range = maxSegundos - minSegundos;
-  // Usar módulo e adicionar o mínimo para ficar dentro do range desejado
-  const segundosAleatorios = minSegundos + (seed % range);
 
-  console.log(`Tempo gerado para ${produtoId}: ${segundosAleatorios} segundos`);
+  // 5. Calcular um valor dentro do range usando a seed combinada
+  // O módulo ainda é necessário para limitar ao range, mas a seed de entrada é mais variável
+  const segundosAleatorios = minSegundos + (combinedSeed % range);
+
+  // console.log(`Tempo gerado para ${produtoId}: Seed=${seed}, VarFactor=${variationFactor}, Combined=${combinedSeed}, Segundos=${segundosAleatorios}`); // Para debug
   return segundosAleatorios;
 }
 
-// MODIFICADO: Função para formatar o tempo incluindo dias
+
+// Função para formatar o tempo incluindo dias
 function formatarTempo(segundosTotais) {
   if (segundosTotais < 0) segundosTotais = 0; // Garante que não seja negativo
 
@@ -1093,9 +1102,6 @@ function formatarTempo(segundosTotais) {
   resultado += `${horas.toString().padStart(2, '0')}h `;
   resultado += `${minutos.toString().padStart(2, '0')}m `;
   resultado += `${segundos.toString().padStart(2, '0')}s`;
-
-  // Se quiser omitir dias/horas/etc se forem 0, a lógica seria mais complexa.
-  // Exemplo: return `${dias > 0 ? dias + 'd ' : ''}${horas > 0 || dias > 0 ? horas.toString().padStart(2, '0') + 'h ' : ''}${minutos.toString().padStart(2, '0')}m ${segundos.toString().padStart(2, '0')}s`;
 
   return resultado.trim(); // Remove espaços extras no final
 }
@@ -1125,17 +1131,26 @@ function iniciarTimer(produtoId, elementoId) {
   function atualizarDisplay() {
       const agora = Math.floor(Date.now() / 1000); // Tempo atual em segundos
       // O ciclo recomeça a cada 'tempoTotalFixo' segundos
+      // Calcula quanto tempo passou desde o início do último ciclo completo
       const tempoPassadoNoCiclo = agora % tempoTotalFixo;
+      // Calcula o tempo restante até o fim do ciclo atual
       let tempoRestante = tempoTotalFixo - tempoPassadoNoCiclo;
 
       // Atualizar o elemento com o tempo formatado
-      elemento.textContent = `Oferta termina em: ${formatarTempo(tempoRestante)}`;
+      // Verifica se o elemento ainda existe no DOM antes de atualizar
+      if (document.getElementById(elementoId)) {
+          elemento.textContent = `Oferta termina em: ${formatarTempo(tempoRestante)}`;
+      } else {
+          // Se o elemento sumiu (ex: card removido), limpar o timer
+          clearInterval(timerId);
+          delete timersAtivos[elementoId];
+      }
   }
 
-  // Atualizar imediatamente
+  // Atualizar imediatamente para mostrar o tempo correto ao carregar
   atualizarDisplay();
 
-  // Iniciar intervalo para decrementar a cada segundo
+  // Iniciar intervalo para atualizar a cada segundo
   const timerId = setInterval(atualizarDisplay, 1000);
 
   // Armazenar o ID do novo timer para poder limpar depois
@@ -1426,7 +1441,8 @@ async function inicializarConteudo() {
 
 // Criar uma versão debounced da função de atualização das setas
 const debouncedUpdateArrows = debounce((event) => {
-    if(event.target.classList.contains('carousel')) {
+    // Verifica se o evento de scroll veio de um elemento carousel
+    if(event.target && event.target.classList.contains('carousel')) {
         updateArrowVisibility(event.target);
     }
 }, 150);
